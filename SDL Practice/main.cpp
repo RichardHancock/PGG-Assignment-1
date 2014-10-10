@@ -3,6 +3,7 @@
 // iostream is so we can output error messages to console
 #include <iostream>
 #include "Texture.h"
+#include "Entity.h"
 
 int main(int argc, char *argv[])
 {
@@ -51,34 +52,26 @@ int main(int argc, char *argv[])
 	// (yes, we can have multiple windows - feel free to have a play sometime)
 	SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, 0);
 
-	// Now we will load our texture
-	std::string filename("image.bmp");
-
-	// First we load it to what SDL calls a 'surface'
-	// This is just a raw collection of pixels
-	Texture* texture1 = new Texture(filename,renderer);
-	if (!texture1)
+	Texture* t_guy = new Texture("guy.bmp",renderer);
+	Entity* guy = new Entity(t_guy, Vec2(75, 4));
+	if (!guy)
 	{
-		// We'll do a quick check here because it's easy to get filenames or directories wrong
-		std::cout << "Class wasn't constucted" << filename.c_str() << std::endl;
+		//Make better (i.e not external)
+		std::cout << "Class wasn't constucted guy" << std::endl;
 		SDL_Delay(10000);
 		SDL_Quit();
 		return -1;
 	}
 
-	// Next we convert the SDL_Surface into what it calls a 'texture'
-	// This is kinda similar, but because it's bound to a renderer, SDL can make some useful optimisations behind the scenes
-	// This will make it draw to the screen faster
-	
-
-	// We've now finished with our raw pixel data, so we can get rid of it
-
-
-
-	// Ok, hopefully finished with initialisation now
-	// Let's go and draw something!
-
-
+	Texture* t_guyName = new Texture("guyName.bmp", renderer);
+	Entity* guyName = new Entity(t_guyName, Vec2(25, 110));
+	if (!guyName)
+	{
+		std::cout << "Class wasn't constucted guyname" << std::endl;
+		SDL_Delay(10000);
+		SDL_Quit();
+		return -1;
+	}
 	// We are now preparing for our main loop (also known as the 'game loop')
 	// This loop will keep going round until we exit from our program by changing the bool 'go' to the value false
 	// This loop is an important concept and forms the basis of most games you'll be writing
@@ -140,7 +133,8 @@ int main(int argc, char *argv[])
 		// Also, feel free to start playing and see if you can get the texture to move about ;)
 		// Or just wait for next week :)
 
-		texture1->draw(renderer);
+		guy->render();
+		guyName->render();
 
 
 		// This tells the renderer to actually show its contents to the screen
@@ -152,7 +146,8 @@ int main(int argc, char *argv[])
 
 
 	// Our cleanup phase, hopefully fairly self-explanatory ;)
-	delete texture1;
+	delete guy;
+	delete guyName;
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 
