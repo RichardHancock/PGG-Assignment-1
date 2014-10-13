@@ -24,9 +24,27 @@ bool Entity::assignTexture(Texture *texture)
 		sprite = texture;
 		return true;
 	}
+
+}
+
+Vec2 Entity::getDimensions()
+{
+	
+	return sprite->getDimensions();
 }
 
 void Entity::render()
 {
 	(*sprite).draw(pos);
+}
+
+void Entity::move(Vec2 adjustBy)
+{
+	pos.x += adjustBy.x;
+	pos.y += adjustBy.y;
+}
+
+Vec2 Entity::getPos()
+{
+	return pos;
 }

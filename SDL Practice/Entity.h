@@ -10,10 +10,13 @@ public:
 	~Entity();
 	void Entity::render();
 	void Entity::move(Vec2);
-private:
-	Texture* sprite = NULL;
+	Vec2 Entity::getPos();
+	Vec2 Entity::getDimensions();
+protected:
+	Texture* sprite;
 	Vec2 pos;
 	bool Entity::assignTexture(Texture*);
+	Vec2 dimensions;
 
 };
 

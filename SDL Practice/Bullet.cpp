@@ -1,0 +1,19 @@
+#include "Bullet.h"
+#include <iostream>
+
+Bullet::Bullet(Texture* inputTexture, Vec2 inputPos) 
+	:Entity(inputTexture, inputPos)
+{
+	speed = 1;
+}
+
+Bullet::~Bullet()
+{
+
+}
+
+void Bullet::update()
+{	
+	pos.y -= speed;
+}
+

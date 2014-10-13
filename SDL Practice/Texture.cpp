@@ -30,26 +30,29 @@ bool Texture::load(std::string filename, SDL_Renderer* renderer)
 bool Texture::createTexture(SDL_Surface &image)
 {
 	texture = SDL_CreateTextureFromSurface(currentRenderer, &image);
+	SDL_QueryTexture(texture, NULL, NULL, &dimensions.x, &dimensions.y);
 	return (texture ? true : false);
 }
 
 void Texture::draw(Vec2 pos)
 {
-	// Ok, now we want to draw our texture to the screen
-	// First we're going to declare an SDL_Rect which we will use for specifying where in the window it should be drawn and how big it should be
-	// We will ultimately do a memory copy from our texture to the window and traditionally we say we are copying from a 'source' to a 'destination'
-	// This rectangle will specify the destination parameters for us
 	SDL_Rect destRect;
-	// SDL has (0,0) at the top left corner - check this by playing about with the numbers!
+
 	destRect.x = pos.x;
 	destRect.y = pos.y;
 
 	// Query the texture to get its original width and height
-	SDL_QueryTexture(texture, NULL, NULL, &destRect.w, &destRect.h);
+	destRect.w = dimensions.x;
+	destRect.h = dimensions.y;
 
 	// Here we are telling the renderer to copy the texture memory to our screen,
 	// at the position of the rectangle we specify
 	SDL_RenderCopy(currentRenderer, texture, NULL, &destRect);
+}
+
+Vec2 Texture::getDimensions()
+{
+	return dimensions;
 }
 
 SDL_Renderer* Texture::getRenderer()

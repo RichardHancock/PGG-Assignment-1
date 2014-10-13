@@ -3,8 +3,8 @@
 
 struct Vec2
 {
-	float x;
-	float y;
+	int x;
+	int y;
 	Vec2()
 	{
 
