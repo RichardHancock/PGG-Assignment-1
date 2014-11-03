@@ -1,7 +1,5 @@
-// This is the main SDL include file
 #include <SDL.h>
 #include <SDL_image.h>
-// iostream is so we can output error messages to console
 #include <iostream>
 #include "Texture.h"
 #include "Entity.h"
@@ -9,80 +7,12 @@
 #include <vector>
 
 
-/*
-
-void update(float dt)
-{
-
-}
-
-void draw()
-{
-
-}
-//For The complicated timer
-#include <windows.h>
-#include <cstdint>
-#include <time.h>
-
-float g_startOfFrame, g_endOfFrame, g_rateInv;
-int64_t g_startTick;
-
-void initFrameTimer()
-{
-	
-	int64_t rate;
-	g_rateInv = 1.0f / (float)CLOCKS_PER_SEC;
-
-	if (!QueryPerformanceCounter((LARGE_INTEGER*)&rate))
-	{
-		return;
-	}
-	if (!rate)
-	{
-		return;
-	}
-	
-	g_rateInv = 1.0f / (float)rate;
-	if (!QueryPerformanceCounter((LARGE_INTEGER*)&g_startTick))
-	{
-		return;
-	}
-}
-
-float currentTime()
-{
-	int64_t endTick;
-	QueryPerformanceCounter((LARGE_INTEGER*)&endTick);
-	return (endTick - g_startTick) * g_rateInv;
-}
-
-void onIdle()
-{
-	do 
-	{
-		g_endOfFrame = currentTime();
-	} 
-	while (g_endOfFrame == g_startOfFrame);
-
-	float dt = g_endOfFrame - g_startOfFrame;
-	g_startOfFrame = g_endOfFrame;
-
-	update(dt);
-	//Define these
-	draw();
-}
-
-//End of Timer stuff
-
-*/
-
 int main(int argc, char *argv[])
 {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
-		// Something went very wrong in initialisation, all we can do is exit
-		std::cout << "Whoops! Something went very wrong, cannot initialise SDL :(" << std::endl;
+		// Something went very wrong in initialization, all we can do is exit
+		std::cout << "Whoops! Something went very wrong, cannot initialize SDL :(" << std::endl;
 		return -1;
 	}
 
@@ -102,7 +32,7 @@ int main(int argc, char *argv[])
 	if (!player)
 	{
 		//Make better (i.e not external)
-		std::cout << "Class wasn't constucted: player" << std::endl;
+		std::cout << "Class wasn't constructed: player" << std::endl;
 		SDL_Delay(10000);
 		SDL_Quit();
 		return -1;
@@ -122,19 +52,13 @@ int main(int argc, char *argv[])
 	bool mv_right = false;
 	bool firing = false;
 	int delay = 0;
-	// We are now preparing for our main loop (also known as the 'game loop')
-	// This loop will keep going round until we exit from our program by changing the bool 'go' to the value false
-	// This loop is an important concept and forms the basis of most games you'll be writing
-	// Within this loop we generally do the following things:
-	//   * Check for input from the user (and do something about it!)
-	//   * Update our world
-	//   * Draw our world
-	// We will come back to this in later lectures
-
+	Vec2 mouse(0, 0);
+	bool mouseEnabled = false;
 	unsigned int lastTime = SDL_GetTicks();
 
 	bool quit = false;
 	SDL_Event e;
+
 	while (!quit)
 	{
 		while (SDL_PollEvent(&e))
@@ -146,10 +70,14 @@ int main(int argc, char *argv[])
 				quit = true;
 				break;
 			case SDL_MOUSEMOTION:
-				e.motion.x;
+				mouse.x = e.motion.x;
+				mouse.y = e.motion.y;
 			case SDL_KEYDOWN:
 				switch (e.key.keysym.sym)
 				{
+				case SDLK_ESCAPE:
+					quit = true;
+					break;
 				case SDLK_LEFT:
 				case SDLK_a:
 					mv_left = true;
@@ -160,7 +88,9 @@ int main(int argc, char *argv[])
 					break;
 				case SDLK_SPACE:
 					firing = true;
-					
+					break;
+				case SDLK_q:
+					mouseEnabled = !mouseEnabled;
 					break;
 				}
 				break;
@@ -203,12 +133,27 @@ int main(int argc, char *argv[])
 			// We are told to move right
 			velocityX = 200.0f;
 		}
+		//Mouse
+		if (mouseEnabled)
+		{
+			int mouseOffsetLeft = (player->getPos().x + (player->getDimensions().x / 2)) - 20;
+			int mouseOffsetRight = mouseOffsetLeft + 40;
+
+			if (mouse.x < mouseOffsetLeft)
+			{
+				velocityX = -200.0f;
+			}
+			if (mouse.x > mouseOffsetRight)
+			{
+				velocityX = 200.0f;
+			}
+		}
+
+
+
 		if (firing && delay > 10)
 		{
 			Vec2 bulletLineup = player->getPos();
-
-			std::cout << player->getDimensions().x << std::endl;
-
 			bulletLineup.x += (player->getDimensions().x / 2) - (bulletSprite->getDimensions().x / 2);
 			//CONTINUE HERE
 			bullets.push_back(new Bullet(bulletSprite, bulletLineup));
@@ -239,6 +184,10 @@ int main(int argc, char *argv[])
 		for (int i = 0; i < bullets.size(); i++)
 		{
 			bullets[i]->render();
+			if (bullets[i]->getPos().y < -30)
+			{
+				bullets.erase(bullets.begin() + i);
+			}
 		}
 		
 		
