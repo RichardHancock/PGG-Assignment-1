@@ -4,7 +4,7 @@
 Bullet::Bullet(Texture* inputTexture, Vec2 inputPos) 
 	:Entity(inputTexture, inputPos)
 {
-	speed = 1;
+	speed = 10;
 }
 
 Bullet::~Bullet()

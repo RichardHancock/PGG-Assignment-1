@@ -28,8 +28,7 @@ bool Entity::assignTexture(Texture *texture)
 }
 
 Vec2 Entity::getDimensions()
-{
-	
+{	
 	return sprite->getDimensions();
 }
 
@@ -40,8 +39,19 @@ void Entity::render()
 
 void Entity::move(Vec2 adjustBy)
 {
-	pos.x += adjustBy.x;
-	pos.y += adjustBy.y;
+	if (pos.x > 640 - getDimensions().x)
+	{
+		pos.x = 640 - getDimensions().x;
+	} 
+	else if (pos.x < 0)
+	{
+		pos.x = 0;
+	}
+	else
+	{
+		pos.x += adjustBy.x;
+		pos.y += adjustBy.y;
+	}
 }
 
 Vec2 Entity::getPos()

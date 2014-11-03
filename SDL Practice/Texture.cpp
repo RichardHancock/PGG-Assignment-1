@@ -13,11 +13,12 @@ Texture::~Texture()
 
 bool Texture::load(std::string filename, SDL_Renderer* renderer)
 {
-	SDL_Surface *image = SDL_LoadBMP(filename.c_str());
+	//SDL_Surface *image = SDL_LoadBMP(filename.c_str());
+	SDL_Surface *image = IMG_Load(filename.c_str());
 	if (!image)
 	{
 		// We'll do a quick check here because it's easy to get filenames or directories wrong
-		std::cout << "Can't find image named" << filename << std::endl;
+		std::cout << "Can't find image named " << filename << " " << IMG_GetError() << std::endl;
 		return false;
 	}
 
