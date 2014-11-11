@@ -9,7 +9,7 @@ Entity::Entity(Texture* inputTexture, Vec2 inputPos)
 
 Entity::~Entity()
 {
-
+	
 }
 
 bool Entity::assignTexture(Texture *texture)

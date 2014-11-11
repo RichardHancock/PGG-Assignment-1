@@ -5,7 +5,10 @@ Texture::Texture(std::string filename, SDL_Renderer* renderer)
 {	
 	load(filename, renderer);
 }
-
+Texture::Texture(SDL_Surface* surface, SDL_Renderer* renderer)
+{
+	load(surface, renderer);
+}
 Texture::~Texture()
 {
 	SDL_DestroyTexture(texture);
@@ -13,7 +16,6 @@ Texture::~Texture()
 
 bool Texture::load(std::string filename, SDL_Renderer* renderer)
 {
-	//SDL_Surface *image = SDL_LoadBMP(filename.c_str());
 	SDL_Surface *image = IMG_Load(filename.c_str());
 	if (!image)
 	{
@@ -25,6 +27,13 @@ bool Texture::load(std::string filename, SDL_Renderer* renderer)
 	currentRenderer = renderer;
 	Texture::createTexture(*image); //Need error check here
 	SDL_FreeSurface(image);
+	return true;
+}
+
+bool Texture::load(SDL_Surface* surface , SDL_Renderer* renderer)
+{
+	currentRenderer = renderer;
+	Texture::createTexture(*surface); //Need error check here
 	return true;
 }
 

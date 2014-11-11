@@ -12,7 +12,7 @@ Bullet::~Bullet()
 
 }
 
-void Bullet::update()
+void Bullet::update(float dt)
 {	
 	pos.y -= speed;
 }

@@ -12,6 +12,7 @@ public:
 	void Entity::move(Vec2);
 	Vec2 Entity::getPos();
 	Vec2 Entity::getDimensions();
+	virtual void update(float) = 0;
 protected:
 	Texture* sprite;
 	Vec2 pos;

@@ -1,59 +1,80 @@
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <iostream>
 #include "Texture.h"
 #include "Entity.h"
 #include "Bullet.h"
 #include <vector>
+#include "PlayerShip.h"
+#include "Background.h"
 
+int init();
+int main(int, char*[]);
+void cleanup();
+
+//Constants
+const int WIN_POS_X = 100;
+const int WIN_POS_Y = 100;
+const int WIN_WIDTH = 640;
+const int WIN_HEIGHT = 480;
+
+//globals
+SDL_Window *window;
+SDL_Renderer *renderer;
+
+int init()
+{
+	int status = 0;
+
+	if (SDL_Init(SDL_INIT_VIDEO) < 0) { status = -1; }
+	if (TTF_Init() < 0) 
+	{ 
+		status = -1;
+		std::cout << "SDL_ttf init failed: " << TTF_GetError << std::endl;
+	}
+
+	window = SDL_CreateWindow("SDL Practice",
+		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+		WIN_WIDTH, WIN_HEIGHT,
+		SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
+
+	renderer = SDL_CreateRenderer(window, -1, 0);
+
+	if (!window || !renderer) { status = -1; }
+	
+	if (status == -1)
+	{
+		std::cout << "Error occurred in init: " << SDL_GetError() << std::endl;
+	}
+	return status;
+}
 
 int main(int argc, char *argv[])
 {
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	
+	if (init() == -1)
 	{
-		// Something went very wrong in initialization, all we can do is exit
-		std::cout << "Whoops! Something went very wrong, cannot initialize SDL :(" << std::endl;
 		return -1;
 	}
 
-	int winPosX = 100;
-	int winPosY = 100;
-	int winWidth = 640;
-	int winHeight = 480;
-	SDL_Window *window = SDL_CreateWindow("My Window!!!",  // The first parameter is the window title
-		winPosX, winPosY,
-		winWidth, winHeight,
-		SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
-
-	SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, 0);
+	Texture* bulletSprite = new Texture("laserRed01.png", renderer);
 
 	Texture* t_player = new Texture("ship.png", renderer);
-	Entity* player = new Entity(t_player, Vec2(75, 330));
-	if (!player)
-	{
-		//Make better (i.e not external)
-		std::cout << "Class wasn't constructed: player" << std::endl;
-		SDL_Delay(10000);
-		SDL_Quit();
-		return -1;
-	}
-	Texture* bulletSprite = new Texture("bullet.bmp", renderer);
-	Texture* background = new Texture("download.bmp", renderer);
-	Texture* background2 = new Texture("download.bmp", renderer);
-	int backgroundY = 0;
-	int background2Y = -480;
+	PlayerShip* player = new PlayerShip(t_player, Vec2(75, 330), bulletSprite);
 	
-	//LAZY Non encapsulated FOR SANITY REMOVE LATER (Merge into entity)
-	int speed = 5;
+	Texture* t_background = new Texture("download.bmp", renderer);
+	Background* background = new Background(t_background, Vec2(0,0), WIN_HEIGHT, WIN_WIDTH);
+	Background* background2 = new Background(t_background, Vec2(0, -480), WIN_HEIGHT, WIN_WIDTH);
+	
+	TTF_Font *font = TTF_OpenFont("OpenSans-Regular.ttf", 16);
+	if (!font) {
+		printf("TTF_OpenFont: %s\n", TTF_GetError());
+		// handle error
+	}
 
-	std::vector<Bullet*> bullets;
-
-	bool mv_left = false;
-	bool mv_right = false;
-	bool firing = false;
-	int delay = 0;
 	Vec2 mouse(0, 0);
-	bool mouseEnabled = false;
+
 	unsigned int lastTime = SDL_GetTicks();
 
 	bool quit = false;
@@ -62,54 +83,27 @@ int main(int argc, char *argv[])
 	while (!quit)
 	{
 		while (SDL_PollEvent(&e))
-		{
-			
+		{	
 			switch (e.type)
 			{
 			case SDL_QUIT:
 				quit = true;
 				break;
+
 			case SDL_MOUSEMOTION:
 				mouse.x = e.motion.x;
 				mouse.y = e.motion.y;
-			case SDL_KEYDOWN:
-				switch (e.key.keysym.sym)
-				{
-				case SDLK_ESCAPE:
-					quit = true;
-					break;
-				case SDLK_LEFT:
-				case SDLK_a:
-					mv_left = true;
-					break;
-				case SDLK_RIGHT:
-				case SDLK_d:
-					mv_right = true;
-					break;
-				case SDLK_SPACE:
-					firing = true;
-					break;
-				case SDLK_q:
-					mouseEnabled = !mouseEnabled;
-					break;
-				}
+				player->updateMouse(mouse);
+			
+			default:
+				player->eventHandler(e);
 				break;
-			case SDL_KEYUP:
-				switch (e.key.keysym.sym)
-				{
-				case SDLK_LEFT:
-				case SDLK_a:
-					mv_left = false;
-					break;
-				case SDLK_RIGHT:
-				case SDLK_d:
-					mv_right = false;
-					break;
-				case SDLK_SPACE:
-					firing = false;
-					break;
-				}
-				
+			}
+
+			//Escape Key
+			if (e.type == SDL_KEYUP && e.key.keysym.sym == SDLK_ESCAPE)
+			{
+				quit = true;
 			}
 		}
 
@@ -117,91 +111,62 @@ int main(int argc, char *argv[])
 		// Update our world
 		// (nothing to update for now)
 		unsigned int current = SDL_GetTicks();
-		float deltaTs = (float)(current - lastTime) / 1000.0f;
+		float dt = (float)(current - lastTime) / 1000.0f;
 		lastTime = current;
 
-		float velocityY = 0.0f;
-		float velocityX = 0.0f;
-
-		if (mv_left &!mv_right)
-		{
-			// We are told to move left
-			velocityX = -200.0f;
-		}
-		if (mv_right &!mv_left)
-		{
-			// We are told to move right
-			velocityX = 200.0f;
-		}
-		//Mouse
-		if (mouseEnabled)
-		{
-			int mouseOffsetLeft = (player->getPos().x + (player->getDimensions().x / 2)) - 20;
-			int mouseOffsetRight = mouseOffsetLeft + 40;
-
-			if (mouse.x < mouseOffsetLeft)
-			{
-				velocityX = -200.0f;
-			}
-			if (mouse.x > mouseOffsetRight)
-			{
-				velocityX = 200.0f;
-			}
-		}
-
-
-
-		if (firing && delay > 10)
-		{
-			Vec2 bulletLineup = player->getPos();
-			bulletLineup.x += (player->getDimensions().x / 2) - (bulletSprite->getDimensions().x / 2);
-			//CONTINUE HERE
-			bullets.push_back(new Bullet(bulletSprite, bulletLineup));
-			delay = 0;
-		}
-		delay++;
-		player->move(Vec2((unsigned int) (velocityX * deltaTs), 0));
-
-		for (int i = 0; i < bullets.size(); i++)
-		{
-			bullets[i]->update();
-		}
+		player->update(dt);
+		background->update(dt);
+		background2->update(dt);
 		
-		
-		backgroundY++;
-		background2Y++;
+
+		//Render
 		SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 		SDL_RenderClear(renderer);
-		background2->draw(Vec2(0, background2Y));
-		background->draw(Vec2(0, backgroundY));             
-		if (backgroundY >= 480) {
-			backgroundY = -480;
-		}
-		if (background2Y >= 480) {
-			background2Y = -480;
-		}
+
+		background2->render();
+		background->render();             
+		
 		player->render();
-		for (int i = 0; i < bullets.size(); i++)
-		{
-			bullets[i]->render();
-			if (bullets[i]->getPos().y < -30)
-			{
-				bullets.erase(bullets.begin() + i);
-			}
-		}
 		
-		
+
+		//Text Test
+		SDL_Colour testColour;
+		testColour.r = 255;
+		testColour.g = 0;
+		testColour.b = 0;
+		std::string textString = player->isMouseEnabled() ? "Mouse Enabled" : "Mouse Disabled";
+
+		Texture* textTest = new Texture(TTF_RenderUTF8_Solid(font, textString.c_str(), testColour),renderer);
+		textTest->draw(Vec2(0, 0));
+		delete textTest;
+
 		SDL_RenderPresent(renderer);
 
-		if (deltaTs < (1.0f / 50.0f))	// not sure how accurate the SDL_Delay function is..
+		if (dt < (1.0f / 50.0f))	// not sure how accurate the SDL_Delay function is..
 		{
-			SDL_Delay((unsigned int)(((1.0f / 50.0f) - deltaTs)*1000.0f));
+			SDL_Delay((unsigned int)(((1.0f / 50.0f) - dt)*1000.0f));
 		}
 	}
 
+	
+	// Delete all classes
 	delete player;
-	SDL_DestroyWindow(window);
-	SDL_Quit();
+	delete background;
+	delete background2;
+
+	delete t_background;
+	delete t_player;
+	delete bulletSprite;
+	TTF_CloseFont(font);
+
+	cleanup();
 
 	return 0;
+}
+
+void cleanup()
+{
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+	SDL_Quit();
 }

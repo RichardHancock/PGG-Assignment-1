@@ -1,13 +1,13 @@
 #include "Entity.h"
 
 
-class Ship
+class Ship : public Entity
 {
 public:
-	Ship();
-	~Ship();
-	
+	Ship(Texture*, Vec2);
+	virtual void shoot() = 0;
 protected:
-	
+	float velocityY;
+	float velocityX;
 private:
 };
