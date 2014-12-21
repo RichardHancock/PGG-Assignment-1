@@ -40,7 +40,15 @@ bool Texture::load(SDL_Surface* surface , SDL_Renderer* renderer)
 bool Texture::createTexture(SDL_Surface &image)
 {
 	texture = SDL_CreateTextureFromSurface(currentRenderer, &image);
-	SDL_QueryTexture(texture, NULL, NULL, &dimensions.x, &dimensions.y);
+
+	// This is done because a float* and int* conflict.
+	int tempDimensionsX;
+	int tempDimensionsY;
+	SDL_QueryTexture(texture, NULL, NULL, &tempDimensionsX, &tempDimensionsY);
+	
+	dimensions.x = (float)tempDimensionsX;
+	dimensions.y = (float)tempDimensionsY;
+
 	return (texture ? true : false);
 }
 
@@ -48,12 +56,12 @@ void Texture::draw(Vec2 pos)
 {
 	SDL_Rect destRect;
 
-	destRect.x = pos.x;
-	destRect.y = pos.y;
+	destRect.x = (int)pos.x;
+	destRect.y = (int)pos.y;
 
 	// Query the texture to get its original width and height
-	destRect.w = dimensions.x;
-	destRect.h = dimensions.y;
+	destRect.w = (int)dimensions.x;
+	destRect.h = (int)dimensions.y;
 
 	// Here we are telling the renderer to copy the texture memory to our screen,
 	// at the position of the rectangle we specify

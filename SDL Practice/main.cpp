@@ -122,10 +122,10 @@ int main(int argc, char *argv[])
 		//Render
 		SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 		SDL_RenderClear(renderer);
-
-		background2->render();
-		background->render();             
 		
+		background->render();             
+		background2->render();
+
 		player->render();
 		
 

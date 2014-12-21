@@ -11,6 +11,7 @@ public:
 private:
 	const int SCREEN_HEIGHT;
 	const int SCREEN_WIDTH;
+	const float scrollSpeed = 50;
 };
 
 #endif

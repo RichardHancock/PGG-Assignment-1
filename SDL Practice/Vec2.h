@@ -3,13 +3,13 @@
 
 struct Vec2
 {
-	int x;
-	int y;
+	float x;
+	float y;
 	Vec2()
 	{
 
 	}
-	Vec2(int initX,int initY)
+	Vec2(float initX, float initY)
 	{
 		x = initX;
 		y = initY;

@@ -103,11 +103,6 @@ void PlayerShip::eventMouse(SDL_Event& e)
 	}
 }
 
-void PlayerShip::updateMouse(Vec2 oldMouse)
-{
-	mouse = oldMouse;
-}
-
 void PlayerShip::update(float dt)
 {
 	float velocityX = 0;
@@ -142,7 +137,7 @@ void PlayerShip::update(float dt)
 	if (isFiring && delay > 10) { shoot(); }
 	delay++;
 
-	move(Vec2((unsigned int)(velocityX * dt), 0));
+	move(Vec2((velocityX * dt), 0));
 
 	for (int i = 0; i < bullets.size(); i++)
 	{
@@ -171,9 +166,10 @@ void PlayerShip::shoot()
 {
 	Vec2 bulletLineup = pos;
 	bulletLineup.x += (getDimensions().x / 2) - (bulletSprite->getDimensions().x / 2);
-	//CONTINUE HERE
 	bullets.push_back(new Bullet(bulletSprite, bulletLineup));
 	delay = 0;
 }
 
 bool PlayerShip::isMouseEnabled() { return mouseEnabled; }
+
+void PlayerShip::updateMouse(Vec2 oldMouse) { mouse = oldMouse; }
