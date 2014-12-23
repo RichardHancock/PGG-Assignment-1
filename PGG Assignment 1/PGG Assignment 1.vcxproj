@@ -12,7 +12,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{993FF1D6-344B-4F1B-A6AC-6AFBD553CB92}</ProjectGuid>
-    <RootNamespace>SDLPractice</RootNamespace>
+    <RootNamespace>PGGAssignment1</RootNamespace>
+    <ProjectName>PGG Assignment 1</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

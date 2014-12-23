@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SDL Practice", "SDL Practice\SDL Practice.vcxproj", "{993FF1D6-344B-4F1B-A6AC-6AFBD553CB92}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PGG Assignment 1", "PGG Assignment 1/PGG Assignment 1.vcxproj", "{993FF1D6-344B-4F1B-A6AC-6AFBD553CB92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
