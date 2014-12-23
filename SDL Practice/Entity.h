@@ -13,7 +13,7 @@ public:
 	void Entity::move(Vec2);
 	Vec2 Entity::getPos();
 	Vec2 Entity::getDimensions();
-	float getRotation() { return rotation; }
+	float getRotation();
 	void setRotation(float);
 	
 	virtual void update(float) = 0;
