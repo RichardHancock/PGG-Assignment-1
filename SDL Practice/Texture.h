@@ -13,7 +13,9 @@ public:
 	Texture(SDL_Surface*, SDL_Renderer*);
 	~Texture();
 	Vec2 Texture::getDimensions();
-	void Texture::draw(Vec2);
+	void Texture::draw(Vec2 pos);
+	void Texture::draw(Vec2 pos, float rotation);
+	void Texture::draw(Vec2 pos, float rotation, Vec2 pivot);
 	bool Texture::load(std::string, SDL_Renderer*);
 	bool Texture::load(SDL_Surface*, SDL_Renderer*);
 	SDL_Renderer* Texture::getRenderer();

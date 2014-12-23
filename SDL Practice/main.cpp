@@ -8,6 +8,7 @@
 #include <vector>
 #include "PlayerShip.h"
 #include "Background.h"
+#include "Utility.h"
 
 int init();
 int main(int, char*[]);
@@ -47,6 +48,9 @@ int init()
 	{
 		std::cout << "Error occurred in init: " << SDL_GetError() << std::endl;
 	}
+
+	Utility::randomInit();
+
 	return status;
 }
 

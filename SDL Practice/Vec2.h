@@ -1,5 +1,4 @@
-#ifndef VEC2_H
-#define VEC2_H
+#pragma once
 
 struct Vec2
 {
@@ -73,4 +72,3 @@ inline bool operator != (const Vec2& a, const Vec2& b)
 { 
 	return (a.x != b.x || a.y != b.y) ? true : false;
 }
-#endif

@@ -85,10 +85,14 @@
     <ClInclude Include="Background.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="EntityWithMotion.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Particle.h" />
+    <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="PlayerShip.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="Utility.h" />
     <ClInclude Include="Vec2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

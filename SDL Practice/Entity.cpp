@@ -34,7 +34,7 @@ Vec2 Entity::getDimensions()
 
 void Entity::render()
 {
-	(*sprite).draw(pos);
+	(*sprite).draw(pos, rotation);
 }
 
 void Entity::move(Vec2 adjustBy)
@@ -57,4 +57,14 @@ void Entity::move(Vec2 adjustBy)
 Vec2 Entity::getPos()
 {
 	return pos;
+}
+
+float Entity::getRotation()
+{
+	return rotation;
+}
+
+void Entity::setRotation(float newRotation)
+{
+	rotation = newRotation;
 }

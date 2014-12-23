@@ -63,9 +63,45 @@ void Texture::draw(Vec2 pos)
 	destRect.w = (int)dimensions.x;
 	destRect.h = (int)dimensions.y;
 
-	// Here we are telling the renderer to copy the texture memory to our screen,
+	// Here we are telling the renderer to copy the texture to our screen,
 	// at the position of the rectangle we specify
 	SDL_RenderCopy(currentRenderer, texture, NULL, &destRect);
+}
+
+void Texture::draw(Vec2 pos, float rotation)
+{
+	SDL_Rect destRect;
+
+	destRect.x = (int)pos.x;
+	destRect.y = (int)pos.y;
+
+	// Query the texture to get its original width and height
+	destRect.w = (int)dimensions.x;
+	destRect.h = (int)dimensions.y;
+
+	// Here we are telling the renderer to copy the texture to our screen,
+	// at the position and rotation we specify
+	SDL_RenderCopyEx(currentRenderer, texture, NULL, &destRect, rotation, NULL, SDL_FLIP_NONE);
+}
+
+void Texture::draw(Vec2 pos, float rotation, Vec2 pivot)
+{
+	SDL_Rect destRect;
+
+	destRect.x = (int)pos.x;
+	destRect.y = (int)pos.y;
+
+	// Query the texture to get its original width and height
+	destRect.w = (int)dimensions.x;
+	destRect.h = (int)dimensions.y;
+	
+	SDL_Point pivotPoint;
+	pivotPoint.x = (int)pivot.x;
+	pivotPoint.y = (int)pivot.y;
+
+	// Here we are telling the renderer to copy the texture to our screen,
+	// at the position and rotation we specify
+	SDL_RenderCopyEx(currentRenderer, texture, NULL, &destRect, rotation, &pivotPoint, SDL_FLIP_NONE);
 }
 
 Vec2 Texture::getDimensions()
