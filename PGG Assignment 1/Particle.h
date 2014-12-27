@@ -18,7 +18,15 @@ public:
 	*/
 	Particle(Texture*,Vec2,float,float,Colour,float);
 	
+	/**
+	@brief Updates a Particle
+	
+	@param
+	*/
 	void update(float);
+
+	bool hasExpired();
+
 private:
 	Colour colour;
 	float lifespan;

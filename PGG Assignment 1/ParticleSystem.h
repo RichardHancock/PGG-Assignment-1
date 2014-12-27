@@ -12,6 +12,11 @@ public:
 	ParticleSystem(Vec2 emitterPos, std::vector<Texture*> textures, int particlesPerTickRate);
 	~ParticleSystem();
 
+	/**
+	@brief Update all particles in the system
+	
+	@param
+	*/
 	void update(float dt);
 	void generateNewParticles();
 

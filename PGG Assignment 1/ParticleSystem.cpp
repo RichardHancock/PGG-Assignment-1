@@ -8,10 +8,30 @@ ParticleSystem::ParticleSystem(Vec2 emitterPos, std::vector<Texture*> textures, 
 
 void ParticleSystem::update(float dt)
 {
+	std::vector<int> particlesToErase;
+
+	
 	for (int i = 0; i < particles.size(); i++)
 	{
 		particles[i].update(dt);
+
+		// Check if the particle has exceeded its lifespan
+		if (particles[i].hasExpired())
+		{
+			// Add the particle to a vector as deleting it in this loop would get messy.
+			particlesToErase.push_back(i);
+		}
 	}
+
+	// Now delete the destroyed particles
+	for (int i = 0; i < particlesToErase.size(); i++)
+	{
+		particles.erase(particles.begin() + particlesToErase[i]);
+	}
+
+	particlesToErase.clear();
+
+
 
 	//Maybe put generateNewParticles here but might be better to have for external calls only
 }
