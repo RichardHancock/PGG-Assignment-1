@@ -3,11 +3,20 @@
 
 #pragma once
 
-class Particle : EntityWithMotion
+class Particle : public EntityWithMotion
 {
 public:
-	Particle(Texture*,Vec2,Colour,float);
-	~Particle();
+	/**
+	@brief Create a Particle
+	
+	@param Texture* - Pointer to texture for the particle to display
+	@param Vec2 - Particles position
+	@param float - The maximum velocity
+	@param float - The maximum rotation speed
+	@param Colour - Colour/Tint to apply (UNTESTED)
+	@param float - Lifespan of the particle (Almost in seconds)
+	*/
+	Particle(Texture*,Vec2,float,float,Colour,float);
 	
 	void update(float);
 private:

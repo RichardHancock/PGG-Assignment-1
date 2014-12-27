@@ -2,21 +2,17 @@
 
 #pragma once
 
-class EntityWithMotion : Entity
+class EntityWithMotion : public Entity
 {
 public:
-	EntityWithMotion();
+	EntityWithMotion(Texture*, Vec2, float, float);
 	virtual void update(float) = 0;
 
-	Vec2 getVelocity() { return velocity; }
+	Vec2 getVelocity();
+	void setVelocity(Vec2 velocity);
 	
-	void setVelocity(Vec2 newVelocity) 
-	{ 
-		velocity = newVelocity; 
-	}
-
-	
-	
+	float getRotationSpeed();
+	void setRotationSpeed(float rotationSpeed);
 protected:
 	Vec2 velocity;
 	float maxVelocity;

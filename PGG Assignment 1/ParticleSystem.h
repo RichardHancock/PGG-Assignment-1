@@ -9,10 +9,11 @@
 class ParticleSystem
 {
 public:
-	ParticleSystem();
+	ParticleSystem(Vec2 emitterPos, std::vector<Texture*> textures, int particlesPerTickRate);
 	~ParticleSystem();
 
 	void update(float dt);
+	void generateNewParticles();
 
 private:
 	/// Position of the Particle Emitter
@@ -20,7 +21,7 @@ private:
 	/// Vector containing all the particles in the system
 	std::vector<Particle> particles;
 	/// Contains all available textures for the particles to use
-	std::vector<Texture> textures;
+	std::vector<Texture*> textures;
 	/// How many particles will be created every tick
 	int particlesPerTickRate;
 };
