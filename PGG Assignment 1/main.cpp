@@ -2,13 +2,17 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <iostream>
+#include <vector>
+#include <string.h>
+
 #include "Texture.h"
 #include "Entity.h"
 #include "Bullet.h"
-#include <vector>
 #include "PlayerShip.h"
 #include "Background.h"
 #include "Utility.h"
+#include "ParticleSystem.h"
+
 
 int init();
 int main(int, char*[]);
@@ -32,7 +36,7 @@ int init()
 	if (TTF_Init() < 0) 
 	{ 
 		status = -1;
-		std::cout << "SDL_ttf init failed: " << TTF_GetError << std::endl;
+		Utility::log(Utility::E,"SDL_ttf init failed: " + std::string(TTF_GetError()));
 	}
 
 	window = SDL_CreateWindow("SDL Practice",
@@ -46,7 +50,7 @@ int init()
 	
 	if (status == -1)
 	{
-		std::cout << "Error occurred in init: " << SDL_GetError() << std::endl;
+		Utility::log(Utility::E, "Error occurred in init: " + std::string(SDL_GetError()));
 	}
 
 	Utility::randomInit();
@@ -57,24 +61,30 @@ int init()
 int main(int argc, char *argv[])
 {
 	
-	if (init() == -1)
-	{
-		return -1;
-	}
+	if (init() == -1) { return -1; }
 
+	// Resource Loading (Encapsulate later)
 	Texture* bulletSprite = new Texture("laserRed01.png", renderer);
 
 	Texture* t_player = new Texture("ship.png", renderer);
 	PlayerShip* player = new PlayerShip(t_player, Vec2(75, 330), bulletSprite);
 	
+		//Particles
+	Texture* particle = new Texture("emitterTest.png", renderer);
+	std::vector<Texture*> particleTextures;
+	particleTextures.push_back(particle);
+	ParticleSystem particleManager(Vec2(240,240), particleTextures, 1);
+
+	particleManager.generateNewParticles();
+
 	Texture* t_background = new Texture("download.bmp", renderer);
 	Background* background = new Background(t_background, Vec2(0,0), WIN_HEIGHT, WIN_WIDTH);
 	Background* background2 = new Background(t_background, Vec2(0, -480), WIN_HEIGHT, WIN_WIDTH);
 	
 	TTF_Font *font = TTF_OpenFont("OpenSans-Regular.ttf", 16);
-	if (!font) {
-		printf("TTF_OpenFont: %s\n", TTF_GetError());
-		// handle error
+	if (!font) 
+	{
+		Utility::log(Utility::E,"TTF_OpenFont: " + std::string(TTF_GetError()));
 	}
 
 	Vec2 mouse(0, 0);
@@ -84,6 +94,7 @@ int main(int argc, char *argv[])
 	bool quit = false;
 	SDL_Event e;
 
+	//Main Loop
 	while (!quit)
 	{
 		while (SDL_PollEvent(&e))
@@ -95,8 +106,8 @@ int main(int argc, char *argv[])
 				break;
 
 			case SDL_MOUSEMOTION:
-				mouse.x = e.motion.x;
-				mouse.y = e.motion.y;
+				mouse.x = (float)e.motion.x;
+				mouse.y = (float)e.motion.y;
 				player->updateMouse(mouse);
 			
 			default:
@@ -112,16 +123,15 @@ int main(int argc, char *argv[])
 		}
 
 
-		// Update our world
-		// (nothing to update for now)
+		// Update
 		unsigned int current = SDL_GetTicks();
 		float dt = (float)(current - lastTime) / 1000.0f;
 		lastTime = current;
-
+		
 		player->update(dt);
 		background->update(dt);
 		background2->update(dt);
-		
+		particleManager.update(dt);
 
 		//Render
 		SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -131,7 +141,7 @@ int main(int argc, char *argv[])
 		background2->render();
 
 		player->render();
-		
+		particleManager.render();
 
 		//Text Test
 		SDL_Colour testColour;

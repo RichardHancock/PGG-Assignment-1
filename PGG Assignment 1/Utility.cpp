@@ -2,7 +2,7 @@
 
 void Utility::randomInit()
 {
-	srand(time(NULL));
+	srand((unsigned int) time(NULL));
 }
 
 int Utility::randomInt(int min, int max)
@@ -10,7 +10,7 @@ int Utility::randomInt(int min, int max)
 	return rand() % (max - min + 1) + min;
 }
 
-void Utility::log(LogType type, char* message)
+void Utility::log(LogType type, std::string message)
 {
 	//Get current time
 	time_t currentTime = time(NULL);
@@ -39,5 +39,5 @@ void Utility::log(LogType type, char* message)
 		break;
 	}
 
-	std::cout << message << std::endl;
+	std::cout << message.c_str() << std::endl;
 }

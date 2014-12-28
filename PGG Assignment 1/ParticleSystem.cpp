@@ -6,12 +6,17 @@ ParticleSystem::ParticleSystem(Vec2 emitterPos, std::vector<Texture*> textures, 
 	
 }
 
+ParticleSystem::~ParticleSystem()
+{
+	particles.clear();
+	textures.clear();
+}
+
 void ParticleSystem::update(float dt)
 {
 	std::vector<int> particlesToErase;
-
 	
-	for (int i = 0; i < particles.size(); i++)
+	for (unsigned int i = 0; i < particles.size(); i++)
 	{
 		particles[i].update(dt);
 
@@ -24,7 +29,7 @@ void ParticleSystem::update(float dt)
 	}
 
 	// Now delete the destroyed particles
-	for (int i = 0; i < particlesToErase.size(); i++)
+	for (unsigned int i = 0; i < particlesToErase.size(); i++)
 	{
 		particles.erase(particles.begin() + particlesToErase[i]);
 	}
@@ -36,8 +41,16 @@ void ParticleSystem::update(float dt)
 	//Maybe put generateNewParticles here but might be better to have for external calls only
 }
 
+void ParticleSystem::render()
+{
+	for (unsigned int i = 0; i < particles.size(); i++)
+	{
+		particles[i].render();
+	}
+}
+
 void ParticleSystem::generateNewParticles()
 {
-	Particle particle(textures[0], Vec2(200,200), 10, 10, Colour(1,1,1), 100);
+	Particle particle(textures[0], Vec2(200,200), 10, 10, Colour(1,1,1), 10);
 	particles.push_back(particle);
 }

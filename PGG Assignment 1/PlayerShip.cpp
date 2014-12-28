@@ -120,7 +120,7 @@ void PlayerShip::update(float dt)
 	
 	if (mouseEnabled)
 	{
-		int mouseOffsetLeft = (pos.x + (getDimensions().x / 2)) - 20;
+		int mouseOffsetLeft = (int)(pos.x + (getDimensions().x / 2)) - 20;
 		int mouseOffsetRight = mouseOffsetLeft + 40;
 
 		if (mouse.x < mouseOffsetLeft)
@@ -139,7 +139,7 @@ void PlayerShip::update(float dt)
 
 	move(Vec2((velocityX * dt), 0));
 
-	for (int i = 0; i < bullets.size(); i++)
+	for (unsigned int i = 0; i < bullets.size(); i++)
 	{
 		bullets[i]->update(dt);
 	}
@@ -152,7 +152,7 @@ void PlayerShip::render()
 	(*sprite).draw(pos);
 
 	//Render Bullets
-	for (int i = 0; i < bullets.size(); i++)
+	for (unsigned int i = 0; i < bullets.size(); i++)
 	{
 		bullets[i]->render();
 		if (bullets[i]->getPos().y < -30)

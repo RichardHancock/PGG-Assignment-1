@@ -9,7 +9,15 @@
 class ParticleSystem
 {
 public:
+	/**
+	@brief Creates a Particle System
+	
+	@param Vec2 - Position of the emitter
+	@param std::vector<Texture*> - Array of texture*
+	@param int - How many particles are created each tick
+	*/
 	ParticleSystem(Vec2 emitterPos, std::vector<Texture*> textures, int particlesPerTickRate);
+
 	~ParticleSystem();
 
 	/**

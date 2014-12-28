@@ -39,7 +39,7 @@ namespace Utility
 	@param LogType - Type of message E: Error, W: Warning, I: Info
 	@param char* - The message to log
 	*/
-	void log(LogType, char*);
+	void log(LogType, std::string);
 
 }
 
