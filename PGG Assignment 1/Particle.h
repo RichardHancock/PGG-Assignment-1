@@ -25,6 +25,8 @@ public:
 	*/
 	void update(float);
 
+	void render();
+
 	bool hasExpired();
 
 private:

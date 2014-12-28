@@ -13,6 +13,11 @@ void Particle::update(float dt)
 	lifespan -= dt;
 }
 
+void Particle::render()
+{
+	sprite->draw(pos, rotation);
+}
+
 bool Particle::hasExpired()
 {
 	if(lifespan <= 0.00f)

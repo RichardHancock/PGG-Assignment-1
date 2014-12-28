@@ -19,7 +19,7 @@ public:
 	*/
 	void update(float dt);
 	void generateNewParticles();
-
+	void render();
 private:
 	/// Position of the Particle Emitter
 	Vec2 emitterPos;

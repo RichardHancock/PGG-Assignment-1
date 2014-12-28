@@ -9,7 +9,6 @@ public:
 	Entity(Texture*,Vec2);
 	~Entity();
 	void Entity::render();
-	void Entity::renderEx();
 	void Entity::move(Vec2);
 	Vec2 Entity::getPos();
 	Vec2 Entity::getDimensions();

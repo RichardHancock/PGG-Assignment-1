@@ -2,9 +2,9 @@
 #include <SDL_image.h>
 #include <string>
 #include "Vec2.h"
+#include "Utility.h"
 
-#ifndef TEXTURE_H
-#define TEXTURE_H
+#pragma once
 
 class Texture
 {
@@ -18,6 +18,7 @@ public:
 	void Texture::draw(Vec2 pos, float rotation, Vec2 pivot);
 	bool Texture::load(std::string, SDL_Renderer*);
 	bool Texture::load(SDL_Surface*, SDL_Renderer*);
+	void Texture::setColourTint(Colour colour);
 	SDL_Renderer* Texture::getRenderer();
 private:
 	Vec2 dimensions;
@@ -26,4 +27,3 @@ private:
 	bool Texture::createTexture(SDL_Surface&);
 };
 
-#endif
