@@ -12,9 +12,12 @@ int Utility::randomInt(int min, int max)
 
 float Utility::randomFloat(float min, float max)
 {
-	// From http://stackoverflow.com/a/686376
+	// From http://stackoverflow.com/a/5289624
 	// Could have used C++11 for random floats, but I think this is adequate.
-	return min + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (max - min)));
+	float random = ((float)rand()) / (float)RAND_MAX;
+	float diff = max - min;
+	float r = random * diff;
+	return min + r;
 }
 
 void Utility::log(LogType type, std::string message)

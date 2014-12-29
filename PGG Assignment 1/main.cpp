@@ -95,8 +95,10 @@ int main(int argc, char *argv[])
 	bool quit = false;
 	SDL_Event e;
 
-	std::cout << std::setprecision(10) << "1 - 10: " << Utility::randomFloat(1.0, 5.0);
-	std::cout << "1 - 10: " << Utility::randomInt(1, 12);
+	for (int i = 0; i < 100; i++){
+		std::cout << std::setprecision(5) << "1 - 10: " << Utility::randomFloat(1.0, 10.0) << std::endl;
+	}
+	
 
 	//Main Loop
 	while (!quit)
