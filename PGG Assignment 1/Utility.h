@@ -16,7 +16,7 @@ namespace Utility
 	void randomInit();
 
 	/**
-	@brief Generate a random number between min and max
+	@brief Generate a random integer number between min and max
 
 	@param int - Minimum Number for the range
 	@param int - Maximum Number for the range
@@ -24,7 +24,18 @@ namespace Utility
 	*/
 	int randomInt(int min, int max);
 
+	/**
+	@brief Generate a random float number between min and max
 
+	@param float - Minimum Number for the range
+	@param float - Maximum Number for the range
+	@return float - Random float between min and max
+	*/
+	float randomFloat(float min, float max);
+
+	/**
+	@brief A type of log message
+	*/
 	enum LogType
 	{
 		E, //< Error

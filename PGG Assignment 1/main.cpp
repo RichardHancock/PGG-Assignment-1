@@ -2,6 +2,7 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <iostream>
+#include <iomanip>
 #include <vector>
 #include <string.h>
 
@@ -93,6 +94,9 @@ int main(int argc, char *argv[])
 
 	bool quit = false;
 	SDL_Event e;
+
+	std::cout << std::setprecision(10) << "1 - 10: " << Utility::randomFloat(1.0, 5.0);
+	std::cout << "1 - 10: " << Utility::randomInt(1, 12);
 
 	//Main Loop
 	while (!quit)
