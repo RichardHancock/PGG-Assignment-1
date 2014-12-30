@@ -100,6 +100,19 @@
     <ClInclude Include="Utility.h" />
     <ClInclude Include="Vec2.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="res\levels\Level 1.lvl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\images\emitterTest.png" />
+    <Image Include="res\images\emitterTestSmall.png" />
+    <Image Include="res\images\laserRed01.png" />
+    <Image Include="res\images\ship.png" />
+    <Image Include="res\images\spaceBackground.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="res\fonts\OpenSans-Regular.ttf" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

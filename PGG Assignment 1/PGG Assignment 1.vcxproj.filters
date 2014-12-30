@@ -12,6 +12,16 @@
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Resource Files\images">
+      <UniqueIdentifier>{913a635e-ea87-41e7-8b3f-079fa2c030a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\fonts">
+      <UniqueIdentifier>{53b12c1a-2632-4301-ba1b-60be7cb01213}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\levels">
+      <UniqueIdentifier>{392496df-57c5-44df-afbd-322518af6c30}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -89,5 +99,32 @@
     <ClInclude Include="EntityWithMotion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\images\laserRed01.png">
+      <Filter>Resource Files\images</Filter>
+    </Image>
+    <Image Include="res\images\emitterTest.png">
+      <Filter>Resource Files\images</Filter>
+    </Image>
+    <Image Include="res\images\emitterTestSmall.png">
+      <Filter>Resource Files\images</Filter>
+    </Image>
+    <Image Include="res\images\ship.png">
+      <Filter>Resource Files\images</Filter>
+    </Image>
+    <Image Include="res\images\spaceBackground.bmp">
+      <Filter>Resource Files\images</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\levels\Level 1.lvl">
+      <Filter>Resource Files\levels</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="res\fonts\OpenSans-Regular.ttf">
+      <Filter>Resource Files\fonts</Filter>
+    </Font>
   </ItemGroup>
 </Project>

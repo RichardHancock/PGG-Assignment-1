@@ -65,24 +65,24 @@ int main(int argc, char *argv[])
 	if (init() == -1) { return -1; }
 
 	// Resource Loading (Encapsulate later)
-	Texture* bulletSprite = new Texture("laserRed01.png", renderer);
+	Texture* bulletSprite = new Texture("res/images/laserRed01.png", renderer);
 
-	Texture* t_player = new Texture("ship.png", renderer);
+	Texture* t_player = new Texture("res/images/ship.png", renderer);
 	PlayerShip* player = new PlayerShip(t_player, Vec2(75, 330), bulletSprite);
 	
 		//Particles
-	Texture* particle = new Texture("emitterTestSmall.png", renderer);
+	Texture* particle = new Texture("res/images/emitterTestSmall.png", renderer);
 	std::vector<Texture*> particleTextures;
 	particleTextures.push_back(particle);
 	ParticleSystem particleManager(Vec2(240, 400), particleTextures, 5, Vec2(0, -10));
 
 	particleManager.generateNewParticles();
 
-	Texture* t_background = new Texture("download.bmp", renderer);
+	Texture* t_background = new Texture("res/images/spaceBackground.bmp", renderer);
 	Background* background = new Background(t_background, Vec2(0,0), WIN_HEIGHT, WIN_WIDTH);
 	Background* background2 = new Background(t_background, Vec2(0, -480), WIN_HEIGHT, WIN_WIDTH);
 	
-	TTF_Font *font = TTF_OpenFont("OpenSans-Regular.ttf", 16);
+	TTF_Font *font = TTF_OpenFont("res/fonts/OpenSans-Regular.ttf", 16);
 	if (!font) 
 	{
 		Utility::log(Utility::E,"TTF_OpenFont: " + std::string(TTF_GetError()));

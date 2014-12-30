@@ -1,6 +1,6 @@
 //Height 
 //Width
-//Data
+//Background image
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 0
 0
@@ -9,6 +9,8 @@
 0 8
 1 1
 
+//Key Not read by loader
 //0 blank
 //1 basic block
 //8 spawn
+//9 finish
