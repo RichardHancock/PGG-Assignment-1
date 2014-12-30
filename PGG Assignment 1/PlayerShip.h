@@ -1,10 +1,9 @@
 #include <vector>
+
 #include "Ship.h"
 #include "Bullet.h"
 
-
-#ifndef PLAYERSHIP_H
-#define PLAYERSHIP_H
+#pragma once
 
 class PlayerShip : public Ship
 {
@@ -33,5 +32,3 @@ private:
 	std::vector<Bullet*> bullets;
 	Texture* bulletSprite;
 };
-
-#endif

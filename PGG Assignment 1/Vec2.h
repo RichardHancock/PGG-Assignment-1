@@ -2,6 +2,9 @@
 
 #pragma once
 
+/**
+@brief Stores a 2D Vector or Position, as floats
+*/
 class Vec2
 {
 public:

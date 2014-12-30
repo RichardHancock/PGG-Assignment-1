@@ -71,10 +71,10 @@ int main(int argc, char *argv[])
 	PlayerShip* player = new PlayerShip(t_player, Vec2(75, 330), bulletSprite);
 	
 		//Particles
-	Texture* particle = new Texture("emitterTest.png", renderer);
+	Texture* particle = new Texture("emitterTestSmall.png", renderer);
 	std::vector<Texture*> particleTextures;
 	particleTextures.push_back(particle);
-	ParticleSystem particleManager(Vec2(240,240), particleTextures, 1);
+	ParticleSystem particleManager(Vec2(240, 400), particleTextures, 5, Vec2(0, -10));
 
 	particleManager.generateNewParticles();
 
@@ -94,11 +94,6 @@ int main(int argc, char *argv[])
 
 	bool quit = false;
 	SDL_Event e;
-
-	for (int i = 0; i < 100; i++){
-		std::cout << std::setprecision(5) << "1 - 10: " << Utility::randomFloat(1.0, 10.0) << std::endl;
-	}
-	
 
 	//Main Loop
 	while (!quit)

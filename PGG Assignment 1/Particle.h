@@ -3,6 +3,9 @@
 
 #pragma once
 
+/**
+@brief A particle only created by a ParticleSystem
+*/
 class Particle : public EntityWithMotion
 {
 public:
@@ -21,15 +24,24 @@ public:
 	/**
 	@brief Updates a Particle
 	
-	@param
+	Applies velocity and lowers it's lifespan
+	@param float - Time since last frame
 	*/
 	void update(float);
 
+	/// Draw the particle
 	void render();
 
+	/**
+	@brief Checks if the lifespan of the particle has run out
+	
+	@return bool - True if expired
+	*/
 	bool hasExpired();
 
 private:
+	/// Tint to apply to the texture
 	Colour colour;
+	/// How long the particle will exist (Almost in seconds)
 	float lifespan;
 };

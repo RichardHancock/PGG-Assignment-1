@@ -1,8 +1,8 @@
 #include "Texture.h"
 #include "Vec2.h"
 
-#ifndef ENTITY_H
-#define ENTITY_H
+#pragma once
+
 class Entity
 {
 public:
@@ -24,5 +24,3 @@ protected:
 	float rotation;
 
 };
-
-#endif

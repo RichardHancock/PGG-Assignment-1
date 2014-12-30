@@ -1,6 +1,7 @@
 #include <SDL.h>
 #include <iostream>
 
+#pragma once
 
 class Game
 {

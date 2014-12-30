@@ -1,5 +1,6 @@
 #include "Entity.h"
 
+#pragma once
 
 class Ship : public Entity
 {

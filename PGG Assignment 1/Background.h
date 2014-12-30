@@ -1,7 +1,6 @@
 #include "Entity.h"
 
-#ifndef BACKGROUND_H
-#define BACKGROUND_H
+#pragma once
 
 class Background : public Entity
 {
@@ -13,5 +12,3 @@ private:
 	const int SCREEN_WIDTH;
 	const float scrollSpeed = 50;
 };
-
-#endif

@@ -1,5 +1,6 @@
-#include "Entity.h"
 #include <iostream>
+
+#include "Entity.h"
 
 Entity::Entity(Texture* inputTexture, Vec2 inputPos)
 {

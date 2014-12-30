@@ -5,6 +5,9 @@
 
 #pragma once
 
+/**
+@brief An assortment of useful functions (random numbers, logging) that don't fit elsewhere.
+*/
 namespace Utility
 {
 	/**

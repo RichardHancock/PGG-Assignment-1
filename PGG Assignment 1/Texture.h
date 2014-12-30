@@ -1,6 +1,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <string>
+
 #include "Vec2.h"
 #include "Utility.h"
 

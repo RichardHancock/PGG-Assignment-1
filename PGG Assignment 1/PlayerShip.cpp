@@ -1,5 +1,4 @@
 #include "PlayerShip.h"
-#include <iostream>
 
 PlayerShip::PlayerShip(Texture* texture, Vec2 pos, Texture*bulletTexture)
 	:Ship(texture, pos), bulletSprite(bulletTexture)

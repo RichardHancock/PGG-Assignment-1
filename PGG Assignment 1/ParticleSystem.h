@@ -6,6 +6,9 @@
 
 #pragma once
 
+/**
+@brief An interface to create, manage and destroy particles for one emitter
+*/
 class ParticleSystem
 {
 public:
@@ -16,17 +19,29 @@ public:
 	@param std::vector<Texture*> - Array of texture*
 	@param int - How many particles are created each tick
 	*/
-	ParticleSystem(Vec2 emitterPos, std::vector<Texture*> textures, int particlesPerTickRate);
-
+	ParticleSystem(Vec2 emitterPos, std::vector<Texture*> textures, int particlesPerTickRate, Vec2 direction);
+	
+	/// Clears vectors the particle system created
 	~ParticleSystem();
 
 	/**
 	@brief Update all particles in the system
 	
-	@param
+	Deletes expired particles, and runs update on all particles.
+	@param float - Time since last frame
 	*/
 	void update(float dt);
+
+	/**
+	@brief Generate some new particles in the system
+
+	Amount is dictated by the "particlesPerTickRate" passed in through the constructor
+	*/
 	void generateNewParticles();
+
+	/**
+	@brief Draws all particles
+	*/
 	void render();
 private:
 	/// Position of the Particle Emitter
@@ -37,4 +52,6 @@ private:
 	std::vector<Texture*> textures;
 	/// How many particles will be created every tick
 	int particlesPerTickRate;
+	/// Direction to emit particles
+	Vec2 direction;
 };

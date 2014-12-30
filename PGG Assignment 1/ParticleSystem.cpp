@@ -1,7 +1,7 @@
 #include "ParticleSystem.h"
 
-ParticleSystem::ParticleSystem(Vec2 emitterPos, std::vector<Texture*> textures, int particlesPerTickRate) 
-	: emitterPos(emitterPos), textures(textures), particlesPerTickRate(particlesPerTickRate)
+ParticleSystem::ParticleSystem(Vec2 emitterPos, std::vector<Texture*> textures, int particlesPerTickRate, Vec2 direction) 
+	: emitterPos(emitterPos), textures(textures), particlesPerTickRate(particlesPerTickRate), direction(direction)
 {
 	
 }
@@ -31,7 +31,7 @@ void ParticleSystem::update(float dt)
 	// Now delete the destroyed particles
 	for (unsigned int i = 0; i < particlesToErase.size(); i++)
 	{
-		particles.erase(particles.begin() + particlesToErase[i]);
+		particles.erase(particles.begin() + (particlesToErase[i] - i));
 	}
 
 	particlesToErase.clear();
@@ -51,6 +51,14 @@ void ParticleSystem::render()
 
 void ParticleSystem::generateNewParticles()
 {
-	Particle particle(textures[0], Vec2(200,200), 10, 10, Colour(1,1,1), 10);
-	particles.push_back(particle);
+	for (int i = 0; i < particlesPerTickRate; i++)
+	{
+		Particle particle(textures[0], emitterPos, 10, 10, Colour(255, 0, 0), 10);
+		Vec2 randomVelocity;
+		randomVelocity.x = Utility::randomFloat(direction.x - 1, direction.x + 1);
+		randomVelocity.y = Utility::randomFloat(direction.y - 1, direction.y + 1);
+		std::cout << randomVelocity << std::endl;
+		particle.setVelocity(randomVelocity);
+		particles.push_back(particle);
+	}
 }
