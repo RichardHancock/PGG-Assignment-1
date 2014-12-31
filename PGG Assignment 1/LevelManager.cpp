@@ -18,6 +18,9 @@ bool LevelManager::loadFile(std::string filename, SDL_Renderer* renderer)
 		Utility::log(Utility::E, filename + "failed to load");
 		return false;
 	}
+	//Get level name
+	std::string levelID;
+	getline(levelFile, levelID);
 
 	int levelHeight, levelWidth;
 	std::string bgfilename;
@@ -29,19 +32,32 @@ bool LevelManager::loadFile(std::string filename, SDL_Renderer* renderer)
 	//Load all tile textures
 	std::map<TileType, TileProperties> tileProperties;
 	tileProperties = loadTileTextures(renderer, levelFile);
-
+	TileProperties debuging = tileProperties[block];
 	//Load tile data
-	std::vector<Tile*> tiles;
+	//Create a multidimensional vector
+	std::vector<std::vector<Tile*>> tiles;
+	createTileVector(tiles, levelHeight, levelWidth);
 
 	for (int h = 0; h < levelHeight; h++)
 	{
 		for (int w = 0; w < levelWidth; w++)
 		{
-			createTile(tileProperties, levelFile, Vec2(w,h));
+			tiles[w][h] = createTile(tileProperties, levelFile, Vec2(w,h));
 		}
 	}
 	
+	//Create level from the loaded data
+	Level* level;
+	level = new Level(tiles, background, levelWidth, levelHeight);
+
+	levels[levelID] = level;
+
 	return true;
+}
+
+Level* LevelManager::getLevel(std::string name) 
+{
+	return levels[name];
 }
 
 std::map<LevelManager::TileType, LevelManager::TileProperties> LevelManager::loadTileTextures(
@@ -62,13 +78,17 @@ std::map<LevelManager::TileType, LevelManager::TileProperties> LevelManager::loa
 		TileType tileType = (TileType)type;
 		
 		//Texture
-		Texture* texture = NULL;
+		Texture* texture;
 		std::string textureFilename;
 		file >> textureFilename;
 		//If a path was provided, load texture
 		if (textureFilename != "0")
 		{
-			Texture* texture = new Texture(textureFilename, renderer);
+			texture = new Texture(textureFilename, renderer);
+		}
+		else
+		{
+			texture = NULL;
 		}
 		
 		currentTileProperties.texture = texture;
@@ -117,22 +137,14 @@ Tile* LevelManager::createTile(std::map<TileType, TileProperties> &tilePropertie
 		tile = new Tile(properties.texture, gridPos);
 	}
 	
+	return tile;
+}
 
-	/*
-	switch (currentTile)
+void LevelManager::createTileVector(std::vector<std::vector<Tile*>> &tiles, int levelHeight, int levelWidth)
+{
+	tiles.resize(levelWidth);
+	for (int x = 0; x < levelWidth; x++)
 	{
-	
-	case block:
-		
-		break;
-	case start:
-	case finish:
-
-	default:
-		// An invalid tileType was provided
-		Utility::log(Utility::E, "Invalid Tile Type specified " + std::to_string(tempCurrentTile));
-		return NULL;
-		break;
+		tiles[x].resize(levelHeight);
 	}
-	*/
 }

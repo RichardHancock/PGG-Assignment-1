@@ -2,6 +2,7 @@
 #include <vector>
 
 #include "TileWithCollision.h"
+#include "Level.h"
 
 #pragma once
 
@@ -27,12 +28,18 @@ private:
 
 public:
 	LevelManager(std::string filename, SDL_Renderer* renderer);
-	~LevelManager();
+	
 
 	bool loadFile(std::string filename, SDL_Renderer* renderer);
 
+	Level* getLevel(std::string name);
+
 private:
-	const Vec2 TILE_DIMENSIONS = { 16, 16 };
+	const Vec2 TILE_DIMENSIONS = { 32, 32 };
+
+	std::map<std::string, Level*> levels;
+
+	void createTileVector(std::vector<std::vector<Tile*>> &tiles, int levelHeight, int levelWidth);
 
 	Tile* createTile(std::map<TileType, TileProperties> &textures, std::ifstream &file, Vec2 gridPos);
 

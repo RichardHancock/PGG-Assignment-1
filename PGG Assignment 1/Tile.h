@@ -8,6 +8,8 @@ public:
 	Tile(Texture*, Vec2);
 	
 	void update(float dt);
+
+	void render(SDL_Rect* camera);
 private:
 	
 };

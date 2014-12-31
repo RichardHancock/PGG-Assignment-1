@@ -1,6 +1,7 @@
+Level 1
 15
 30
-res/images/spaceBackground.png
+res/images/spaceBackground.bmp
 4
 0 0 0
 1 res/images/metal.png 1
@@ -19,8 +20,8 @@ res/images/spaceBackground.png
 0 0 0 2 0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	3 0	0 1
 1 1 1 1 1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1
 1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1
-1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1
-1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1
+0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0
+0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0
 //Key Not read by loader
 //Line 1 = Height
 //Width

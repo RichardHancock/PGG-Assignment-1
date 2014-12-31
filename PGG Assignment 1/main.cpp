@@ -13,7 +13,7 @@
 #include "Background.h"
 #include "Utility.h"
 #include "ParticleSystem.h"
-
+#include "LevelManager.h"
 
 int init();
 int main(int, char*[]);
@@ -78,10 +78,12 @@ int main(int argc, char *argv[])
 
 	particleManager.generateNewParticles();
 
-	Texture* t_background = new Texture("res/images/spaceBackground.bmp", renderer);
-	Background* background = new Background(t_background, Vec2(0,0), WIN_HEIGHT, WIN_WIDTH);
-	Background* background2 = new Background(t_background, Vec2(0, -480), WIN_HEIGHT, WIN_WIDTH);
+	//Texture* t_background = new Texture("res/images/spaceBackground.bmp", renderer);
+	//Background* background = new Background(t_background, Vec2(0,0), WIN_HEIGHT, WIN_WIDTH);
+	//Background* background2 = new Background(t_background, Vec2(0, -480), WIN_HEIGHT, WIN_WIDTH);
 	
+	LevelManager levels("res/levels/Level 1.lvl", renderer);
+
 	TTF_Font *font = TTF_OpenFont("res/fonts/OpenSans-Regular.ttf", 16);
 	if (!font) 
 	{
@@ -123,26 +125,34 @@ int main(int argc, char *argv[])
 			}
 		}
 
-
 		// Update
 		unsigned int current = SDL_GetTicks();
 		float dt = (float)(current - lastTime) / 1000.0f;
 		lastTime = current;
 		
-		player->update(dt);
-		background->update(dt);
-		background2->update(dt);
+		SDL_Rect camera;
+		camera.x = 0;
+		camera.y = 0;
+		camera.h = WIN_HEIGHT;
+		camera.w = WIN_WIDTH;
+
+		//player->update(dt);
+		//background->update(dt);
+		//background2->update(dt);
 		particleManager.update(dt);
+		levels.getLevel("Level 1")->update(dt);
 
 		//Render
 		SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 		SDL_RenderClear(renderer);
 		
-		background->render();             
-		background2->render();
-
-		player->render();
+		//background->render();             
+		//background2->render();
+		
+		levels.getLevel("Level 1")->render(&camera);
+		//player->render();
 		particleManager.render();
+		
 
 		//Text Test
 		SDL_Colour testColour;
@@ -166,10 +176,10 @@ int main(int argc, char *argv[])
 	
 	// Delete all classes
 	delete player;
-	delete background;
-	delete background2;
+	//delete background;
+	//delete background2;
 
-	delete t_background;
+	//delete t_background;
 	delete t_player;
 	delete bulletSprite;
 	TTF_CloseFont(font);
