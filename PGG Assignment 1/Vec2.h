@@ -34,6 +34,18 @@ public:
 		y -= b.y;
 		return this;
 	}
+	Vec2* operator *= (Vec2 b)
+	{
+		x *= b.x;
+		y *= b.y;
+		return this;
+	}
+	Vec2* operator /= (Vec2 b)
+	{
+		x /= b.x;
+		y /= b.y;
+		return this;
+	}
 
 	inline Vec2 operator + (Vec2 b)
 	{

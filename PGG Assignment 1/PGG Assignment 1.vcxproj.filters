@@ -61,6 +61,9 @@
     <ClCompile Include="Utility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LevelManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Texture.h">
@@ -97,6 +100,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EntityWithMotion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TileWithCollision.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
