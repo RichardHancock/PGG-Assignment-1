@@ -1,7 +1,7 @@
 #include <map>
 #include <vector>
 
-#include "Tile.h"
+#include "TileWithCollision.h"
 
 #pragma once
 
@@ -19,10 +19,10 @@ private:
 		finish,
 	};
 
-	struct TileTexture
+	struct TileProperties
 	{
-		TileType type;
-		Texture* texture;
+		Texture* texture; //< Can be null for no texture
+		bool hasCollision;
 	};
 
 public:
@@ -30,10 +30,12 @@ public:
 	~LevelManager();
 
 	bool loadFile(std::string filename, SDL_Renderer* renderer);
-	Tile* LevelManager::createTile(std::map<TileType, Texture*> &textures, std::ifstream &file, Vec2 gridPos);
 
 private:
-	
 	const Vec2 TILE_DIMENSIONS = { 16, 16 };
+
+	Tile* createTile(std::map<TileType, TileProperties> &textures, std::ifstream &file, Vec2 gridPos);
+
+	std::map<TileType, TileProperties> loadTileTextures(SDL_Renderer* renderer, std::ifstream &file);
 
 };

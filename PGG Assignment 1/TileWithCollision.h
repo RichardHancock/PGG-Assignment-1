@@ -2,7 +2,7 @@
 
 #pragma once
 
-class TileWithCollision : Tile
+class TileWithCollision : public Tile
 {
 public:
 	TileWithCollision(Texture*, Vec2);

@@ -9,12 +9,6 @@ LevelManager::LevelManager(std::string filename, SDL_Renderer* renderer)
 	loadFile(filename, renderer);
 }
 
-struct wouldntNeedThisInPython //Never thought I would miss dictionary types
-{
-	//Because STL map
-	//bool operator()(const char* s1)
-};
-
 bool LevelManager::loadFile(std::string filename, SDL_Renderer* renderer)
 {
 	std::ifstream levelFile;
@@ -33,31 +27,8 @@ bool LevelManager::loadFile(std::string filename, SDL_Renderer* renderer)
 	Texture* background = new Texture(bgfilename, renderer);
 
 	//Load all tile textures
-	//std::vector<TileTexture> textures;
-	std::map<TileType, Texture*> textures;
-	int tileTextureCount;
-	levelFile >> tileTextureCount;
-
-	for (int i = 0; i < tileTextureCount; i++)
-	{
-		
-		//Type of tile that uses this texture
-		TileTexture currentTexture;
-		int type;
-		levelFile >> type;
-		currentTexture.type = (TileType)type;
-
-
-		//Texture
-		std::string textureFilename;
-		levelFile >> textureFilename;
-		Texture* texture = new Texture(textureFilename, renderer);
-		currentTexture.texture = texture;
-
-		//textures.push_back(currentTexture);
-		textures[(TileType)type] = texture;
-	}
-
+	std::map<TileType, TileProperties> tileProperties;
+	tileProperties = loadTileTextures(renderer, levelFile);
 
 	//Load tile data
 	std::vector<Tile*> tiles;
@@ -66,14 +37,56 @@ bool LevelManager::loadFile(std::string filename, SDL_Renderer* renderer)
 	{
 		for (int w = 0; w < levelWidth; w++)
 		{
-			createTile(textures, levelFile, Vec2(w,h));
+			createTile(tileProperties, levelFile, Vec2(w,h));
 		}
 	}
 	
 	return true;
 }
 
-Tile* LevelManager::createTile(std::map<TileType, Texture*> &textures, std::ifstream &file, Vec2 gridPos)
+std::map<LevelManager::TileType, LevelManager::TileProperties> LevelManager::loadTileTextures(
+	SDL_Renderer* renderer, std::ifstream &file)
+{
+	std::map<TileType, TileProperties> tileProperties;
+
+	int tilePropertiesCount;
+	file >> tilePropertiesCount;
+
+	for (int i = 0; i < tilePropertiesCount; i++)
+	{
+		TileProperties currentTileProperties;
+		//Type of tile that uses this texture
+		int type;
+		file >> type;
+		//Force the int to a TileType enum
+		TileType tileType = (TileType)type;
+		
+		//Texture
+		Texture* texture = NULL;
+		std::string textureFilename;
+		file >> textureFilename;
+		//If a path was provided, load texture
+		if (textureFilename != "0")
+		{
+			Texture* texture = new Texture(textureFilename, renderer);
+		}
+		
+		currentTileProperties.texture = texture;
+
+		//Collision
+		int collisionInt;
+		file >> collisionInt;
+		//Convert to a boolean - 0 is false, anything else is true
+		currentTileProperties.hasCollision = (collisionInt != 0);
+
+		//textures.push_back(currentTexture);
+		tileProperties[tileType] = currentTileProperties;
+	}
+
+	return tileProperties;
+}
+
+Tile* LevelManager::createTile(std::map<TileType, TileProperties> &tileProperties, std::ifstream &file, Vec2 gridPos)
 {
 	TileType currentTile;
 	// Might be a more elegant solution to this type juggling, but it works fine for now.
@@ -81,18 +94,36 @@ Tile* LevelManager::createTile(std::map<TileType, Texture*> &textures, std::ifst
 	file >> tempCurrentTile;
 	currentTile = (TileType)tempCurrentTile;
 
+	//Time/space saver
+	TileProperties properties = tileProperties[currentTile];
+
+	//If the tile has no texture don't create a tile.
+	if (properties.texture == NULL)
+	{
+		return NULL;
+	}
+
 	//GridPos calculation (Might need + 1)
 	gridPos *= TILE_DIMENSIONS;
 	
 	Tile* tile;
+	
+	if (properties.hasCollision)
+	{
+		tile = new TileWithCollision(properties.texture, gridPos);
+	}
+	else
+	{
+		tile = new Tile(properties.texture, gridPos);
+	}
+	
 
+	/*
 	switch (currentTile)
 	{
-	case blank:
-		tile = new Tile(NULL, gridPos);
-		break;
+	
 	case block:
-		tile = new Tile(textures[currentTile], gridPos);
+		
 		break;
 	case start:
 	case finish:
@@ -103,4 +134,5 @@ Tile* LevelManager::createTile(std::map<TileType, Texture*> &textures, std::ifst
 		return NULL;
 		break;
 	}
+	*/
 }
