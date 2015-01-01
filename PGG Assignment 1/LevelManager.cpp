@@ -23,11 +23,21 @@ bool LevelManager::loadFile(std::string filename, SDL_Renderer* renderer)
 	getline(levelFile, levelID);
 
 	int levelHeight, levelWidth;
-	std::string bgfilename;
+	
 	levelFile >> levelHeight;
 	levelFile >> levelWidth;
-	levelFile >> bgfilename;
-	Texture* background = new Texture(bgfilename, renderer);
+
+	int bgCount;
+	levelFile >> bgCount;
+	std::vector<Texture*> backgrounds;
+	for (int i = 0; i < bgCount; i++)
+	{
+		std::string bgfilename;
+		levelFile >> bgfilename;
+		Texture* background = new Texture(bgfilename, renderer);
+
+		backgrounds.push_back(background);
+	}
 
 	//Load all tile textures
 	std::map<TileType, TileProperties> tileProperties;
@@ -48,7 +58,7 @@ bool LevelManager::loadFile(std::string filename, SDL_Renderer* renderer)
 	
 	//Create level from the loaded data
 	Level* level;
-	level = new Level(tiles, background, levelWidth, levelHeight);
+	level = new Level(tiles, backgrounds, levelWidth, levelHeight);
 
 	levels[levelID] = level;
 

@@ -1,7 +1,10 @@
 Level 1
 15
 30
-res/images/spaceBackground.bmp
+3
+res/images/Space1.png
+res/images/Space2.png
+res/images/Space3.png
 4
 0 0 0
 1 res/images/metal.png 1
@@ -22,10 +25,13 @@ res/images/spaceBackground.bmp
 1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1	1 1
 0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0
 0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0	0 0
+
 //Key Not read by loader
-//Line 1 = Height
+//Level Name
+//Height
 //Width
-//Background image
+//Background image count
+//Background image path
 //Number of Tile properties
 // blocknum image collisionflag
 //0 blank
