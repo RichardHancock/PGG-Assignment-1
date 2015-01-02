@@ -3,7 +3,7 @@
 Particle::Particle(Texture* texture, Vec2 pos, float maxVelocity, float maxRotationSpeed, Colour colour, float lifespan)
 	: EntityWithMotion(texture, pos, maxVelocity, maxRotationSpeed), colour(colour), lifespan(lifespan)
 {
-	sprite->setColourTint(colour);
+	
 }
 
 void Particle::update(float dt)
@@ -17,6 +17,7 @@ void Particle::update(float dt)
 
 void Particle::render()
 {
+	sprite->setColourTint(colour);
 	sprite->draw(pos, rotation);
 }
 

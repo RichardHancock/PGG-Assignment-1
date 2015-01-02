@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
 	Texture* particle = new Texture("res/images/emitterTestSmall.png", renderer);
 	std::vector<Texture*> particleTextures;
 	particleTextures.push_back(particle);
-	ParticleSystem particleManager(Vec2(240, 400), particleTextures, 5, Vec2(0, -10));
+	ParticleSystem particleManager(Vec2(240, 350), particleTextures, 3, Vec2(0, -10));
 
 	particleManager.generateNewParticles();	
 

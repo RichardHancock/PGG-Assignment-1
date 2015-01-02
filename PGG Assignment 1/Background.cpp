@@ -8,9 +8,6 @@ Background::Background(Texture* texture, Vec2 pos, int startingX)
 }
 void Background::update(float dt)
 {
-	
-
-
 	pos.x -= (scrollSpeed * dt);
 	if (pos.x < -getDimensions().x) 
 	{
