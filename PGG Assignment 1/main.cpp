@@ -18,6 +18,7 @@
 int init();
 int main(int, char*[]);
 void cleanup();
+void collisions(float dt, LevelManager &levels, Player &player);
 
 //Constants
 const int WIN_POS_X = 100;
@@ -65,9 +66,9 @@ int main(int argc, char *argv[])
 	if (init() == -1) { return -1; }
 
 	// Resource Loading (Encapsulate later)
-	Texture* bulletSprite = new Texture("res/images/laserRed01.png", renderer);
+	Texture* bulletSprite = new Texture("res/images/laser.png", renderer);
 
-	Texture* t_player = new Texture("res/images/ship.png", renderer);
+	Texture* t_player = new Texture("res/images/player.png", renderer);
 	Player* player = new Player(t_player, Vec2(75, 330), bulletSprite, 10);
 	
 	//Particles
@@ -92,7 +93,7 @@ int main(int argc, char *argv[])
 
 	bool quit = false;
 	SDL_Event e;
-
+	
 	//Main Loop
 	while (!quit)
 	{
@@ -134,6 +135,7 @@ int main(int argc, char *argv[])
 		player->update(dt);
 		particleManager.update(dt);
 		levels.getLevel("Level 1")->update(dt);
+		collisions(dt, levels, *player);
 
 		//Render
 		SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -161,15 +163,29 @@ int main(int argc, char *argv[])
 
 	
 	// Delete all classes
-	//delete player;
+	delete player;
 
-	//delete t_player;
-	//delete bulletSprite;
+	// Delete all resources
+	delete t_player;
+	delete bulletSprite;
 	TTF_CloseFont(font);
 
 	cleanup();
-	_CrtDumpMemoryLeaks();
 	return 0;
+}
+
+void collisions(float dt, LevelManager &levels, Player &player)
+{
+	//Calculate the area that collisions will need to be calculated in.
+	Vec2 playerNewPos = player.getPos() + player.getVelocity();
+	SDL_Rect playerOld = player.getAABB();
+	SDL_Rect playerNew = playerOld;
+	playerNew.x = playerNewPos.x;
+	playerNew.y = playerNewPos.y;
+
+	SDL_Rect result;
+	SDL_UnionRect(&playerOld, &playerNew, &result);
+
 }
 
 void cleanup()

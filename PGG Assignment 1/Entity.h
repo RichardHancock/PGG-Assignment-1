@@ -14,7 +14,7 @@ public:
 	Vec2 Entity::getDimensions();
 	float getRotation();
 	void setRotation(float);
-	
+	SDL_Rect getAABB();
 	virtual void update(float) = 0;
 protected:
 	Texture* sprite;
@@ -23,4 +23,5 @@ protected:
 	Vec2 dimensions;
 	float rotation;
 
+	SDL_Rect AABB;
 };

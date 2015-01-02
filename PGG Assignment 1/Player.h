@@ -14,6 +14,7 @@ public:
 	void render();
 	void update(float);
 	void eventKeyboard(SDL_Event&);
+	
 private:
 	void shoot();
 
@@ -21,10 +22,9 @@ private:
 	bool movingLeft;
 	bool movingRight;
 	bool isJumping;
+	bool facingRight;
 
-	SDL_Rect AABB;
-
-	int delay;
+	float delay;
 
 	const float initialJumpVelocity = 20.0f;
 

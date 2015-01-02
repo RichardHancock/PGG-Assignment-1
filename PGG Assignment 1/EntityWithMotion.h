@@ -5,6 +5,7 @@
 class EntityWithMotion : public Entity
 {
 public:
+	EntityWithMotion(Texture*, Vec2);
 	EntityWithMotion(Texture*, Vec2, float, float);
 	virtual void update(float) = 0;
 

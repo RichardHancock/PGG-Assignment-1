@@ -1,20 +1,14 @@
-#include "Entity.h"
+#include "EntityWithMotion.h"
 
-#ifndef BULLET_H
-#define BULLET_H
+#pragma once
 
-
-class Bullet: public Entity
+class Bullet: public EntityWithMotion
 {
 public:
-	Bullet(Texture*, Vec2);
-	~Bullet();
-	void Bullet::update(float);
-protected:
+	Bullet(Texture*, Vec2, bool);
 	
+	void update(float);
+	void render();
 private:
-	int speed;
-	char direction;
+	bool facingRight;
 };
-
-#endif

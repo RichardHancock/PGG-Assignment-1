@@ -7,6 +7,13 @@ EntityWithMotion::EntityWithMotion(Texture* texture, Vec2 pos, float maxVelocity
 	velocity = { 0, 0 };
 }
 
+EntityWithMotion::EntityWithMotion(Texture* texture, Vec2 pos)
+	: Entity(texture, pos), maxVelocity(200), maxRotationSpeed(200)
+{
+	rotationSpeed = 0;
+	velocity = { 0, 0 };
+}
+
 Vec2 EntityWithMotion::getVelocity() { return velocity; }
 
 void EntityWithMotion::setVelocity(Vec2 velocity)

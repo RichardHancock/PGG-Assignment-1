@@ -6,6 +6,12 @@ Entity::Entity(Texture* inputTexture, Vec2 inputPos)
 {
 	pos = inputPos;
 	assignTexture(inputTexture);
+
+	//Create the Collision box (AABB - Axis-Aligned Bounding Box)
+	AABB.h = getDimensions().y;
+	AABB.w = getDimensions().x;
+	AABB.x = pos.x;
+	AABB.y = pos.y;
 }
 
 Entity::~Entity()
@@ -68,4 +74,9 @@ float Entity::getRotation()
 void Entity::setRotation(float newRotation)
 {
 	rotation = newRotation;
+}
+
+SDL_Rect Entity::getAABB()
+{
+	return AABB;
 }

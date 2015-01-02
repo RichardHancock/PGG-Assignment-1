@@ -8,12 +8,7 @@ Player::Player(Texture* texture, Vec2 pos, Texture*bulletTexture, float maxVeloc
 	movingRight = false;
 	isFiring = false;
 	isJumping = false;
-
-	//Create the Collision box (AABB - Axis-Aligned Bounding Box)
-	AABB.h = getDimensions().y;
-	AABB.w = getDimensions().x;
-	AABB.x = pos.x;
-	AABB.y = pos.y;
+	facingRight = true;
 }
 
 Player::~Player()
@@ -31,10 +26,12 @@ void Player::eventKeyboard(SDL_Event& e)
 		case SDLK_LEFT:
 		case SDLK_a:
 			movingLeft = true;
+			facingRight = false;
 			break;
 		case SDLK_RIGHT:
 		case SDLK_d:
 			movingRight = true;
+			facingRight = true;
 			break;
 		case SDLK_UP:
 		case SDLK_w:
@@ -86,8 +83,8 @@ void Player::update(float dt)
 	}
 
 	
-	if (isFiring && delay > 3) { shoot(); }
-	delay += dt;
+	if (isFiring && delay > 0.75) { shoot(); }
+	delay += 1 * dt;
 
 	move(Vec2((velocity.x * dt), 0));
 
@@ -101,8 +98,6 @@ void Player::update(float dt)
 
 void Player::render()
 {
-	(*sprite).draw(pos);
-
 	//Render Bullets
 	for (unsigned int i = 0; i < bullets.size(); i++)
 	{
@@ -112,12 +107,19 @@ void Player::render()
 			bullets.erase(bullets.begin() + i);
 		}
 	}
+
+	//Render Player
+	(*sprite).draw(pos,facingRight);
 }
 
 void Player::shoot()
 {
 	Vec2 bulletLineup = pos;
 	bulletLineup.y += (getDimensions().y / 2) - (bulletSprite->getDimensions().y / 2);
-	bullets.push_back(new Bullet(bulletSprite, bulletLineup));
+	
+	Bullet* bullet = new Bullet(bulletSprite, bulletLineup, facingRight);
+	int velocityX = facingRight ? 500.0f : -500.0f;
+	bullet->setVelocity(Vec2(velocityX, 0));
+	bullets.push_back(bullet);
 	delay = 0;
 }

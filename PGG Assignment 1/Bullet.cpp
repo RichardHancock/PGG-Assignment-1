@@ -1,18 +1,18 @@
 #include "Bullet.h"
 
-Bullet::Bullet(Texture* inputTexture, Vec2 inputPos) 
-	:Entity(inputTexture, inputPos)
+Bullet::Bullet(Texture* inputTexture, Vec2 inputPos, bool facingRight) 
+	:EntityWithMotion(inputTexture, inputPos), facingRight(facingRight)
 {
-	speed = 10;
-}
-
-Bullet::~Bullet()
-{
-
+	
 }
 
 void Bullet::update(float dt)
 {	
-	pos.y -= speed;
+	pos += velocity * dt;
+}
+
+void Bullet::render()
+{
+	(*sprite).draw(pos, facingRight);
 }
 

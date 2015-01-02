@@ -70,6 +70,27 @@ void Texture::draw(Vec2 pos)
 	SDL_RenderCopy(currentRenderer, texture, NULL, &destRect);
 }
 
+void Texture::draw(Vec2 pos, bool facingRight)
+{
+	//Function assumes that the texture by default is facing right.
+	SDL_RendererFlip flip = facingRight ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
+
+
+	SDL_Rect destRect;
+
+	destRect.x = (int)pos.x;
+	destRect.y = (int)pos.y;
+
+	// Query the texture to get its original width and height
+	destRect.w = (int)dimensions.x;
+	destRect.h = (int)dimensions.y;
+
+	// Here we are telling the renderer to copy the texture to our screen,
+	// at the position of the rectangle we specify
+	SDL_RenderCopyEx(currentRenderer, texture, NULL, &destRect, 0, NULL, flip);
+}
+
+
 void Texture::draw(Vec2 pos, float rotation)
 {
 	SDL_Rect destRect;
