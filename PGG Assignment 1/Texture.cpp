@@ -35,6 +35,7 @@ bool Texture::load(SDL_Surface* surface , SDL_Renderer* renderer)
 {
 	currentRenderer = renderer;
 	Texture::createTexture(*surface); //Need error check here
+	SDL_FreeSurface(surface);
 	return true;
 }
 

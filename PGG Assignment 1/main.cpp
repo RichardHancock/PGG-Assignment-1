@@ -9,7 +9,7 @@
 #include "Texture.h"
 #include "Entity.h"
 #include "Bullet.h"
-#include "PlayerShip.h"
+#include "Player.h"
 #include "Background.h"
 #include "Utility.h"
 #include "ParticleSystem.h"
@@ -68,20 +68,16 @@ int main(int argc, char *argv[])
 	Texture* bulletSprite = new Texture("res/images/laserRed01.png", renderer);
 
 	Texture* t_player = new Texture("res/images/ship.png", renderer);
-	PlayerShip* player = new PlayerShip(t_player, Vec2(75, 330), bulletSprite);
+	Player* player = new Player(t_player, Vec2(75, 330), bulletSprite, 10);
 	
-		//Particles
+	//Particles
 	Texture* particle = new Texture("res/images/emitterTestSmall.png", renderer);
 	std::vector<Texture*> particleTextures;
 	particleTextures.push_back(particle);
 	ParticleSystem particleManager(Vec2(240, 400), particleTextures, 5, Vec2(0, -10));
 
-	particleManager.generateNewParticles();
+	particleManager.generateNewParticles();	
 
-	//Texture* t_background = new Texture("res/images/spaceBackground.bmp", renderer);
-	//Background* background = new Background(t_background, Vec2(0,0), WIN_HEIGHT, WIN_WIDTH);
-	//Background* background2 = new Background(t_background, Vec2(0, -480), WIN_HEIGHT, WIN_WIDTH);
-	
 	LevelManager levels("res/levels/Level 1.lvl", renderer);
 
 	TTF_Font *font = TTF_OpenFont("res/fonts/OpenSans-Regular.ttf", 16);
@@ -107,14 +103,13 @@ int main(int argc, char *argv[])
 			case SDL_QUIT:
 				quit = true;
 				break;
-
 			case SDL_MOUSEMOTION:
 				mouse.x = (float)e.motion.x;
 				mouse.y = (float)e.motion.y;
-				player->updateMouse(mouse);
-			
-			default:
-				player->eventHandler(e);
+				break;
+			case SDL_KEYDOWN:
+			case SDL_KEYUP:
+				player->eventKeyboard(e);
 				break;
 			}
 
@@ -136,9 +131,7 @@ int main(int argc, char *argv[])
 		camera.h = WIN_HEIGHT;
 		camera.w = WIN_WIDTH;
 
-		//player->update(dt);
-		//background->update(dt);
-		//background2->update(dt);
+		player->update(dt);
 		particleManager.update(dt);
 		levels.getLevel("Level 1")->update(dt);
 
@@ -146,20 +139,13 @@ int main(int argc, char *argv[])
 		SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 		SDL_RenderClear(renderer);
 		
-		//background->render();             
-		//background2->render();
-		
 		levels.getLevel("Level 1")->render(&camera);
-		//player->render();
+		player->render();
 		particleManager.render();
-		
 
 		//Text Test
-		SDL_Colour testColour;
-		testColour.r = 255;
-		testColour.g = 0;
-		testColour.b = 0;
-		std::string textString = player->isMouseEnabled() ? "Mouse Enabled" : "Mouse Disabled";
+		SDL_Colour testColour = {255, 0, 0};
+		std::string textString = "Level 1";
 
 		Texture* textTest = new Texture(TTF_RenderUTF8_Solid(font, textString.c_str(), testColour),renderer);
 		textTest->draw(Vec2(0, 0));
@@ -175,17 +161,14 @@ int main(int argc, char *argv[])
 
 	
 	// Delete all classes
-	delete player;
-	//delete background;
-	//delete background2;
+	//delete player;
 
-	//delete t_background;
-	delete t_player;
-	delete bulletSprite;
+	//delete t_player;
+	//delete bulletSprite;
 	TTF_CloseFont(font);
 
 	cleanup();
-
+	_CrtDumpMemoryLeaks();
 	return 0;
 }
 

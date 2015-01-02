@@ -8,6 +8,6 @@ public:
 	Background(Texture*, Vec2, int);
 	void update(float);
 private:
-	const float scrollSpeed = 50;
+	const float scrollSpeed = 25;
 	const int startingX;
 };
