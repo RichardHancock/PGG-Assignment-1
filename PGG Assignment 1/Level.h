@@ -14,6 +14,8 @@ public:
 
 	void update(float dt);
 
+	std::vector<Tile*> checkTiles(SDL_Rect);
+
 private:
 	std::vector<std::vector<Tile*>> tiles;
 

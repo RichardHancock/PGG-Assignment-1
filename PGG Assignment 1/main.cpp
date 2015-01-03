@@ -186,6 +186,16 @@ void collisions(float dt, LevelManager &levels, Player &player)
 	SDL_Rect result;
 	SDL_UnionRect(&playerOld, &playerNew, &result);
 
+	std::vector<Tile*> tilesToProcess = levels.getLevel("Level 1")->checkTiles(result);
+	std::vector<Tile*> tilesWithCollision;
+	for (int i = 0; i < tilesToProcess.size(); i++)
+	{
+		if (SDL_HasIntersection(&(tilesToProcess[i]->getAABB()), &playerNew));
+		{
+			tilesWithCollision.push_back(tilesToProcess[i]);
+		}
+	}
+
 }
 
 void cleanup()

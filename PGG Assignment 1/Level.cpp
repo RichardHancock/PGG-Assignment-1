@@ -66,3 +66,29 @@ void Level::update(float dt)
 		}
 	}
 }
+
+std::vector<Tile*> Level::checkTiles(SDL_Rect selection)
+{
+	//I could write a more complex search with filtering here to reduce the amount but this should be fine.
+
+	int offset = 0; //just to make sure we get them all
+	//Start the 
+	Vec2 start;
+	Vec2 end;
+	start.x = (selection.x / tileDimensions.x) - offset;
+	end.x = ((selection.x + selection.w) / tileDimensions.x) + offset;
+	start.y = (selection.y / tileDimensions.y) - offset;
+	end.y = ((selection.y + selection.h) / tileDimensions.y) + offset;
+
+	std::vector<Tile*> results;
+
+	for (int x = start.x; x < end.x; x++)
+	{
+		for (int y = start.y; y < end.y; y++)
+		{
+			results.push_back(tiles[x][y]);
+		}
+	}
+
+	return results;
+}
