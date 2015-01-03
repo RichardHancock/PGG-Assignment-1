@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 	Texture* bulletSprite = new Texture("res/images/laser.png", renderer);
 
 	Texture* t_player = new Texture("res/images/player.png", renderer);
-	Player* player = new Player(t_player, Vec2(75, 330), bulletSprite, 10);
+	Player* player = new Player(t_player, Vec2(75, 200), bulletSprite, 10);
 	
 	//Particles
 	Texture* particle = new Texture("res/images/emitterTestSmall.png", renderer);
@@ -177,25 +177,56 @@ int main(int argc, char *argv[])
 void collisions(float dt, LevelManager &levels, Player &player)
 {
 	//Calculate the area that collisions will need to be calculated in.
-	Vec2 playerNewPos = player.getPos() + player.getVelocity();
+	Vec2 playerNewPos = player.getPos() + (player.getVelocity() * dt);
 	SDL_Rect playerOld = player.getAABB();
 	SDL_Rect playerNew = playerOld;
 	playerNew.x = playerNewPos.x;
 	playerNew.y = playerNewPos.y;
-
+	Vec2 playerNewCenter = Utility::getRectCenter(playerNew);
 	SDL_Rect result;
 	SDL_UnionRect(&playerOld, &playerNew, &result);
 
 	std::vector<Tile*> tilesToProcess = levels.getLevel("Level 1")->checkTiles(result);
-	std::vector<Tile*> tilesWithCollision;
+	
 	for (int i = 0; i < tilesToProcess.size(); i++)
 	{
-		if (SDL_HasIntersection(&(tilesToProcess[i]->getAABB()), &playerNew));
+		SDL_Rect tileAABB = tilesToProcess[i]->getAABB();
+		if (SDL_HasIntersection(&tileAABB, &playerNew));
 		{
-			tilesWithCollision.push_back(tilesToProcess[i]);
+			Vec2 distance;
+			Vec2 tileCenter = Utility::getRectCenter(tilesToProcess[i]->getAABB());
+
+			distance.x = fabs(pow(playerNewCenter.x, 2) + pow(tileCenter.x, 2));
+			distance.y = fabs(pow(playerNewCenter.y, 2) + pow(tileCenter.y, 2));
+
+			if (distance.x < distance.y)
+			{
+				if (playerNewCenter.x < tileCenter.x)
+				{
+					//Right side of player
+					player.setVelocity(Vec2(0, player.getVelocity().y));
+				}
+				else
+				{
+					//Left
+					player.setVelocity(Vec2(0, player.getVelocity().y));
+				}
+			}
+			else if (distance.y < distance.x)
+			{
+				if (playerNewCenter.y < tileCenter.y)
+				{
+					//botttom side of player
+					player.setVelocity(Vec2(player.getVelocity().x, 0));
+				}
+				else
+				{
+					//top
+					player.setVelocity(Vec2(player.getVelocity().x, 0));
+				}
+			}
 		}
 	}
-
 }
 
 void cleanup()

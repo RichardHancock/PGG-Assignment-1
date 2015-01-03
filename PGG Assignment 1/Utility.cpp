@@ -51,3 +51,11 @@ void Utility::log(LogType type, std::string message)
 
 	std::cout << message.c_str() << std::endl;
 }
+
+Vec2 Utility::getRectCenter(SDL_Rect rect)
+{
+	Vec2 center;
+	center.x = rect.x + (rect.w / 2);
+	center.y = rect.y + (rect.h / 2);
+	return center;
+}

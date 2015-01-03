@@ -86,7 +86,11 @@ std::vector<Tile*> Level::checkTiles(SDL_Rect selection)
 	{
 		for (int y = start.y; y < end.y; y++)
 		{
-			results.push_back(tiles[x][y]);
+			if (tiles[x][y] != NULL)
+			{
+				results.push_back(tiles[x][y]);
+			}
+			
 		}
 	}
 

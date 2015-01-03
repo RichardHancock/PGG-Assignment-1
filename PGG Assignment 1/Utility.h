@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <iostream>
+#include <SDL.h>
+
+#include "Vec2.h"
 
 #pragma once
 
@@ -56,6 +59,13 @@ namespace Utility
 	@param char* - The message to log
 	*/
 	void log(LogType, std::string);
+
+	/**
+	@brief Returns the center position of a rectangle
+	@param SDL_Rect - Rectangle struct
+	@return Vec2 - Center position of the rectangle
+	*/
+	Vec2 getRectCenter(SDL_Rect rect);
 
 }
 
