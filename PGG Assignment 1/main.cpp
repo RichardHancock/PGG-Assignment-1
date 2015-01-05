@@ -127,7 +127,7 @@ int main(int argc, char *argv[])
 		lastTime = current;
 		
 		SDL_Rect camera;
-		camera.x = player->getPos().x;
+		camera.x = (int)player->getPos().x;
 		camera.y = 0;
 		camera.h = WIN_HEIGHT;
 		camera.w = WIN_WIDTH;
@@ -180,8 +180,8 @@ void collisions(float dt, LevelManager &levels, Player &player)
 	Vec2 playerNewPos = player.getPos() + (player.getVelocity() * dt);
 	SDL_Rect playerOld = player.getAABB();
 	SDL_Rect playerNew = playerOld;
-	playerNew.x = playerNewPos.x;
-	playerNew.y = playerNewPos.y;
+	playerNew.x = (int)playerNewPos.x;
+	playerNew.y = (int)playerNewPos.y;
 	Vec2 playerNewCenter = Utility::getRectCenter(playerNew);
 	SDL_Rect result;
 	SDL_UnionRect(&playerOld, &playerNew, &result);
@@ -190,10 +190,10 @@ void collisions(float dt, LevelManager &levels, Player &player)
 	
 	bool stillLanded = false;
 
-	for (int i = 0; i < tilesToProcess.size(); i++)
+	for (int i = 0; i < (int)tilesToProcess.size(); i++)
 	{
 		SDL_Rect tileAABB = tilesToProcess[i]->getAABB();
-		if (SDL_HasIntersection(&tileAABB, &playerNew));
+		if (SDL_HasIntersection(&tileAABB, &playerNew))
 		{
 			Vec2 leftSide = playerNewPos;
 			leftSide.y += playerNew.h / 2;

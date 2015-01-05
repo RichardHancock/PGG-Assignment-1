@@ -123,6 +123,7 @@ void Player::render()
 void Player::shoot()
 {
 	Vec2 bulletLineup = pos;
+	bulletLineup.x = 0;
 	bulletLineup.y += (getDimensions().y / 2) - (bulletSprite->getDimensions().y / 2);
 	
 	Bullet* bullet = new Bullet(bulletSprite, bulletLineup, facingRight);
