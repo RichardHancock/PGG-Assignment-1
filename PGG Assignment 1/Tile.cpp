@@ -1,7 +1,7 @@
 #include "Tile.h"
 
-Tile::Tile(Texture* texture, Vec2 pos)
-	: Entity(texture, pos)
+Tile::Tile(Texture* texture, Vec2 pos, bool collidable)
+	: Entity(texture, pos), collidable(collidable)
 {
 
 }
@@ -28,4 +28,9 @@ void Tile::render(SDL_Rect* camera)
 		(*sprite).draw(offsetPos, rotation);
 	}
 	
+}
+
+bool Tile::isCollidable()
+{
+	return collidable;
 }

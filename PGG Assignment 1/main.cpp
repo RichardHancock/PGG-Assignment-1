@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 	Texture* bulletSprite = new Texture("res/images/laser.png", renderer);
 
 	Texture* t_player = new Texture("res/images/player.png", renderer);
-	Player* player = new Player(t_player, Vec2(75, 200), bulletSprite, 10);
+	Player* player = new Player(t_player, Vec2(360, 200), bulletSprite, 10);
 	
 	//Particles
 	Texture* particle = new Texture("res/images/emitterTestSmall.png", renderer);
@@ -127,16 +127,16 @@ int main(int argc, char *argv[])
 		lastTime = current;
 		
 		SDL_Rect camera;
-		camera.x = 0;
+		camera.x = player->getPos().x;
 		camera.y = 0;
 		camera.h = WIN_HEIGHT;
 		camera.w = WIN_WIDTH;
 
-		player->update(dt);
+		player->updateVelocities(dt);
 		particleManager.update(dt);
 		levels.getLevel("Level 1")->update(dt);
 		collisions(dt, levels, *player);
-
+		player->update(dt);
 		//Render
 		SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 		SDL_RenderClear(renderer);
@@ -188,45 +188,89 @@ void collisions(float dt, LevelManager &levels, Player &player)
 
 	std::vector<Tile*> tilesToProcess = levels.getLevel("Level 1")->checkTiles(result);
 	
+	bool stillLanded = false;
+
 	for (int i = 0; i < tilesToProcess.size(); i++)
 	{
 		SDL_Rect tileAABB = tilesToProcess[i]->getAABB();
 		if (SDL_HasIntersection(&tileAABB, &playerNew));
 		{
-			Vec2 distance;
-			Vec2 tileCenter = Utility::getRectCenter(tilesToProcess[i]->getAABB());
+			Vec2 leftSide = playerNewPos;
+			leftSide.y += playerNew.h / 2;
+			Vec2 rightSide = leftSide;
+			rightSide.x += playerNew.w;
+			Vec2 topSide = playerNewPos;
+			topSide.x += playerNew.w / 2;
+			Vec2 bottomSide = topSide;
+			bottomSide.y += playerNew.h;
+				
+			//test x
+			bool movingLeft = false;
+			bool movingRight = false;
+			bool movingUp = false;
+			bool movingDown = false;
 
-			distance.x = fabs(pow(playerNewCenter.x, 2) + pow(tileCenter.x, 2));
-			distance.y = fabs(pow(playerNewCenter.y, 2) + pow(tileCenter.y, 2));
-
-			if (distance.x < distance.y)
+			if (player.getVelocity().x < 0.0f)
 			{
-				if (playerNewCenter.x < tileCenter.x)
+				movingLeft = true;
+				//player.setVelocity(Vec2(0, player.getVelocity().y));
+			}
+			else if (player.getVelocity().x > 0.0f)
+			{
+				movingRight = true;
+			}
+
+			if (movingLeft)
+			{
+				if (tilesToProcess[i]->getPos().x + tileAABB.w >= playerNewPos.x)
 				{
-					//Right side of player
-					player.setVelocity(Vec2(0, player.getVelocity().y));
+					player.setVelocity(Vec2(0,player.getVelocity().y));
 				}
-				else
+			}
+			else if (movingRight)
+			{
+				if (tilesToProcess[i]->getPos().x <= playerNewPos.x + playerNew.w)
 				{
-					//Left
 					player.setVelocity(Vec2(0, player.getVelocity().y));
 				}
 			}
-			else if (distance.y < distance.x)
+
+
+			//test y
+			if (player.getVelocity().y < -0.01f)
 			{
-				if (playerNewCenter.y < tileCenter.y)
+				movingUp = true;
+			}
+			else if (player.getVelocity().y > 0.01f)
+			{
+				movingDown = true;
+			}
+
+
+			if (movingUp)
+			{
+				if (tilesToProcess[i]->getPos().y + tileAABB.h >= playerNewPos.y)
 				{
-					//botttom side of player
 					player.setVelocity(Vec2(player.getVelocity().x, 0));
 				}
-				else
+			}
+			else if (movingDown)
+			{
+				if (tilesToProcess[i]->getPos().y <= playerNewPos.y + playerNew.h)
 				{
-					//top
-					player.setVelocity(Vec2(player.getVelocity().x, 0));
+					stillLanded = true;
+					if (!player.landed)
+					{
+						player.setVelocity(Vec2(player.getVelocity().x, 0));
+						player.move(Vec2(0, -2));
+						player.landed = true;
+					}
 				}
 			}
 		}
 	}
+
+	player.landed = stillLanded;
 }
 
 void cleanup()

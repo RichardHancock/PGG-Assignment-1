@@ -49,6 +49,7 @@ void Entity::render()
 
 void Entity::move(Vec2 adjustBy)
 {
+	/*
 	if (pos.x > 640 - getDimensions().x)
 	{
 		pos.x = 640 - getDimensions().x;
@@ -59,9 +60,10 @@ void Entity::move(Vec2 adjustBy)
 	}
 	else
 	{
+	*/
 		pos.x += adjustBy.x;
 		pos.y += adjustBy.y;
-	}
+	
 }
 
 Vec2 Entity::getPos()
@@ -79,7 +81,14 @@ void Entity::setRotation(float newRotation)
 	rotation = newRotation;
 }
 
+void Entity::updateAABB()
+{
+	AABB.x = pos.x;
+	AABB.y = pos.y;
+}
+
 SDL_Rect Entity::getAABB()
 {
+	updateAABB();
 	return this->AABB;
 }

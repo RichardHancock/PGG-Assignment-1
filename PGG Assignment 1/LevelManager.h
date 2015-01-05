@@ -1,7 +1,7 @@
 #include <map>
 #include <vector>
 
-#include "TileWithCollision.h"
+#include "Tile.h"
 #include "Level.h"
 
 #pragma once

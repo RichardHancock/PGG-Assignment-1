@@ -88,7 +88,10 @@ std::vector<Tile*> Level::checkTiles(SDL_Rect selection)
 		{
 			if (tiles[x][y] != NULL)
 			{
-				results.push_back(tiles[x][y]);
+				if (tiles[x][y]->isCollidable())
+				{
+					results.push_back(tiles[x][y]);
+				}				
 			}
 			
 		}

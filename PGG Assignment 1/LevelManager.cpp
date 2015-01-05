@@ -136,16 +136,7 @@ Tile* LevelManager::createTile(std::map<TileType, TileProperties> &tilePropertie
 	//GridPos calculation (Might need + 1)
 	gridPos *= TILE_DIMENSIONS;
 	
-	Tile* tile;
-	
-	if (properties.hasCollision)
-	{
-		tile = new TileWithCollision(properties.texture, gridPos);
-	}
-	else
-	{
-		tile = new Tile(properties.texture, gridPos);
-	}
+	Tile* tile = new Tile(properties.texture, gridPos, properties.hasCollision);
 	
 	return tile;
 }

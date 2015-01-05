@@ -9,6 +9,7 @@ Player::Player(Texture* texture, Vec2 pos, Texture*bulletTexture, float maxVeloc
 	isFiring = false;
 	isJumping = false;
 	facingRight = true;
+	landed = true;
 }
 
 Player::~Player()
@@ -67,7 +68,7 @@ void Player::eventKeyboard(SDL_Event& e)
 	}
 }
 
-void Player::update(float dt)
+void Player::updateVelocities(float dt)
 {
 	velocity.x = 0;
 
@@ -82,17 +83,24 @@ void Player::update(float dt)
 		velocity.x = 200.0f;
 	}
 
+	if (!landed)
+	{
+		velocity.y += gravity * dt;
+	}
 	
+}
+
+void Player::update(float dt)
+{	
 	if (isFiring && delay > 0.75) { shoot(); }
 	delay += 1 * dt;
 
-	move(Vec2((velocity.x * dt), 0));
+	move(Vec2((velocity.x * dt), velocity.y * dt));
 
 	for (unsigned int i = 0; i < bullets.size(); i++)
 	{
 		bullets[i]->update(dt);
 	}
-
 
 }
 
@@ -109,7 +117,7 @@ void Player::render()
 	}
 
 	//Render Player
-	(*sprite).draw(pos,facingRight);
+	(*sprite).draw(Vec2(0,pos.y),facingRight);
 }
 
 void Player::shoot()
