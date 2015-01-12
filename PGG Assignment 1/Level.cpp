@@ -82,6 +82,11 @@ std::vector<Tile*> Level::checkTiles(SDL_Rect selection)
 
 	std::vector<Tile*> results;
 
+	if (start.x < 0) { start.x = 0; }
+	if (end.x > tileCountW) { end.x = tileCountW; }
+	if (start.y < 0) { start.y = 0; }
+	if (end.y > tileCountH) { end.y = tileCountH; }
+
 	for (int x = start.x; x < end.x; x++)
 	{
 		for (int y = start.y; y < end.y; y++)
