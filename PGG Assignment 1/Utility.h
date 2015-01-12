@@ -54,7 +54,7 @@ namespace Utility
 	/**
 	@brief Log a message to the console
 
-	Made this one function instead of multiple to reduce clutter
+	Made this one function instead of multiple to reduce clutter. Could have used SDL_Log instead.
 	@param LogType - Type of message E: Error, W: Warning, I: Info
 	@param char* - The message to log
 	*/

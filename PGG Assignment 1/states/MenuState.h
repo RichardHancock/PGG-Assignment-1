@@ -1,5 +1,6 @@
 #include "State.h"
 #include "StateManager.h"
+#include "../Vec2.h"
 
 #pragma once
 
@@ -15,5 +16,7 @@ public:
 	void render();
 
 private:
+
+	Vec2 mouse;
 
 };

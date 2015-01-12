@@ -2,7 +2,7 @@
 #include <string>
 
 #include "LevelManager.h"
-#include "Utility.h"
+#include "../Utility.h"
 
 LevelManager::LevelManager(std::string filename, SDL_Renderer* renderer)
 {
@@ -52,7 +52,7 @@ bool LevelManager::loadFile(std::string filename, SDL_Renderer* renderer)
 	{
 		for (int w = 0; w < levelWidth; w++)
 		{
-			tiles[w][h] = createTile(tileProperties, levelFile, Vec2(w,h));
+			tiles[w][h] = createTile(tileProperties, levelFile, Vec2((float)w,(float)h));
 		}
 	}
 	

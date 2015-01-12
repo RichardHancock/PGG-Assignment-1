@@ -1,4 +1,4 @@
-#include "Entity.h"
+#include "../entities/Entity.h"
 
 #pragma once
 

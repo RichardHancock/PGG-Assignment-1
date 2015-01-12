@@ -17,8 +17,8 @@ void Tile::render(SDL_Rect* camera)
 	SDL_Rect tileRect;
 	tileRect.x = (int)pos.x;
 	tileRect.y = (int)pos.y;
-	tileRect.w = getDimensions().x;
-	tileRect.h = getDimensions().y;
+	tileRect.w = (int)getDimensions().x;
+	tileRect.h = (int)getDimensions().y;
 
 	if (SDL_HasIntersection(camera, &tileRect))
 	{

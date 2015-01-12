@@ -55,7 +55,7 @@ void Utility::log(LogType type, std::string message)
 Vec2 Utility::getRectCenter(SDL_Rect rect)
 {
 	Vec2 center;
-	center.x = rect.x + (rect.w / 2);
-	center.y = rect.y + (rect.h / 2);
+	center.x = (float)(rect.x + (rect.w / 2));
+	center.y = (float)(rect.y + (rect.h / 2));
 	return center;
 }

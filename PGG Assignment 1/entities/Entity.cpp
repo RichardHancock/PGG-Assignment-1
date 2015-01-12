@@ -9,10 +9,10 @@ Entity::Entity(Texture* inputTexture, Vec2 inputPos)
 
 	//Create the Collision box (AABB - Axis-Aligned Bounding Box)
 	SDL_Rect tempAABB;
-	tempAABB.h = getDimensions().y;
-	tempAABB.w = getDimensions().x;
-	tempAABB.x = pos.x;
-	tempAABB.y = pos.y;
+	tempAABB.h = (int)getDimensions().y;
+	tempAABB.w = (int)getDimensions().x;
+	tempAABB.x = (int)pos.x;
+	tempAABB.y = (int)pos.y;
 
 	AABB = tempAABB;
 }
@@ -83,8 +83,8 @@ void Entity::setRotation(float newRotation)
 
 void Entity::updateAABB()
 {
-	AABB.x = pos.x;
-	AABB.y = pos.y;
+	AABB.x = (int)pos.x;
+	AABB.y = (int)pos.y;
 }
 
 SDL_Rect Entity::getAABB()

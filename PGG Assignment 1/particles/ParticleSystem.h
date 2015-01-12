@@ -1,7 +1,7 @@
 #include <vector>
 
-#include "Vec2.h"
-#include "Texture.h"
+#include "../Vec2.h"
+#include "../Texture.h"
 #include "Particle.h"
 
 #pragma once

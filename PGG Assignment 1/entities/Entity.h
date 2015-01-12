@@ -1,5 +1,5 @@
-#include "Texture.h"
-#include "Vec2.h"
+#include "../Texture.h"
+#include "../Vec2.h"
 
 #pragma once
 

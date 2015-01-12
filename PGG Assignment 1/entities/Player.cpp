@@ -127,7 +127,7 @@ void Player::shoot()
 	bulletLineup.y += (getDimensions().y / 2) - (bulletSprite->getDimensions().y / 2);
 	
 	Bullet* bullet = new Bullet(bulletSprite, bulletLineup, facingRight);
-	int velocityX = facingRight ? 500.0f : -500.0f;
+	float velocityX = facingRight ? 500.0f : -500.0f;
 	bullet->setVelocity(Vec2(velocityX, 0));
 	bullets.push_back(bullet);
 	delay = 0;

@@ -1,5 +1,5 @@
-#include "EntityWithMotion.h"
-#include "Utility.h"
+#include "../entities/EntityWithMotion.h"
+#include "../Utility.h"
 
 #pragma once
 

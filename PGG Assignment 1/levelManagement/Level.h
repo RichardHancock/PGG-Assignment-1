@@ -1,7 +1,7 @@
 #include <vector>
 
 #include "Tile.h"
-#include "Background.h"
+#include "../entities/Background.h"
 
 #pragma once
 

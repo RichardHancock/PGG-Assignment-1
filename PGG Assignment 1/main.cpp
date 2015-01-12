@@ -7,13 +7,13 @@
 #include <string.h>
 
 #include "Texture.h"
-#include "Entity.h"
-#include "Bullet.h"
-#include "Player.h"
-#include "Background.h"
+#include "entities/Entity.h"
+#include "entities/Bullet.h"
+#include "entities/Player.h"
+#include "entities/Background.h"
 #include "Utility.h"
-#include "ParticleSystem.h"
-#include "LevelManager.h"
+#include "particles/ParticleSystem.h"
+#include "levelManagement/LevelManager.h"
 
 int init();
 int main(int, char*[]);
@@ -87,8 +87,6 @@ int main(int argc, char *argv[])
 		Utility::log(Utility::E,"TTF_OpenFont: " + std::string(TTF_GetError()));
 	}
 
-	Vec2 mouse(0, 0);
-
 	unsigned int lastTime = SDL_GetTicks();
 
 	bool quit = false;
@@ -101,13 +99,7 @@ int main(int argc, char *argv[])
 		{	
 			switch (e.type)
 			{
-			case SDL_QUIT:
-				quit = true;
-				break;
-			case SDL_MOUSEMOTION:
-				mouse.x = (float)e.motion.x;
-				mouse.y = (float)e.motion.y;
-				break;
+			
 			case SDL_KEYDOWN:
 			case SDL_KEYUP:
 				player->eventKeyboard(e);

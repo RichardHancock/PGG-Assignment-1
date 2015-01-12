@@ -1,8 +1,8 @@
 #include "Level.h"
 
 Level::Level(std::vector<std::vector<Tile*>> &tiles, std::vector<Texture*> backgrounds, int tileCountW, int tileCountH)
-	: tiles(tiles), tileCountW(tileCountW), tileCountH(tileCountH), levelWidth(tileCountW * tileDimensions.x)
-	, levelHeight(tileCountH * tileDimensions.y)
+	: tiles(tiles), tileCountW(tileCountW), tileCountH(tileCountH), levelWidth(tileCountW * (int)tileDimensions.x)
+	, levelHeight(tileCountH * (int)tileDimensions.y)
 {
 	createBackgroundLoop(backgrounds);
 }
@@ -10,15 +10,15 @@ Level::Level(std::vector<std::vector<Tile*>> &tiles, std::vector<Texture*> backg
 void Level::createBackgroundLoop(std::vector<Texture*> backgrounds)
 {
 	//Get the position that the background should reset to  
-	int startingX = (backgrounds.size() - 1) * backgrounds[0]->getDimensions().x;
+	int startingX = (backgrounds.size() - 1) * (int)backgrounds[0]->getDimensions().x;
 	
-	for (int i = 0; i < backgrounds.size(); i++)
+	for (unsigned int i = 0; i < backgrounds.size(); i++)
 	{
 		Vec2 backgroundDimensions = backgrounds[i]->getDimensions();
 
-		int backgroundX = i * backgroundDimensions.x;
+		int backgroundX = i * (unsigned int)backgroundDimensions.x;
 
-		Background* background = new Background(backgrounds[i], Vec2(backgroundX, 0), startingX);
+		Background* background = new Background(backgrounds[i], Vec2((float)backgroundX, 0), startingX);
 
 		backgroundLoop.push_back(background);
 	}
@@ -28,15 +28,15 @@ void Level::createBackgroundLoop(std::vector<Texture*> backgrounds)
 void Level::render(SDL_Rect* camera)
 {
 	//Render Background
-	for (int i = 0; i < backgroundLoop.size(); i++)
+	for (Background* bg : backgroundLoop)
 	{
-		backgroundLoop[i]->render();
+		bg->render();
 	}
 
 	//Render Tiles
-	for (int x = 0; x < tiles.size(); x++)
+	for (unsigned int x = 0; x < tiles.size(); x++)
 	{
-		for (int y = 0; y < tiles[x].size(); y++)
+		for (unsigned int y = 0; y < tiles[x].size(); y++)
 		{
 			if (tiles[x][y] != NULL)
 			{
@@ -49,15 +49,15 @@ void Level::render(SDL_Rect* camera)
 void Level::update(float dt)
 {
 	//Render Background
-	for (int i = 0; i < backgroundLoop.size(); i++)
+	for (Background* bg : backgroundLoop)
 	{
-		backgroundLoop[i]->update(dt);
+		bg->update(dt);
 	}
 
 	//Update Tiles
-	for (int x = 0; x < tiles.size(); x++)
+	for (unsigned int x = 0; x < tiles.size(); x++)
 	{
-		for (int y = 0; y < tiles[x].size(); y++)
+		for (unsigned int y = 0; y < tiles[x].size(); y++)
 		{
 			if (tiles[x][y] != NULL)
 			{
@@ -83,13 +83,13 @@ std::vector<Tile*> Level::checkTiles(SDL_Rect selection)
 	std::vector<Tile*> results;
 
 	if (start.x < 0) { start.x = 0; }
-	if (end.x > tileCountW) { end.x = tileCountW; }
+	if (end.x > tileCountW) { end.x = (float)tileCountW; }
 	if (start.y < 0) { start.y = 0; }
-	if (end.y > tileCountH) { end.y = tileCountH; }
+	if (end.y > tileCountH) { end.y = (float)tileCountH; }
 
-	for (int x = start.x; x < end.x; x++)
+	for (int x = (int)start.x; x < end.x; x++)
 	{
-		for (int y = start.y; y < end.y; y++)
+		for (int y = (int)start.y; y < end.y; y++)
 		{
 			if (tiles[x][y] != NULL)
 			{
