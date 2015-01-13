@@ -90,6 +90,7 @@
   <ItemGroup>
     <ClInclude Include="entities\Background.h" />
     <ClInclude Include="entities\Bullet.h" />
+    <ClInclude Include="entities\Button.h" />
     <ClInclude Include="entities\Entity.h" />
     <ClInclude Include="entities\EntityWithMotion.h" />
     <ClInclude Include="entities\Player.h" />
@@ -110,6 +111,7 @@
   <ItemGroup>
     <ClCompile Include="entities\Background.cpp" />
     <ClCompile Include="entities\Bullet.cpp" />
+    <ClCompile Include="entities\Button.cpp" />
     <ClCompile Include="entities\Entity.cpp" />
     <ClCompile Include="entities\EntityWithMotion.cpp" />
     <ClCompile Include="entities\Player.cpp" />

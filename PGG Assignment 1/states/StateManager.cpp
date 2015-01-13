@@ -9,9 +9,9 @@ StateManager::~StateManager()
 
 void StateManager::clearStates()
 {
-	for (int i = 0; i < (int)states.size(); i++)
+	for (auto s : states)
 	{
-		delete states[i];
+		delete s;
 	}
 	states.clear();
 }
