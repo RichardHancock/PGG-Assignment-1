@@ -7,6 +7,7 @@
 class StateManager
 {
 public:
+	StateManager(int windowWidth, int windowHeight);
 	~StateManager();
 
 	void addState(State* state);
@@ -17,6 +18,10 @@ public:
 	bool eventHandler();
 	void update(float dt);
 	void render();
+
+	//Think these are fine to have public since they are const
+	const int WINDOW_WIDTH;
+	const int WINDOW_HEIGHT;
 
 private:
 

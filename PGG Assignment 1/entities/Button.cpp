@@ -37,7 +37,7 @@ void Button::render()
 	(*sprite).draw(pos, rotation);
 	
 	Vec2 textPos;
-	textPos.x = (sprite->getDimensions().x / 2) - (text->getDimensions().x / 2);
-	textPos.y = (sprite->getDimensions().y / 2) - (text->getDimensions().y / 2);
+	textPos.x = pos.x + ((sprite->getDimensions().x / 2) - (text->getDimensions().x / 2));
+	textPos.y = pos.y + ((sprite->getDimensions().y / 2) - (text->getDimensions().y / 2));
 	(*text).draw(textPos);
 }

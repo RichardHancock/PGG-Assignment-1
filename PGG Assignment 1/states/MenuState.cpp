@@ -8,10 +8,12 @@ MenuState::MenuState(StateManager* manager, SDL_Renderer* renderer)
 	mouse = { 0, 0 };
 	
 	TTF_Font* font = TTF_OpenFont("res/fonts/OpenSans-Regular.ttf", 32);
+	if (!font)
+	{
+		Utility::log(Utility::E, "TTF_OpenFont in MenuState: " + std::string(TTF_GetError()));
+	}
 	buttonTexture = new Texture("res/images/button.png", renderer);
 	SDL_Colour colour = { 255, 255, 255 };
-	//Button* play = new Button(Vec2(0, 20), buttonTexture, "Play", font, colour, renderer);
-
 	buttons[Play] = new Button(Vec2(0, 20), buttonTexture, "Play", font, colour, renderer);
 	buttons[Options] = new Button(Vec2(0, 170), buttonTexture, "Options", font, colour, renderer);
 	buttons[Help] = new Button(Vec2(0, 320), buttonTexture, "Help", font, colour, renderer);
@@ -21,7 +23,7 @@ MenuState::MenuState(StateManager* manager, SDL_Renderer* renderer)
 		buttonTexture, "Quit", font, colour, renderer);
 	
 	TTF_CloseFont(font);
-	delete font;
+	font = nullptr;
 }
 
 MenuState::~MenuState()
@@ -43,10 +45,6 @@ bool MenuState::eventHandler()
 	{
 		switch (e.type)
 		{
-		case SDL_QUIT:
-			return false;
-			break;
-
 		case SDL_MOUSEMOTION:
 			mouse.x = (float)e.motion.x;
 			mouse.y = (float)e.motion.y;
@@ -55,6 +53,17 @@ bool MenuState::eventHandler()
 			if (e.button.button == SDL_BUTTON_LEFT) { 
 				return click();
 			}
+			break;
+
+		case SDL_KEYUP:
+			if (e.key.keysym.sym == SDLK_ESCAPE)
+			{
+				return false;
+			}
+			break;
+		case SDL_QUIT:
+			return false;
+			break;
 		}
 	}
 
@@ -92,7 +101,8 @@ bool MenuState::click()
 			switch (b.first)
 			{
 			case Play:
-				stateManager->changeState(new PlayState(stateManager, renderer));
+				stateManager->changeState(new PlayState(stateManager, renderer, 1));
+				
 				break;
 			case Quit:
 				return false;
@@ -101,6 +111,9 @@ bool MenuState::click()
 				Utility::log(Utility::W, "Unhandled menu button pressed");
 				break;
 			}
+
+			//A button has been pressed, its pointless and dangerous to continue looping.
+			break;
 		}
 	}
 

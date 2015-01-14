@@ -2,6 +2,12 @@
 #include "State.h"
 #include "../Utility.h"
 
+StateManager::StateManager(int windowWidth, int windowHeight)
+	: WINDOW_WIDTH(windowWidth), WINDOW_HEIGHT(windowHeight)
+{
+
+}
+
 StateManager::~StateManager()
 {
 	clearStates();
