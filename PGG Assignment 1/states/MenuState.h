@@ -29,6 +29,8 @@ public:
 
 private:
 
+	Texture* buttonTexture;
+
 	Vec2 mouse;
 
 	std::unordered_map<MenuButton, Button*> buttons;

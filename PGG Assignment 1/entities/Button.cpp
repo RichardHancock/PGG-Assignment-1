@@ -27,6 +27,11 @@ bool Button::isClicked(Vec2 cursor)
 	return SDL_HasIntersection(&point, &AABB) != 0; // Had to put != 0 because it uses SDL_Bool instead of bool (Generates Warning)
 }
 
+void Button::update(float dt)
+{
+
+}
+
 void Button::render()
 {
 	(*sprite).draw(pos, rotation);

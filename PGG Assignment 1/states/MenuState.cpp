@@ -6,11 +6,34 @@ MenuState::MenuState(StateManager* manager, SDL_Renderer* renderer)
 {
 	stateName = "Menu State";
 	mouse = { 0, 0 };
+	
+	TTF_Font* font = TTF_OpenFont("res/fonts/OpenSans-Regular.ttf", 32);
+	buttonTexture = new Texture("res/images/button.png", renderer);
+	SDL_Colour colour = { 255, 255, 255 };
+	//Button* play = new Button(Vec2(0, 20), buttonTexture, "Play", font, colour, renderer);
+
+	buttons[Play] = new Button(Vec2(0, 20), buttonTexture, "Play", font, colour, renderer);
+	buttons[Options] = new Button(Vec2(0, 170), buttonTexture, "Options", font, colour, renderer);
+	buttons[Help] = new Button(Vec2(0, 320), buttonTexture, "Help", font, colour, renderer);
+	buttons[Credits] = new Button(Vec2(640 - buttonTexture->getDimensions().x, 460 - buttonTexture->getDimensions().y), 
+		buttonTexture, "Credits", font, colour, renderer);
+	buttons[Quit] = new Button(Vec2(640 - buttonTexture->getDimensions().x, 310 - buttonTexture->getDimensions().y),
+		buttonTexture, "Quit", font, colour, renderer);
+	
+	TTF_CloseFont(font);
+	delete font;
 }
 
 MenuState::~MenuState()
 {
+	delete buttonTexture;
+	
+	for (auto b : buttons)
+	{
+		delete b.second;
+	}
 
+	buttons.clear();
 }
 
 bool MenuState::eventHandler()
