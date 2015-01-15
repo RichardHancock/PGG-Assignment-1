@@ -37,4 +37,7 @@ private:
 
 	bool click();
 
+	Texture* logo;
+	Texture* background;
+
 };

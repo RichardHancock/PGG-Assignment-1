@@ -15,15 +15,18 @@ MenuState::MenuState(StateManager* manager, SDL_Renderer* renderer)
 	buttonTexture = new Texture("res/images/button.png", renderer);
 	SDL_Colour colour = { 255, 255, 255 };
 	buttons[Play] = new Button(Vec2(0, 20), buttonTexture, "Play", font, colour, renderer);
-	buttons[Options] = new Button(Vec2(0, 170), buttonTexture, "Options", font, colour, renderer);
-	buttons[Help] = new Button(Vec2(0, 320), buttonTexture, "Help", font, colour, renderer);
-	buttons[Credits] = new Button(Vec2(640 - buttonTexture->getDimensions().x, 460 - buttonTexture->getDimensions().y), 
+	buttons[Options] = new Button(Vec2(0, 95), buttonTexture, "Options", font, colour, renderer);
+	buttons[Help] = new Button(Vec2(0, 170), buttonTexture, "Help", font, colour, renderer);
+	buttons[Credits] = new Button(Vec2(640 - buttonTexture->getDimensions().x, 385 - buttonTexture->getDimensions().y),
 		buttonTexture, "Credits", font, colour, renderer);
-	buttons[Quit] = new Button(Vec2(640 - buttonTexture->getDimensions().x, 310 - buttonTexture->getDimensions().y),
+	buttons[Quit] = new Button(Vec2(640 - buttonTexture->getDimensions().x, 460 - buttonTexture->getDimensions().y),
 		buttonTexture, "Quit", font, colour, renderer);
 	
 	TTF_CloseFont(font);
 	font = nullptr;
+
+	logo = new Texture("res/images/logo.png", renderer);
+	background = new Texture("res/images/Space3.png", renderer);
 }
 
 MenuState::~MenuState()
@@ -36,6 +39,9 @@ MenuState::~MenuState()
 	}
 
 	buttons.clear();
+
+	delete background;
+	delete logo;
 }
 
 bool MenuState::eventHandler()
@@ -86,6 +92,10 @@ void MenuState::render()
 	*/
 
 	// C++11 makes this awesome
+
+	background->draw(Vec2(0, 0));
+	logo->draw(Vec2(50, 300));
+
 	for(auto b : buttons)
 	{
 		b.second->render();
