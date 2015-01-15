@@ -1,7 +1,7 @@
 #include "Tile.h"
 
-Tile::Tile(Texture* texture, Vec2 pos, bool collidable)
-	: Entity(texture, pos), collidable(collidable)
+Tile::Tile(Texture* texture, Vec2 pos, bool collidable, Utility::TileType type)
+	: Entity(texture, pos), collidable(collidable), type(type)
 {
 
 }
@@ -33,4 +33,9 @@ void Tile::render(SDL_Rect* camera)
 bool Tile::isCollidable()
 {
 	return collidable;
+}
+
+Utility::TileType Tile::getType()
+{
+	return type;
 }

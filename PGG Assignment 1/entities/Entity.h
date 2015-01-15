@@ -11,6 +11,7 @@ public:
 	void Entity::render();
 	void Entity::move(Vec2);
 	Vec2 Entity::getPos();
+	void Entity::setPos(Vec2);
 	Vec2 Entity::getDimensions();
 	float getRotation();
 	void setRotation(float);

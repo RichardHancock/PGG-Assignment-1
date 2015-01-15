@@ -1,9 +1,12 @@
 #include "Level.h"
 
-Level::Level(std::vector<std::vector<Tile*>> &tiles, std::vector<Texture*> backgrounds, int tileCountW, int tileCountH)
+Level::Level(std::vector<std::vector<Tile*>> &tiles, std::vector<Texture*> backgrounds, int tileCountW, int tileCountH, std::vector<Tile*> specialTiles)
 	: tiles(tiles), tileCountW(tileCountW), tileCountH(tileCountH), levelWidth(tileCountW * (int)tileDimensions.x)
 	, levelHeight(tileCountH * (int)tileDimensions.y)
 {
+	start = specialTiles[0];
+	end = specialTiles[1];
+
 	createBackgroundLoop(backgrounds);
 }
 

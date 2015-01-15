@@ -40,25 +40,34 @@ bool LevelManager::loadFile(std::string filename, SDL_Renderer* renderer)
 	}
 
 	//Load all tile textures
-	std::map<TileType, TileProperties> tileProperties;
+	std::map<Utility::TileType, TileProperties> tileProperties;
 	tileProperties = loadTileTextures(renderer, levelFile);
-	TileProperties debuging = tileProperties[block];
+
 	//Load tile data
 	//Create a multidimensional vector
 	std::vector<std::vector<Tile*>> tiles;
 	createTileVector(tiles, levelHeight, levelWidth);
+
+	std::vector<Tile*> specialTiles(2);
 
 	for (int h = 0; h < levelHeight; h++)
 	{
 		for (int w = 0; w < levelWidth; w++)
 		{
 			tiles[w][h] = createTile(tileProperties, levelFile, Vec2((float)w,(float)h));
+
+			//I put these here to avoid running another loop over them all just to find these special tiles
+			if (tiles[w][h] != nullptr)
+			{
+				if (tiles[w][h]->getType() == Utility::TileType::start) { specialTiles[0] = tiles[w][h]; }
+				if (tiles[w][h]->getType() == Utility::TileType::finish) { specialTiles[1] = tiles[w][h]; }
+			}
 		}
 	}
 	
 	//Create level from the loaded data
 	Level* level;
-	level = new Level(tiles, backgrounds, levelWidth, levelHeight);
+	level = new Level(tiles, backgrounds, levelWidth, levelHeight, specialTiles);
 
 	levels[levelID] = level;
 
@@ -70,10 +79,10 @@ Level* LevelManager::getLevel(std::string name)
 	return levels[name];
 }
 
-std::map<LevelManager::TileType, LevelManager::TileProperties> LevelManager::loadTileTextures(
+std::map<Utility::TileType, LevelManager::TileProperties> LevelManager::loadTileTextures(
 	SDL_Renderer* renderer, std::ifstream &file)
 {
-	std::map<TileType, TileProperties> tileProperties;
+	std::map<Utility::TileType, TileProperties> tileProperties;
 
 	int tilePropertiesCount;
 	file >> tilePropertiesCount;
@@ -85,7 +94,7 @@ std::map<LevelManager::TileType, LevelManager::TileProperties> LevelManager::loa
 		int type;
 		file >> type;
 		//Force the int to a TileType enum
-		TileType tileType = (TileType)type;
+		Utility::TileType tileType = (Utility::TileType)type;
 		
 		//Texture
 		Texture* texture;
@@ -116,13 +125,13 @@ std::map<LevelManager::TileType, LevelManager::TileProperties> LevelManager::loa
 	return tileProperties;
 }
 
-Tile* LevelManager::createTile(std::map<TileType, TileProperties> &tileProperties, std::ifstream &file, Vec2 gridPos)
+Tile* LevelManager::createTile(std::map<Utility::TileType, TileProperties> &tileProperties, std::ifstream &file, Vec2 gridPos)
 {
-	TileType currentTile;
+	Utility::TileType currentTile;
 	// Might be a more elegant solution to this type juggling, but it works fine for now.
 	int tempCurrentTile;
 	file >> tempCurrentTile;
-	currentTile = (TileType)tempCurrentTile;
+	currentTile = (Utility::TileType)tempCurrentTile;
 
 	//Time/space saver
 	TileProperties properties = tileProperties[currentTile];
@@ -136,7 +145,7 @@ Tile* LevelManager::createTile(std::map<TileType, TileProperties> &tilePropertie
 	//GridPos calculation (Might need + 1)
 	gridPos *= TILE_DIMENSIONS;
 	
-	Tile* tile = new Tile(properties.texture, gridPos, properties.hasCollision);
+	Tile* tile = new Tile(properties.texture, gridPos, properties.hasCollision, currentTile);
 	
 	return tile;
 }

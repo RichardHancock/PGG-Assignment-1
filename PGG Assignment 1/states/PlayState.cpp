@@ -17,6 +17,7 @@ PlayState::PlayState(StateManager* manager, SDL_Renderer* renderer,
 
 	//Load Level
 	levels = new LevelManager("res/levels/Level 1.lvl", renderer);
+	player->setPos(levels->getLevel(currentLevel)->getStartPos());
 }
 
 PlayState::~PlayState()
@@ -70,9 +71,11 @@ void PlayState::update(float dt)
 
 	player->updateVelocities(dt);
 	particleTest->update(dt);
-	levels->getLevel("Level 1")->update(dt);
+	levels->getLevel(currentLevel)->update(dt);
 	collisions(dt, *levels, *player);
 	player->update(dt);
+
+	checkGameOver();
 }
 
 void PlayState::render()
@@ -80,6 +83,15 @@ void PlayState::render()
 	levels->getLevel("Level 1")->render(&camera);
 	player->render();
 	particleTest->render();
+}
+
+void PlayState::checkGameOver()
+{
+	if (SDL_HasIntersection(&player->getAABB(), &levels->getLevel(currentLevel)->getEndBox()))
+	{
+		//TODO
+		Utility::log(Utility::I, "Game Won!");
+	}
 }
 
 void PlayState::loadResources()

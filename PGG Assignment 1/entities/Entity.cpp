@@ -71,6 +71,11 @@ Vec2 Entity::getPos()
 	return pos;
 }
 
+void Entity::setPos(Vec2 setTo)
+{
+	pos = setTo;
+}
+
 float Entity::getRotation()
 {
 	return rotation;

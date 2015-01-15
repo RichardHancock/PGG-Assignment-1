@@ -23,6 +23,11 @@ public:
 private:
 	void collisions(float dt, LevelManager &levels, Player &player);
 
+	/**
+	@brief Checks if a game over has occured (Reach end of level
+	@todo Add a game over screen, currently only prints to console.
+	*/
+	void checkGameOver();
 	void loadResources();
 
 	Texture* bulletSprite;
@@ -30,6 +35,9 @@ private:
 	std::vector<Texture*> particleSprites;
 
 	SDL_Rect camera;
+
+	//Temp until level switching added
+	std::string currentLevel = "Level 1";
 
 	LevelManager* levels;
 	Player* player;

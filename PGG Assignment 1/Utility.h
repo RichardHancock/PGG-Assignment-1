@@ -67,6 +67,18 @@ namespace Utility
 	*/
 	Vec2 getRectCenter(SDL_Rect rect);
 
+	/**
+	@brief Enum containing all types of tiles
+	
+	This was in the level manager but was causing a recusive include loop that is easily avoided putting it here.
+	*/
+	enum TileType
+	{
+		blank = 0,
+		block,
+		start,
+		finish,
+	};
 }
 
 /**
