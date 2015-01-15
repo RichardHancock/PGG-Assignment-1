@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
 #include <SDL_ttf.h>
 #include <iostream>
 #include <iomanip>
@@ -33,6 +34,11 @@ int init()
 	{ 
 		status = -1;
 		Utility::log(Utility::E,"SDL_ttf init failed: " + std::string(TTF_GetError()));
+	}
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+	{
+		status = -1;
+		Utility::log(Utility::E, "SDL_mixer init failed: " + std::string(Mix_GetError()));
 	}
 
 	window = SDL_CreateWindow("SDL Practice",

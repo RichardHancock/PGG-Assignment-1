@@ -88,6 +88,7 @@
     <Font Include="res\fonts\OpenSans-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Audio.h" />
     <ClInclude Include="entities\Background.h" />
     <ClInclude Include="entities\Bullet.h" />
     <ClInclude Include="entities\Button.h" />
