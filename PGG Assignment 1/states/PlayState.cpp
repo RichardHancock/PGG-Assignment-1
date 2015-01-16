@@ -11,6 +11,7 @@ PlayState::PlayState(StateManager* manager, SDL_Renderer* renderer,
 	loadResources();
 
 	//camera.x is updated every update loop
+	camera.x = 0;
 	camera.y = 0;
 	camera.h = stateManager->WINDOW_HEIGHT;
 	camera.w = stateManager->WINDOW_WIDTH;
@@ -69,6 +70,8 @@ bool PlayState::eventHandler()
 
 void PlayState::update(float dt)
 {
+	Utility::Timer::update(dt);
+
 	// Work out current screen pos (This is used to only render on screen tiles. Massive performance saver)
 	camera.x = (int)player->getPos().x;
 

@@ -59,3 +59,73 @@ Vec2 Utility::getRectCenter(SDL_Rect rect)
 	center.y = (float)(rect.y + (rect.h / 2));
 	return center;
 }
+
+//Timer
+
+std::unordered_map<std::string, Utility::Timer::TimerStruct> Utility::Timer::timers;
+const float Utility::Timer::TIME_INTERVAL = 1.0f;
+
+Utility::Timer::Timer() {}
+
+void Utility::Timer::update(float dt)
+{
+	for (auto timer : timers)
+	{
+		timer.second.currentTime += (TIME_INTERVAL * dt);
+	}
+}
+
+bool Utility::Timer::createTimer(std::string id, float duration)
+{
+	//Unordered map can't have duplicates
+	if (timers.count(id) == 1)
+	{
+		log(W,"Timer id specified already exists");
+		return false;
+	}
+
+	//Create the Timer
+	TimerStruct timer = {0.0f, duration};
+
+	//Push it into the timers unordered_map
+	timers.insert(std::make_pair(id,timer));
+
+	return true;
+}
+
+float Utility::Timer::stopTimer(std::string id)
+{
+	if (timers.count(id) == 0) { return -1.0f; }
+
+	float finalCurrentTime = timers[id].currentTime;
+
+	timers.erase(id);
+
+	return finalCurrentTime;
+}
+
+bool Utility::Timer::hasTimerFinished(std::string id)
+{
+	if (!timers.count(id))
+	{
+		log(W,"Unknown timer was asked if finished. Timer ID:" +id);
+		return false;
+	}
+	
+	TimerStruct timer = timers[id];
+	if (timer.currentTime >= timer.duration)
+	{
+		//Could call stop timer but would have an extra id check (Which is wasteful)
+		timers.erase(id);
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void Utility::Timer::cleanup()
+{
+	timers.clear();
+}

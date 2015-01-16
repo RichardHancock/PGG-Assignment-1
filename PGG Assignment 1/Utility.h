@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <iostream>
 #include <SDL.h>
+#include <unordered_map>
 
 #include "Vec2.h"
 
@@ -78,6 +79,79 @@ namespace Utility
 		block,
 		start,
 		finish,
+	};
+
+	//Timer Management
+
+	/**
+	@brief creates a timer for use in game
+
+	This code was used in the Group Project Unit, but was entirely written by me.
+	I have upgraded it to use some really useful C++11 which did require a rewrite of all the functions, 
+	but the general structure (Headers) is the same.
+	*/
+	class Timer
+	{
+	private:
+		///a structure for the individual timers
+		struct TimerStruct
+		{
+			float currentTime;
+			float duration;
+		};
+	public:
+		/**
+		upadates the time in the timer
+
+		@param float - deltaTime
+		*/
+		static void update(float dt);
+
+		/**
+		Creates a new timer with a unique id and a duration
+
+		@param std::string - The id of the timer
+		@param float - the duration of the timer
+		@returns bool - false if id is not unique
+		*/
+		static bool createTimer(std::string id, float duration);
+
+		/**
+		Stops the time and returns the time taken
+
+		@param std::string - The id of the timer
+		@returns float - the time taken
+		*/
+		static float stopTimer(std::string id);
+
+		/**
+		Checks to see if the timer has finished
+
+		@param std::string - The id of the timer
+		@returns bool - if the timer has ended
+		*/
+		static bool hasTimerFinished(std::string id);
+
+		/**
+		@brief Deletes all timers
+		*/
+		static void cleanup();
+
+	private:
+		//No one should call this so it is private
+		Timer();
+
+		static const float TIME_INTERVAL;
+
+		/**
+		@brief Stores the Timers
+
+		1 - currentTime
+		2 - duration
+		*/
+		static std::unordered_map<std::string, TimerStruct> timers;
+		
+		
 	};
 }
 
