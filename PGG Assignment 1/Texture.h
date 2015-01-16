@@ -7,6 +7,12 @@
 
 #pragma once
 
+/**
+@class Texture
+@brief Encapsulates an SDL_Texture
+
+Contains the ability to draw, load, etc.. Textures.
+*/
 class Texture
 {
 public:

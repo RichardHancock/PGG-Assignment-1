@@ -18,6 +18,9 @@ PlayState::PlayState(StateManager* manager, SDL_Renderer* renderer,
 	//Load Level
 	levels = new LevelManager("res/levels/Level 1.lvl", renderer);
 	player->setPos(levels->getLevel(currentLevel)->getStartPos());
+
+	music = new Music("res/audio/test.wav");
+	music->play(0, 0);
 }
 
 PlayState::~PlayState()

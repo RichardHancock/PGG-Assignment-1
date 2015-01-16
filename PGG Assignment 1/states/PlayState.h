@@ -6,6 +6,8 @@
 #include "../entities/Player.h"
 #include "../particles/ParticleSystem.h"
 #include "../levelManagement/LevelManager.h"
+#include "../Music.h"
+#include "../SFX.h"
 
 #pragma once
 
@@ -42,4 +44,9 @@ private:
 	LevelManager* levels;
 	Player* player;
 	ParticleSystem* particleTest;
+
+	//Sound Test
+	Music* music;
+	SFX* s1;
+	SFX* s2;
 };

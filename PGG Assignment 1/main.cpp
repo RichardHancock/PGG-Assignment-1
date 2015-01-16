@@ -29,12 +29,15 @@ int init()
 {
 	int status = 0;
 
-	if (SDL_Init(SDL_INIT_VIDEO) < 0) { status = -1; }
+	if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO) < 0) { status = -1; }
 	if (TTF_Init() < 0) 
 	{ 
 		status = -1;
 		Utility::log(Utility::E,"SDL_ttf init failed: " + std::string(TTF_GetError()));
 	}
+
+	Mix_Init(MIX_INIT_MP3);
+	//Initialize SDL_Mixer with some standard audio formats/freqs. Also set channels to 2 for stereo sound.
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 	{
 		status = -1;
@@ -91,7 +94,7 @@ int main(int argc, char *argv[])
 
 		SDL_RenderPresent(renderer);
 
-		if (dt < (1.0f / 50.0f))	// not sure how accurate the SDL_Delay function is..
+		if (dt < (1.0f / 50.0f))
 		{
 			SDL_Delay((unsigned int)(((1.0f / 50.0f) - dt)*1000.0f));
 		}
@@ -105,6 +108,9 @@ int main(int argc, char *argv[])
 
 void cleanup()
 {
+	IMG_Quit();
+	Mix_CloseAudio();
+	Mix_Quit();
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();

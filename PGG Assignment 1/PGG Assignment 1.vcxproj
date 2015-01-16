@@ -52,7 +52,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\SDKs\SDL\lib\x86</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -98,8 +98,10 @@
     <ClInclude Include="levelManagement\Level.h" />
     <ClInclude Include="levelManagement\LevelManager.h" />
     <ClInclude Include="levelManagement\Tile.h" />
+    <ClInclude Include="Music.h" />
     <ClInclude Include="particles\Particle.h" />
     <ClInclude Include="particles\ParticleSystem.h" />
+    <ClInclude Include="SFX.h" />
     <ClInclude Include="states\MenuState.h" />
     <ClInclude Include="states\PlayState.h" />
     <ClInclude Include="states\State.h" />
@@ -109,6 +111,7 @@
     <ClInclude Include="Vec2.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Audio.cpp" />
     <ClCompile Include="entities\Background.cpp" />
     <ClCompile Include="entities\Bullet.cpp" />
     <ClCompile Include="entities\Button.cpp" />
@@ -119,8 +122,10 @@
     <ClCompile Include="levelManagement\LevelManager.cpp" />
     <ClCompile Include="levelManagement\Tile.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Music.cpp" />
     <ClCompile Include="particles\Particle.cpp" />
     <ClCompile Include="particles\ParticleSystem.cpp" />
+    <ClCompile Include="SFX.cpp" />
     <ClCompile Include="states\MenuState.cpp" />
     <ClCompile Include="states\PlayState.cpp" />
     <ClCompile Include="states\State.cpp" />
