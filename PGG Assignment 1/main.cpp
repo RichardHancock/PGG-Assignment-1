@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
 
 		//Render
 		SDL_RenderClear(renderer);
-		
+
 		stateManager->render();
 
 		SDL_RenderPresent(renderer);

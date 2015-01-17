@@ -106,7 +106,7 @@ void PlayState::loadResources()
 	bulletSprite = new Texture(dir + "laser.png", renderer);
 	playerSprite = new Texture(dir + "player.png", renderer);
 
-	player = new Player(playerSprite, Vec2(360, 200), bulletSprite, 10);
+	player = new Player(playerSprite, Vec2(360, 200), bulletSprite);
 
 	Texture* particle = new Texture(dir + "emitterTestSmall.png", renderer);
 	particleSprites.push_back(particle);

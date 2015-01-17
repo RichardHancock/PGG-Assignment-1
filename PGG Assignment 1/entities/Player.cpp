@@ -1,7 +1,7 @@
 #include "Player.h"
 
-Player::Player(Texture* texture, Vec2 pos, Texture*bulletTexture, float maxVelocity)
-	:EntityWithMotion(texture, pos, maxVelocity, 0), bulletSprite(bulletTexture)
+Player::Player(Texture* texture, Vec2 pos, Texture*bulletTexture)
+	:EntityWithMotion(texture, pos, 0), bulletSprite(bulletTexture)
 {
 	delay = 0;
 	movingLeft = false;

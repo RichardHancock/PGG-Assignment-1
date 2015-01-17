@@ -6,7 +6,7 @@ class EntityWithMotion : public Entity
 {
 public:
 	EntityWithMotion(Texture*, Vec2);
-	EntityWithMotion(Texture*, Vec2, float, float);
+	EntityWithMotion(Texture*, Vec2, float);
 	virtual void update(float) = 0;
 
 	Vec2 getVelocity();
@@ -16,7 +16,6 @@ public:
 	void setRotationSpeed(float rotationSpeed);
 protected:
 	Vec2 velocity;
-	float maxVelocity;
 
 	float rotationSpeed;
 	float maxRotationSpeed;

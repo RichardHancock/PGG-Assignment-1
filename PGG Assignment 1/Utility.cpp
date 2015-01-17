@@ -12,7 +12,7 @@ int Utility::randomInt(int min, int max)
 
 float Utility::randomFloat(float min, float max)
 {
-	// From http://stackoverflow.com/a/5289624
+	// Not written by me it's from: http://stackoverflow.com/a/5289624
 	// Could have used C++11 for random floats, but I think this is adequate.
 	float random = ((float)rand()) / (float)RAND_MAX;
 	float diff = max - min;

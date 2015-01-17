@@ -53,8 +53,8 @@ void ParticleSystem::generateNewParticles()
 {
 	for (int i = 0; i < particlesPerTickRate; i++)
 	{
-		Particle particle(textures[0], emitterPos, 10, 10, 
-			Colour(Utility::randomInt(0, 255), Utility::randomInt(0, 255), Utility::randomInt(0, 255)), 3);
+		Particle particle(textures[0], emitterPos, 10, Colour(Utility::randomInt(0, 255),
+			Utility::randomInt(0, 255), Utility::randomInt(0, 255)), 3);
 		Vec2 randomVelocity;
 		randomVelocity.x = Utility::randomFloat(direction.x - 1, direction.x + 1);
 		randomVelocity.y = Utility::randomFloat(direction.y - 1, direction.y + 1);

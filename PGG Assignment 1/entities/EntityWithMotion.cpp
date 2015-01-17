@@ -1,14 +1,14 @@
 #include "EntityWithMotion.h"
 
-EntityWithMotion::EntityWithMotion(Texture* texture, Vec2 pos, float maxVelocity, float maxRotationSpeed)
-	: Entity(texture, pos), maxVelocity(maxVelocity), maxRotationSpeed(maxRotationSpeed)
+EntityWithMotion::EntityWithMotion(Texture* texture, Vec2 pos, float maxRotationSpeed)
+	: Entity(texture, pos), maxRotationSpeed(maxRotationSpeed)
 {
 	rotationSpeed = 0;
 	velocity = { 0, 0 };
 }
 
 EntityWithMotion::EntityWithMotion(Texture* texture, Vec2 pos)
-	: Entity(texture, pos), maxVelocity(200), maxRotationSpeed(200)
+	: Entity(texture, pos), maxRotationSpeed(0)
 {
 	rotationSpeed = 0;
 	velocity = { 0, 0 };

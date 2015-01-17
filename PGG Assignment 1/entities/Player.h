@@ -8,7 +8,7 @@
 class Player : public EntityWithMotion
 {
 public:
-	Player(Texture*, Vec2, Texture*, float);
+	Player(Texture*, Vec2, Texture*);
 	~Player();
 
 	void render();
