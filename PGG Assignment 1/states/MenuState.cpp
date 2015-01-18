@@ -28,7 +28,7 @@ MenuState::MenuState(StateManager* manager, SDL_Renderer* renderer)
 	logo = new Texture("res/images/logo.png", renderer);
 	background = new Texture("res/images/Space3.png", renderer);
 
-	music = new Music("res/audio/Take a Chance.wav");
+	music = new Music("res/audio/Take a Chance.ogg");
 	music->play(100, -1);
 }
 

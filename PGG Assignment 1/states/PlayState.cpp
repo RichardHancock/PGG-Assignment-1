@@ -28,7 +28,7 @@ PlayState::PlayState(StateManager* manager, SDL_Renderer* renderer,
 	enemyManager = new EnemyManager(enemiesTextures, 3);
 	enemyManager->toggleSpawning();
 
-	music = new Music("res/audio/Deep Haze.wav");
+	music = new Music("res/audio/Deep Haze.ogg");
 	music->play(0, -1);
 }
 
