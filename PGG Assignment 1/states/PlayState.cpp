@@ -117,6 +117,7 @@ void PlayState::loadResources()
 	player = new Player(playerSprite, Vec2(360, 200), bulletSprite);
 }
 
+//I have no idea how this works anymore, it has quite iritating bugs that I cannot fix without scraping it entirely
 
 void PlayState::worldCollisions(float dt, LevelManager &levels, Player &player)
 {
@@ -155,17 +156,22 @@ void PlayState::worldCollisions(float dt, LevelManager &levels, Player &player)
 				movingRight = true;
 			}
 
+			bool hitLeft = false;
+			bool hitRight = false;
+
 			if (movingLeft)
 			{
 				if (tilesToProcess[i]->getPos().x + tileAABB.w >= playerNewPos.x)
 				{
 					player.setVelocity(Vec2(0, player.getVelocity().y));
+					hitLeft = true;
 				}
 			}
 			else if (movingRight)
 			{
 				if (tilesToProcess[i]->getPos().x <= playerNewPos.x + playerNew.w)
 				{
+					hitRight = true;
 					player.setVelocity(Vec2(0, player.getVelocity().y));
 				}
 			}
@@ -181,7 +187,7 @@ void PlayState::worldCollisions(float dt, LevelManager &levels, Player &player)
 				movingDown = true;
 			}
 
-
+			
 			if (movingUp)
 			{
 				if (tilesToProcess[i]->getPos().y + tileAABB.h >= playerNewPos.y)
@@ -189,9 +195,9 @@ void PlayState::worldCollisions(float dt, LevelManager &levels, Player &player)
 					player.setVelocity(Vec2(player.getVelocity().x, 0));
 				}
 			}
-			else if (movingDown)
+			if (movingDown && !hitLeft && !hitRight)
 			{
-				if (tilesToProcess[i]->getPos().y <= playerNewPos.y + playerNew.h)
+				if (tilesToProcess[i]->getPos().y <= playerNewPos.y + playerNew.h )
 				{
 					stillLanded = true;
 					//if (!player.landed)
