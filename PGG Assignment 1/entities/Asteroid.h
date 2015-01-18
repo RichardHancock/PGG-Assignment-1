@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Enemy.h"
-
+#include "../particles/ParticleSystem.h"
 /**
 @class Asteroid
 @brief An Asteroid that is thrown at a random velocity towards the ground. Will kill the player.
@@ -20,8 +20,10 @@ public:
 	
 	/**
 	@brief Update the internal values
-	@param float - deltatime
+	@param float - delta time
 	*/
 	void update(float dt);
 
+private:
+	ParticleSystem* particles;
 };

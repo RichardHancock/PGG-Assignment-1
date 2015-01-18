@@ -18,8 +18,12 @@ public:
 	@param Vec2 - Position of the emitter
 	@param std::vector<Texture*> - Array of texture*
 	@param int - How many particles are created each tick
+	@param Vec2 - Direction to generate particles
+	@param Colour - Minimum Colour Values for use in random colour generation
+	@param Colour - Maximum Colour Values for use in random colour generation
 	*/
-	ParticleSystem(Vec2 emitterPos, std::vector<Texture*> textures, int particlesPerTickRate, Vec2 direction);
+	ParticleSystem(Vec2 emitterPos, std::vector<Texture*> textures, int particlesPerTickRate, Vec2 direction
+		,Colour min, Colour max);
 	
 	/// Clears vectors the particle system created
 	~ParticleSystem();
@@ -33,6 +37,11 @@ public:
 	void update(float dt);
 
 	/**
+	@brief Changes Emitter position
+	@param Vec2 - New Position
+	*/
+
+	/**
 	@brief Generate some new particles in the system
 
 	Amount is dictated by the "particlesPerTickRate" passed in through the constructor
@@ -42,7 +51,7 @@ public:
 	/**
 	@brief Draws all particles
 	*/
-	void render();
+	void render(SDL_Rect* camera);
 private:
 	/// Position of the Particle Emitter
 	Vec2 emitterPos;

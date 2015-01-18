@@ -29,7 +29,7 @@ public:
 	void update(float);
 
 	/// Draw the particle
-	void render();
+	void render(SDL_Rect* camera);
 
 	/**
 	@brief Checks if the lifespan of the particle has run out

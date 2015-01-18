@@ -35,7 +35,6 @@ private:
 
 	Texture* bulletSprite;
 	Texture* playerSprite;
-	std::vector<Texture*> particleSprites;
 
 	SDL_Rect camera;
 
@@ -44,7 +43,6 @@ private:
 
 	LevelManager* levels;
 	Player* player;
-	ParticleSystem* particleTest;
 
 	EnemyManager* enemyManager;
 

@@ -14,11 +14,12 @@ public:
 	/**
 	@brief Update all the enemies
 	@param float - deltatime
+	@param Vec2 - The top right screen position (Get from camera.x + screen Width, camera.y)
 	*/
-	void update(float dt);
+	void update(float dt, SDL_Rect* camera);
 
 	///Render all the enemies
-	void render();
+	void render(SDL_Rect* camera);
 
 	/**
 	@brief Is the EnemyManager currently set to spawn enemies
@@ -38,8 +39,9 @@ private:
 
 	/**
 	@brief Spawns Enemies
+	@param Vec2 - The top right screen position (Get from camera.x + screen Width, camera.y)
 	*/
-	void spawnEnemy();
+	void spawnEnemy(Vec2 topRightScreenPos);
 
 	std::vector<Enemy*> enemies;
 

@@ -15,10 +15,14 @@ void Particle::update(float dt)
 	lifespan -= dt;
 }
 
-void Particle::render()
+void Particle::render(SDL_Rect* camera)
 {
 	sprite->setColourTint(colour);
-	sprite->draw(pos, rotation);
+
+	Vec2 offsetPos;
+	offsetPos.x = pos.x - camera->x;
+	offsetPos.y = pos.y - camera->y;
+	sprite->draw(offsetPos, rotation);
 }
 
 bool Particle::hasExpired()

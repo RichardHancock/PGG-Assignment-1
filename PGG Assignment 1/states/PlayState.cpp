@@ -24,7 +24,7 @@ PlayState::PlayState(StateManager* manager, SDL_Renderer* renderer,
 	std::unordered_map<std::string, Texture*> enemiesTextures;
 	enemiesTextures["LargeAsteroid"] = new Texture("res/images/largeAsteroid.png", renderer);
 	enemiesTextures["SmallAsteroid"] = new Texture("res/images/smallAsteroid.png", renderer);
-	enemyManager = new EnemyManager(enemiesTextures, 6);
+	enemyManager = new EnemyManager(enemiesTextures, 3);
 	enemyManager->toggleSpawning();
 
 	music = new Music("res/audio/test.wav");
@@ -39,12 +39,6 @@ PlayState::~PlayState()
 	// Delete all resources
 	delete playerSprite;
 	delete bulletSprite;
-
-	for (Texture* p : particleSprites)
-	{
-		delete p;
-	}
-	particleSprites.clear();
 
 	delete enemyManager;
 }
@@ -85,11 +79,10 @@ void PlayState::update(float dt)
 	camera.x = (int)player->getPos().x;
 
 	player->updateVelocities(dt);
-	particleTest->update(dt);
 	levels->getLevel(currentLevel)->update(dt);
 	collisions(dt, *levels, *player);
 	player->update(dt);
-	enemyManager->update(dt);
+	enemyManager->update(dt, &camera);
 
 	checkGameOver();
 }
@@ -98,8 +91,7 @@ void PlayState::render()
 {
 	levels->getLevel("Level 1")->render(&camera);
 	player->render();
-	particleTest->render();
-	enemyManager->render();
+	enemyManager->render(&camera);
 }
 
 void PlayState::checkGameOver()
@@ -118,11 +110,6 @@ void PlayState::loadResources()
 	playerSprite = new Texture(dir + "player.png", renderer);
 
 	player = new Player(playerSprite, Vec2(360, 200), bulletSprite);
-
-	Texture* particle = new Texture(dir + "emitterTestSmall.png", renderer);
-	particleSprites.push_back(particle);
-	particleTest = new ParticleSystem(Vec2(240, 350), particleSprites, 3, Vec2(0, -10));
-	particleTest->generateNewParticles();
 }
 
 

@@ -1,6 +1,7 @@
 #include "ParticleSystem.h"
 
-ParticleSystem::ParticleSystem(Vec2 emitterPos, std::vector<Texture*> textures, int particlesPerTickRate, Vec2 direction) 
+ParticleSystem::ParticleSystem(Vec2 emitterPos, std::vector<Texture*> textures, int particlesPerTickRate, Vec2 direction
+	, Colour min, Colour max)
 	: emitterPos(emitterPos), textures(textures), particlesPerTickRate(particlesPerTickRate), direction(direction)
 {
 	
@@ -35,17 +36,14 @@ void ParticleSystem::update(float dt)
 	}
 
 	particlesToErase.clear();
-
-
-
 	//Maybe put generateNewParticles here but might be better to have for external calls only
 }
 
-void ParticleSystem::render()
+void ParticleSystem::render(SDL_Rect* camera)
 {
 	for (unsigned int i = 0; i < particles.size(); i++)
 	{
-		particles[i].render();
+		particles[i].render(camera);
 	}
 }
 
