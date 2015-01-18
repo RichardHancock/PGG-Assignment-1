@@ -20,6 +20,30 @@ public:
 		y = initY;
 	}
 
+	/**
+	@brief Get the length of the vector
+	@return float - length of vector
+	*/
+	float getLength()
+	{
+		Vec2 temp;
+		temp.x = pow(x, 2);
+		temp.y = pow(y, 2);
+		float total = temp.x + temp.y;
+		return sqrt(total);
+	}
+
+	/**
+	@brief Get a normalized Vec2
+	@return Vec2 - Normalized vector
+	*/
+	Vec2 normalize()
+	{
+		float length = getLength();
+		return Vec2(x / length, y / length);
+	}
+
+
 	//Operator Overloading
 
 	Vec2* operator += (Vec2 b)

@@ -28,7 +28,7 @@ public:
 	@brief Render the enemy
 	@param SDL_Rect* - Global camera position to render relative to
 	*/
-	void render(SDL_Rect* camera);
+	virtual void render(SDL_Rect* camera);
 private:
 	int health;
 

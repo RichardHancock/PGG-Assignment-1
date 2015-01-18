@@ -17,12 +17,12 @@ public:
 	
 	@param Vec2 - Position of the emitter
 	@param std::vector<Texture*> - Array of texture*
-	@param int - How many particles are created each tick
+	@param int - How many particles are created each request
 	@param Vec2 - Direction to generate particles
 	@param Colour - Minimum Colour Values for use in random colour generation
 	@param Colour - Maximum Colour Values for use in random colour generation
 	*/
-	ParticleSystem(Vec2 emitterPos, std::vector<Texture*> textures, int particlesPerTickRate, Vec2 direction
+	ParticleSystem(Vec2 emitterPos, std::vector<Texture*> textures, int particlesPerCallRate, Vec2 direction
 		,Colour min, Colour max);
 	
 	/// Clears vectors the particle system created
@@ -40,6 +40,7 @@ public:
 	@brief Changes Emitter position
 	@param Vec2 - New Position
 	*/
+	void setEmitterPos(Vec2 newPos);
 
 	/**
 	@brief Generate some new particles in the system
@@ -59,8 +60,13 @@ private:
 	std::vector<Particle> particles;
 	/// Contains all available textures for the particles to use
 	std::vector<Texture*> textures;
-	/// How many particles will be created every tick
-	int particlesPerTickRate;
+	/// How many particles will be created every request
+	int particlesPerCallRate;
 	/// Direction to emit particles
 	Vec2 direction;
+	///Minimum Colour Values for use in random colour generation
+	Colour min;
+	///Maximum Colour Values for use in random colour generation
+	Colour max;
+
 };

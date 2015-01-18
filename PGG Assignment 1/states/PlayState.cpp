@@ -24,6 +24,7 @@ PlayState::PlayState(StateManager* manager, SDL_Renderer* renderer,
 	std::unordered_map<std::string, Texture*> enemiesTextures;
 	enemiesTextures["LargeAsteroid"] = new Texture("res/images/largeAsteroid.png", renderer);
 	enemiesTextures["SmallAsteroid"] = new Texture("res/images/smallAsteroid.png", renderer);
+	enemiesTextures["AsteroidParticle"] = new Texture("res/images/emitterTestSmall.png", renderer);
 	enemyManager = new EnemyManager(enemiesTextures, 3);
 	enemyManager->toggleSpawning();
 

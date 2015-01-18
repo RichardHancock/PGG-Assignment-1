@@ -1,8 +1,8 @@
 #include "ParticleSystem.h"
 
-ParticleSystem::ParticleSystem(Vec2 emitterPos, std::vector<Texture*> textures, int particlesPerTickRate, Vec2 direction
+ParticleSystem::ParticleSystem(Vec2 emitterPos, std::vector<Texture*> textures, int particlesPerCallRate, Vec2 direction
 	, Colour min, Colour max)
-	: emitterPos(emitterPos), textures(textures), particlesPerTickRate(particlesPerTickRate), direction(direction)
+	: emitterPos(emitterPos), textures(textures), particlesPerCallRate(particlesPerCallRate), direction(direction), min(min), max(max)
 {
 	
 }
@@ -39,6 +39,11 @@ void ParticleSystem::update(float dt)
 	//Maybe put generateNewParticles here but might be better to have for external calls only
 }
 
+void ParticleSystem::setEmitterPos(Vec2 newPos)
+{
+	emitterPos = newPos;
+}
+
 void ParticleSystem::render(SDL_Rect* camera)
 {
 	for (unsigned int i = 0; i < particles.size(); i++)
@@ -49,10 +54,14 @@ void ParticleSystem::render(SDL_Rect* camera)
 
 void ParticleSystem::generateNewParticles()
 {
-	for (int i = 0; i < particlesPerTickRate; i++)
+	for (int i = 0; i < particlesPerCallRate; i++)
 	{
-		Particle particle(textures[0], emitterPos, 10, Colour(Utility::randomInt(0, 255),
-			Utility::randomInt(0, 255), Utility::randomInt(0, 255)), 3);
+		Colour colour = { 0, 0, 0 };
+		colour.r = Utility::randomInt(min.r, max.r);
+		colour.g = Utility::randomInt(min.g, max.g);
+		colour.b = Utility::randomInt(min.b, max.b);
+
+		Particle particle(textures[0], emitterPos, 10, colour, 2);
 		Vec2 randomVelocity;
 		randomVelocity.x = Utility::randomFloat(direction.x - 1, direction.x + 1);
 		randomVelocity.y = Utility::randomFloat(direction.y - 1, direction.y + 1);

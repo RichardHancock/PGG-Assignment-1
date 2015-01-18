@@ -15,14 +15,21 @@ public:
 	@param Vec2 - Starting Position
 	@param int - Damage Capability
 	@param Vec2 - Asteroids constant velocity
+	@param Texture* - Sprite for particles
 	*/
-	Asteroid(Texture* sprite, Vec2 pos, int damage, Vec2 velocity);
+	Asteroid(Texture* sprite, Vec2 pos, int damage, Vec2 velocity, Texture* pTexture);
 	
 	/**
 	@brief Update the internal values
 	@param float - delta time
 	*/
 	void update(float dt);
+
+	/**
+	@brief Render the asteroid and its particles
+	@param SDL_Rect* - Global camera position to render relative to
+	*/
+	void render(SDL_Rect* camera);
 
 private:
 	ParticleSystem* particles;
