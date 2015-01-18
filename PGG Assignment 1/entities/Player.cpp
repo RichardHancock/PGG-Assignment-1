@@ -16,6 +16,10 @@ Player::Player(Texture* texture, Vec2 pos, Texture*bulletTexture)
 
 Player::~Player()
 {
+	for (unsigned int i = 0; i < bullets.size(); i++)
+	{
+		delete bullets[i];
+	}
 	bullets.clear();
 }
 

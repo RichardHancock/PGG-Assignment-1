@@ -20,7 +20,7 @@ public:
 	Enemy(Texture*, Vec2, int, int);
 
 	/**
-	@brief Updates internal value
+	@brief Updates internal values
 	@param float - delta time
 	*/
 	virtual void update(float dt) = 0;
@@ -49,7 +49,9 @@ public:
 	*/
 	int damageAmount();
 protected:
+	///Current health of the Enemy
 	int health;
 
+	///Damage potential of the Enemy
 	const int damage;
 };

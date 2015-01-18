@@ -7,6 +7,11 @@ class EntityWithMotion : public Entity
 public:
 	EntityWithMotion(Texture*, Vec2);
 	EntityWithMotion(Texture*, Vec2, float);
+
+	/**
+	@brief Updates the Internal values (Velocity/Pos)
+	@param float - delta time
+	*/
 	virtual void update(float) = 0;
 
 	Vec2 getVelocity();

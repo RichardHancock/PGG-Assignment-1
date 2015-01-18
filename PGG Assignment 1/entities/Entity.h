@@ -81,6 +81,7 @@ public:
 	@param unsigned int - Percent between 0 - 100
 	*/
 	void setReducedAABB(unsigned int);
+
 	/**
 	@brief Updates the Internal values of Entity (Velocity/Pos)
 	@param float - delta time
