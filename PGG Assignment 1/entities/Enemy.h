@@ -31,7 +31,23 @@ public:
 	*/
 	virtual void render(SDL_Rect* camera);
 
+	/**
+	@brief Checks if the enemy is has no health left
+	@return bool - True if dead, false if alive
+	*/
 	bool isDead();
+
+	/**
+	@brief Inflict damage to the enemy's health
+	@param int - Damage amount
+	*/
+	void hit(int damage);
+
+	/**
+	@brief Get the enemy's damage value
+	@return int - Damage the enemy will deal 
+	*/
+	int damageAmount();
 protected:
 	int health;
 

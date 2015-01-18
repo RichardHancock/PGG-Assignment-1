@@ -14,7 +14,17 @@ void Enemy::render(SDL_Rect* camera)
 	sprite->draw(offsetPos, rotation);
 }
 
+void Enemy::hit(int damage)
+{
+	this->health -= damage;
+}
+
 bool Enemy::isDead()
 {
 	return (health <= 0);
+}
+
+int Enemy::damageAmount()
+{
+	return damage;
 }

@@ -81,9 +81,12 @@ void PlayState::update(float dt)
 
 	player->updateVelocities(dt);
 	levels->getLevel(currentLevel)->update(dt);
-	collisions(dt, *levels, *player);
+	worldCollisions(dt, *levels, *player);
+	enemyCollisions(*enemyManager, *player);
 	player->update(dt);
 	enemyManager->update(dt, &camera);
+
+	Utility::log(Utility::I, std::to_string(player->getHealth()));
 
 	checkGameOver();
 }
@@ -114,7 +117,7 @@ void PlayState::loadResources()
 }
 
 
-void PlayState::collisions(float dt, LevelManager &levels, Player &player)
+void PlayState::worldCollisions(float dt, LevelManager &levels, Player &player)
 {
 	//Calculate the area that collisions will need to be calculated in.
 	Vec2 playerNewPos = player.getPos() + (player.getVelocity() * dt);
@@ -135,15 +138,6 @@ void PlayState::collisions(float dt, LevelManager &levels, Player &player)
 		SDL_Rect tileAABB = tilesToProcess[i]->getAABB();
 		if (SDL_HasIntersection(&tileAABB, &playerNew))
 		{
-			Vec2 leftSide = playerNewPos;
-			leftSide.y += playerNew.h / 2;
-			Vec2 rightSide = leftSide;
-			rightSide.x += playerNew.w;
-			Vec2 topSide = playerNewPos;
-			topSide.x += playerNew.w / 2;
-			Vec2 bottomSide = topSide;
-			bottomSide.y += playerNew.h;
-
 			//test x
 			bool movingLeft = false;
 			bool movingRight = false;
@@ -211,4 +205,10 @@ void PlayState::collisions(float dt, LevelManager &levels, Player &player)
 	}
 
 	player.landed = stillLanded;
+}
+
+void PlayState::enemyCollisions(EnemyManager &enemies, Player &player)
+{
+	//Checks for any collisions with enemies and then applies any damage to the player
+	player.hit(enemies.playerCollision(&player.getAABB()));
 }

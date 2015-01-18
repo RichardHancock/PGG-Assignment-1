@@ -16,6 +16,24 @@ public:
 	void update(float);
 	void eventKeyboard(SDL_Event&);
 	
+	/**
+	@brief Inflict damage to the player's health
+	@param int - Damage amount
+	*/
+	void hit(int damage);
+
+	/**
+	@brief Get the player's current health
+	@return int - Player's health
+	*/
+	int getHealth();
+
+	/**
+	@brief Checks if the player is has no health left
+	@return bool - True if dead, false if alive
+	*/
+	bool isDead();
+
 	bool landed;
 
 private:
@@ -27,6 +45,8 @@ private:
 	bool isJumping;
 	bool facingRight;
 	float delay;
+
+	int health;
 
 	const float gravity = 100.0f;
 	const float initialJumpVelocity = -200.0f;

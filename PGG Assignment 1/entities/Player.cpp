@@ -10,6 +10,8 @@ Player::Player(Texture* texture, Vec2 pos, Texture*bulletTexture)
 	isJumping = false;
 	facingRight = true;
 	landed = true;
+
+	health = 2;
 }
 
 Player::~Player()
@@ -131,4 +133,19 @@ void Player::shoot()
 	bullet->setVelocity(Vec2(velocityX, 0));
 	bullets.push_back(bullet);
 	delay = 0;
+}
+
+void Player::hit(int damage)
+{
+	this->health -= damage;
+}
+
+int Player::getHealth()
+{
+	return health;
+}
+
+bool Player::isDead()
+{
+	return (health <= 0);
 }

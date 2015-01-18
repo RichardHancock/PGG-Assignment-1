@@ -89,7 +89,21 @@ void EnemyManager::spawnEnemy(Vec2 topRightScreenPos)
 	Asteroid* temp = new Asteroid(sprite, startPos, 1, 1, randomVelocity, enemySprites["AsteroidParticle"]);
 	temp->setReducedAABB(85);
 	enemies.push_back(temp);
+}
 
+unsigned int EnemyManager::playerCollision(SDL_Rect* player)
+{
+	unsigned int damageDealt = 0;
 
+	for (unsigned int i = 0; i < enemies.size(); i++)
+	{
+		if (SDL_HasIntersection(player, &enemies[i]->getAABB()))
+		{
+			Enemy* e = enemies[i];
+			damageDealt += e->damageAmount();
+			e->hit(1);
+		}
+	}
 
+	return damageDealt;
 }

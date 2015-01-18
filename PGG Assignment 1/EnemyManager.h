@@ -32,6 +32,13 @@ public:
 	*/
 	void toggleSpawning();
 
+	/**
+	@brief Checks if any of the enemies are colliding with the player
+	@param SDL_Rect* - The player AABB (Axis-Aligned Bounding Box)
+	@return unsigned int - Damage to be dealt to the player (returns 0 for none)
+	*/
+	unsigned int playerCollision(SDL_Rect* player);
+
 private:
 	float spawnDelay;
 
