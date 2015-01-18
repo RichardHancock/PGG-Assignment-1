@@ -27,6 +27,9 @@ MenuState::MenuState(StateManager* manager, SDL_Renderer* renderer)
 
 	logo = new Texture("res/images/logo.png", renderer);
 	background = new Texture("res/images/Space3.png", renderer);
+
+	music = new Music("res/audio/Take a Chance.wav");
+	music->play(100, -1);
 }
 
 MenuState::~MenuState()
@@ -42,6 +45,8 @@ MenuState::~MenuState()
 
 	delete background;
 	delete logo;
+	delete music;
+
 }
 
 bool MenuState::eventHandler()
@@ -111,6 +116,9 @@ bool MenuState::click()
 			switch (b.first)
 			{
 			case Play:
+				//This has to be here otherwise it stops the new music
+				music->stop(100);
+				
 				stateManager->changeState(new PlayState(stateManager, renderer, 1));
 				
 				break;

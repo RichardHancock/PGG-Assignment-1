@@ -4,6 +4,7 @@
 #include "StateManager.h"
 #include "../Vec2.h"
 #include "../entities/Button.h"
+#include "../Music.h"
 
 #pragma once
 
@@ -39,5 +40,7 @@ private:
 
 	Texture* logo;
 	Texture* background;
+
+	Music* music;
 
 };

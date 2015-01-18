@@ -28,8 +28,8 @@ PlayState::PlayState(StateManager* manager, SDL_Renderer* renderer,
 	enemyManager = new EnemyManager(enemiesTextures, 3);
 	enemyManager->toggleSpawning();
 
-	music = new Music("res/audio/test.wav");
-	music->play(0, 0);
+	music = new Music("res/audio/Deep Haze.wav");
+	music->play(0, -1);
 }
 
 PlayState::~PlayState()
@@ -42,6 +42,8 @@ PlayState::~PlayState()
 	delete bulletSprite;
 
 	delete enemyManager;
+	
+	delete music;
 }
 
 bool PlayState::eventHandler()
@@ -59,6 +61,7 @@ bool PlayState::eventHandler()
 
 			if (e.key.keysym.sym == SDLK_ESCAPE)
 			{
+				music->stop(100);
 				//Add Pause here instead
 				stateManager->changeState(new MenuState(stateManager,renderer));
 			}
@@ -85,8 +88,6 @@ void PlayState::update(float dt)
 	enemyCollisions(*enemyManager, *player);
 	player->update(dt);
 	enemyManager->update(dt, &camera);
-
-	Utility::log(Utility::I, std::to_string(player->getHealth()));
 
 	checkGameOver();
 }
