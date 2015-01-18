@@ -36,7 +36,9 @@ public:
 
 
 private:
+	/// The Fire trail of the Asteroid is contained in this ParticleSystem
 	ParticleSystem* particles;
 
+	/// Lifespan of the Asteroid in seconds
 	float lifespan;
 };

@@ -5,10 +5,20 @@
 
 #include "entities/Enemy.h"
 
+/**
+@class EnemyManager
+@brief A class that manager all the enemies in the game
+*/
 class EnemyManager
 {
 public:
+	/**
+	@brief Creates the Enemy Manager
+	@param std::unordered_map<std::string, Texture*> - Contains the enemy sprites with labels
+	@param float - The delay (in seconds ish) between enemy spawns
+	*/
 	EnemyManager(std::unordered_map<std::string, Texture*> enemySprites,float spawnDelay);
+	
 	~EnemyManager();
 
 	/**
@@ -40,8 +50,10 @@ public:
 	unsigned int playerCollision(SDL_Rect* player);
 
 private:
+	/// The delay between enemies spawning
 	float spawnDelay;
 
+	/// Are enemies currently allowed to spawn
 	bool spawning;
 
 	/**
@@ -50,7 +62,9 @@ private:
 	*/
 	void spawnEnemy(Vec2 topRightScreenPos);
 
+	/// Contains all the enemies
 	std::vector<Enemy*> enemies;
 
+	/// Contains all the enemies' sprites
 	std::unordered_map<std::string, Texture*> enemySprites;
 };
