@@ -1,7 +1,7 @@
 #include "Asteroid.h"
 
-Asteroid::Asteroid(Texture* sprite, Vec2 pos, int damage, Vec2 velocity, Texture* pTexture)
-	: Enemy(sprite, pos, damage)
+Asteroid::Asteroid(Texture* sprite, Vec2 pos, int health, int damage, Vec2 velocity, Texture* pTexture)
+	: Enemy(sprite, pos, health, damage), lifespan(15)
 {
 	setVelocity(velocity);
 
@@ -13,6 +13,11 @@ Asteroid::Asteroid(Texture* sprite, Vec2 pos, int damage, Vec2 velocity, Texture
 	particles = new ParticleSystem(pos, pTextures, 1, direction, Colour(200, 0, 0), Colour(255, 80, 0));
 }
 
+Asteroid::~Asteroid()
+{
+	delete particles;
+}
+
 void Asteroid::update(float dt)
 {
 	updateAABB();
@@ -20,6 +25,10 @@ void Asteroid::update(float dt)
 	particles->generateNewParticles();
 	particles->update(dt);
 	pos += (velocity * dt);
+
+	lifespan -= (1 * dt);
+
+	if (lifespan <= 0.0f) { health = 0; }
 }
 
 void Asteroid::render(SDL_Rect* camera)

@@ -63,8 +63,8 @@ void ParticleSystem::generateNewParticles()
 
 		Particle particle(textures[0], emitterPos, 10, colour, 2);
 		Vec2 randomVelocity;
-		randomVelocity.x = Utility::randomFloat(direction.x - 1, direction.x + 1);
-		randomVelocity.y = Utility::randomFloat(direction.y - 1, direction.y + 1);
+		randomVelocity.x = Utility::randomFloat(direction.x - 2, direction.x + 2);
+		randomVelocity.y = Utility::randomFloat(direction.y - 2, direction.y + 2);
 		
 		particle.setVelocity(randomVelocity);
 		particles.push_back(particle);

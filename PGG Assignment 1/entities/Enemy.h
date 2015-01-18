@@ -14,9 +14,10 @@ public:
 	@brief Enemy Constructor
 	@param Texture* - Sprite
 	@param Vec2 - Starting position
+	@param int - Enemy health
 	@param int - Damage Capability
 	*/
-	Enemy(Texture*, Vec2, int);
+	Enemy(Texture*, Vec2, int, int);
 
 	/**
 	@brief Updates internal value
@@ -29,7 +30,9 @@ public:
 	@param SDL_Rect* - Global camera position to render relative to
 	*/
 	virtual void render(SDL_Rect* camera);
-private:
+
+	bool isDead();
+protected:
 	int health;
 
 	const int damage;
