@@ -10,6 +10,12 @@
 class Bullet: public EntityWithMotion
 {
 public:
+	/**
+	@brief Create a Bullet
+	@param Texture* - Bullet's sprite
+	@param Vec2 - Bullet's starting position
+	@param bool - Whether the bullet is facing right (Was fired while player was facing right)
+	*/
 	Bullet(Texture*, Vec2, bool);
 	
 	/**

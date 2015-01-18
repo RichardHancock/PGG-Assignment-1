@@ -83,7 +83,7 @@ public:
 	void setReducedAABB(unsigned int);
 
 	/**
-	@brief Updates the Internal values of Entity (Velocity/Pos)
+	@brief Updates the Internal values of Entity
 	@param float - delta time
 	*/
 	virtual void update(float) = 0;

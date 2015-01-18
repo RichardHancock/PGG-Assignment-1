@@ -7,13 +7,28 @@
 */
 class Vec2
 {
+	//Used to be a Struct but had so much functionality and complexity I converted it to a class
+	
 public:
+	///X Pos
 	float x;
+
+	///Y Pos
 	float y;
+
+	/**
+	@brief Create a Vec2
+	*/
 	Vec2()
 	{
 
 	}
+
+	/**
+	@brief Create a Vec2
+	@param float - x value
+	@param float - y value
+	*/
 	Vec2(float initX, float initY)
 	{
 		x = initX;

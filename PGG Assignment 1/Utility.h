@@ -102,9 +102,9 @@ namespace Utility
 		};
 	public:
 		/**
-		upadates the time in the timer
+		updates the time in the timer
 
-		@param float - deltaTime
+		@param float - delta time
 		*/
 		static void update(float dt);
 
@@ -151,13 +151,13 @@ namespace Utility
 		2 - duration
 		*/
 		static std::unordered_map<std::string, TimerStruct> timers;
-		
-		
 	};
 }
 
 /**
 @brief Defines a RGB colour
+
+Didn't realise there was a SDL_Colour until it was too late, oh well...
 */
 struct Colour
 {
@@ -165,6 +165,12 @@ struct Colour
 	uint8_t g; //< Green Channel
 	uint8_t b; //< Blue Channel
 
+	/**
+	@brief Colour
+	@param uint8_t - Red
+	@param uint8_t - Green
+	@param uint8_t - Blue
+	*/
 	Colour(uint8_t r, uint8_t g, uint8_t b) : r(r), g(g), b(b) {}
 };
 

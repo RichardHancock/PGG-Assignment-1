@@ -12,15 +12,37 @@
 
 #pragma once
 
+/**
+@class PlayState
+@brief The state which contains the game and all gameplay elements
+*/
 class PlayState :public State
 {
 public:
-	PlayState(StateManager* manager, SDL_Renderer* renderer, 
-		unsigned int level);
+	/**
+	@brief Create the State
+	@param StateManager* - Pointer to the current state manager
+	@param SDL_Renderer* - Renderer
+	@param unsigned int - Starting level
+	*/
+	PlayState(StateManager* manager, SDL_Renderer* renderer, unsigned int level);
+
 	~PlayState();
 
+	/**
+	@brief Handles any events such as keyboard/mouse input
+	*/
 	bool eventHandler();
+
+	/**
+	@brief Update any internal values
+	@param float - delta time
+	*/
 	void update(float dt);
+
+	/**
+	@brief Render any sprites relevant to the state
+	*/
 	void render();
 
 private:
@@ -45,20 +67,32 @@ private:
 	*/
 	void checkGameOver();
 
+	/**
+	@brief Load most of the resources require for gameplay (Mostly done to clean up the constructor)
+	*/
 	void loadResources();
 
+	/// Bullet's sprite
 	Texture* bulletSprite;
+
+	/// Player's sprite
 	Texture* playerSprite;
 
+	/// The location and size of the camera (Locked to the player's position)
 	SDL_Rect camera;
 
 	//Temp until level switching added
 	std::string currentLevel = "Level 1";
 
+	///The level manager which contains all of the levels data.
 	LevelManager* levels;
+
+	///The Player object
 	Player* player;
 
+	///The enemy manager which encapsulates all of the enemies
 	EnemyManager* enemyManager;
 
+	///Background music
 	Music* music;
 };

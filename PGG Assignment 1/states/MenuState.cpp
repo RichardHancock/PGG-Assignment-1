@@ -96,11 +96,10 @@ void MenuState::render()
 	}
 	*/
 
-	// C++11 makes this awesome
-
 	background->draw(Vec2(0, 0));
 	logo->draw(Vec2(50, 300));
 
+	// C++11 makes this awesome
 	for(auto b : buttons)
 	{
 		b.second->render();
