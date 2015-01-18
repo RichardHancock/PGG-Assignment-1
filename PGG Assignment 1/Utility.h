@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <iostream>
+#include <string>
 #include <SDL.h>
 #include <unordered_map>
 

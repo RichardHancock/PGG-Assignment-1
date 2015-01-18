@@ -1,8 +1,8 @@
 #include "EnemyManager.h"
 #include "entities/Asteroid.h"
 
-EnemyManager::EnemyManager(float spawnDelay)
-	:spawnDelay(spawnDelay), spawning(false)
+EnemyManager::EnemyManager(std::unordered_map<std::string, Texture*> enemySprites, float spawnDelay)
+	:spawnDelay(spawnDelay), spawning(false), enemySprites(enemySprites)
 {
 
 }
@@ -25,7 +25,8 @@ EnemyManager::~EnemyManager()
 }
 
 void EnemyManager::update(float dt)
-{
+{ 
+	//spawnEnemy();
 	if (Utility::Timer::hasTimerFinished("SpawnDelay"))
 	{
 		spawnEnemy();
@@ -60,18 +61,21 @@ void EnemyManager::toggleSpawning()
 
 void EnemyManager::spawnEnemy()
 {
-	//This could be easily exanded for different types of enemies.
+	//This could be easily expanded for different types of enemies.
 	int random = Utility::randomInt(1, 4);
 
 	//Generate a random velocity backwards at a 0-54 degree angle.
 	Vec2 randomVelocity;
-	randomVelocity.x = -(Utility::randomFloat(0.0f, 1.0f));
+	//randomVelocity.x = -(Utility::randomFloat(0.0f, 1.0f));
+	randomVelocity.x = -1.0f;
 	randomVelocity.y = Utility::randomFloat(0.0f, 0.6f);
-	// possible multiply here if this is too slow
+	
+	///@todo *= operator overload hasn't been implemented 
+	randomVelocity = randomVelocity * 100;
 	
 	Vec2 startPos = { 640, 0 };
 	Texture* sprite = (random == 4 ? enemySprites["LargeAsteroid"] : enemySprites["SmallAsteroid"]);
-	Asteroid* temp = new Asteroid(sprite, startPos, randomVelocity);
+	Asteroid* temp = new Asteroid(sprite, startPos, 1, randomVelocity);
 	temp->setReducedAABB(85);
 	enemies.push_back(temp);
 

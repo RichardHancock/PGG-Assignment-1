@@ -6,7 +6,7 @@ PlayState::PlayState(StateManager* manager, SDL_Renderer* renderer,
 	: State(manager, renderer)
 {
 	stateName = "Play State";
-	///@todo Change Levelmanager to use the uint level parameter
+	///@todo Change Level manager to use the uint level parameter
 	
 	loadResources();
 
@@ -19,6 +19,13 @@ PlayState::PlayState(StateManager* manager, SDL_Renderer* renderer,
 	//Load Level
 	levels = new LevelManager("res/levels/Level 1.lvl", renderer);
 	player->setPos(levels->getLevel(currentLevel)->getStartPos());
+
+	//Enemies
+	std::unordered_map<std::string, Texture*> enemiesTextures;
+	enemiesTextures["LargeAsteroid"] = new Texture("res/images/largeAsteroid.png", renderer);
+	enemiesTextures["SmallAsteroid"] = new Texture("res/images/smallAsteroid.png", renderer);
+	enemyManager = new EnemyManager(enemiesTextures, 6);
+	enemyManager->toggleSpawning();
 
 	music = new Music("res/audio/test.wav");
 	music->play(0, 0);
@@ -38,6 +45,8 @@ PlayState::~PlayState()
 		delete p;
 	}
 	particleSprites.clear();
+
+	delete enemyManager;
 }
 
 bool PlayState::eventHandler()
@@ -80,6 +89,7 @@ void PlayState::update(float dt)
 	levels->getLevel(currentLevel)->update(dt);
 	collisions(dt, *levels, *player);
 	player->update(dt);
+	enemyManager->update(dt);
 
 	checkGameOver();
 }
@@ -89,6 +99,7 @@ void PlayState::render()
 	levels->getLevel("Level 1")->render(&camera);
 	player->render();
 	particleTest->render();
+	enemyManager->render();
 }
 
 void PlayState::checkGameOver()

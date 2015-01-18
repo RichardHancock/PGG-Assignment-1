@@ -69,9 +69,10 @@ Utility::Timer::Timer() {}
 
 void Utility::Timer::update(float dt)
 {
-	for (auto timer : timers)
+	//Need auto& to get a reference otherwise it's just a local copy (Really Fun Bug to Find)
+	for (auto& timer : timers)
 	{
-		timer.second.currentTime += (TIME_INTERVAL * dt);
+		timer.second.currentTime += (float)(TIME_INTERVAL * dt);
 	}
 }
 

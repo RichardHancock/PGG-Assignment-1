@@ -8,6 +8,7 @@
 #include "../levelManagement/LevelManager.h"
 #include "../Music.h"
 #include "../SFX.h"
+#include "../EnemyManager.h"
 
 #pragma once
 
@@ -26,7 +27,7 @@ private:
 	void collisions(float dt, LevelManager &levels, Player &player);
 
 	/**
-	@brief Checks if a game over has occured (Reach end of level
+	@brief Checks if a game over has occurred (Reach end of level
 	@todo Add a game over screen, currently only prints to console.
 	*/
 	void checkGameOver();
@@ -45,8 +46,7 @@ private:
 	Player* player;
 	ParticleSystem* particleTest;
 
-	//Sound Test
+	EnemyManager* enemyManager;
+
 	Music* music;
-	SFX* s1;
-	SFX* s2;
 };

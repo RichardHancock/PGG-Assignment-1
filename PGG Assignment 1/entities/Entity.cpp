@@ -100,16 +100,17 @@ SDL_Rect Entity::getAABB()
 
 void Entity::setReducedAABB(Vec2 dimensions)
 {
-	AABB.w = dimensions.x;
-	AABB.h = dimensions.y;
+	AABB.w = (int)dimensions.x;
+	AABB.h = (int)dimensions.y;
 }
 
 void Entity::setReducedAABB(unsigned int percent)
 {
 	if (percent > 100)
 	{
-		Utility::log(Utility::E, "setReducedAABB was gived a percentage higher than 100: " + std::to_string(percent));
+		Utility::log(Utility::E, "setReducedAABB was given a percentage higher than 100: " + std::to_string(percent));
 		return;
 	}
-	AABB.w = (percent / 100) * AABB.w;
+	//Casts put everywhere for paranoia that it will throw out the decimals too early 
+	AABB.w = (int)(((float)percent / 100.0f) * (float)AABB.w);
 }
