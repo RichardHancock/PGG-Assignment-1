@@ -27,7 +27,7 @@ public:
 
 	std::vector<Tile*> checkTiles(SDL_Rect);
 
-	Vec2 getStartPos() { return start->getPos(); }
+	Vec2 getStartPos() { return start->getPos() - Vec2(0, 50.0f); }
 	SDL_Rect getEndBox() { return end->getAABB(); }
 
 private:

@@ -172,11 +172,11 @@ void PlayState::worldCollisions(float dt, LevelManager &levels, Player &player)
 
 
 			//test y
-			if (player.getVelocity().y < -0.01f)
+			if (player.getVelocity().y < 0.0f)
 			{
 				movingUp = true;
 			}
-			else if (player.getVelocity().y > 0.01f)
+			else if (player.getVelocity().y > 0.0f)
 			{
 				movingDown = true;
 			}
@@ -194,12 +194,14 @@ void PlayState::worldCollisions(float dt, LevelManager &levels, Player &player)
 				if (tilesToProcess[i]->getPos().y <= playerNewPos.y + playerNew.h)
 				{
 					stillLanded = true;
-					if (!player.landed)
-					{
+					//if (!player.landed)
+					//{
 						player.setVelocity(Vec2(player.getVelocity().x, 0));
-						player.move(Vec2(0, -2));
+						float newYPos = (tilesToProcess[i]->getPos().y) - player.getDimensions().y;
+						player.setPos(Vec2(player.getPos().x, newYPos));
 						player.landed = true;
-					}
+					//}
+					
 				}
 			}
 		}

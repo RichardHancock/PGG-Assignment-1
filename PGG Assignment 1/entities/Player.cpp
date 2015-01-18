@@ -9,7 +9,7 @@ Player::Player(Texture* texture, Vec2 pos, Texture*bulletTexture)
 	isFiring = false;
 	isJumping = false;
 	facingRight = true;
-	landed = true;
+	landed = false;
 
 	health = 2;
 }
@@ -85,10 +85,10 @@ void Player::updateVelocities(float dt)
 		velocity.x = 200.0f;
 	}
 
-	if (!landed)
-	{
+	//if (!landed)
+	//{
 		velocity.y += gravity * dt;
-	}
+	//}
 	
 }
 
@@ -104,6 +104,10 @@ void Player::update(float dt)
 		bullets[i]->update(dt);
 	}
 
+	if (landed)
+	{
+		isJumping = false;
+	}
 }
 
 void Player::render()
