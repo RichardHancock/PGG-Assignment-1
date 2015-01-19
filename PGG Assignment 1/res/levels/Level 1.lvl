@@ -38,9 +38,5 @@ res/images/Space3.png
 //Background image count
 //Background image paths
 //Number of Tile properties
-// blocknum image collisionflag
-//0 blank
-//1 basic block
-//2 spawn
-//3 finish
+// blocknum imagePath collisionflag
 //Level Data

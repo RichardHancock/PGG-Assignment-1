@@ -38,7 +38,7 @@ GameOverState::GameOverState(StateManager* manager, SDL_Renderer* renderer, bool
 	if (gameWon)
 	{
 		buttonPos.x += (padding * 2) + buttonTexture->getDimensions().x;
-		buttons[NextLevel] = new Button(buttonPos, buttonTexture, "Next Level", font, colour, renderer);
+		buttons[Retry] = new Button(buttonPos, buttonTexture, "Retry", font, colour, renderer);
 	}
 	
 
@@ -116,7 +116,7 @@ bool GameOverState::click()
 		{
 			switch (b.first)
 			{
-			case NextLevel:
+			case Retry:
 				stateManager->prepareToChangeState();
 				stateManager->changeState(new PlayState(stateManager, renderer, 2));
 				break;

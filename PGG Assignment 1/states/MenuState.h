@@ -19,8 +19,6 @@ private:
 	enum MenuButton
 	{
 		Play,
-		Credits,
-		Help,
 		Quit
 	};
 public:

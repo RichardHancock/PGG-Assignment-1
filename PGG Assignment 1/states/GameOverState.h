@@ -18,7 +18,7 @@ private:
 	/// All the possible buttons on this menu
 	enum MenuButton
 	{
-		NextLevel,
+		Retry,
 		MainMenu
 	};
 public:

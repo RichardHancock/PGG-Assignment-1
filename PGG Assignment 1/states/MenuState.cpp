@@ -16,9 +16,6 @@ MenuState::MenuState(StateManager* manager, SDL_Renderer* renderer)
 	buttonTexture = new Texture("res/images/button.png", renderer);
 	SDL_Colour colour = { 255, 255, 255 };
 	buttons[Play] = new Button(Vec2(0, 20), buttonTexture, "Play", font, colour, renderer);
-	buttons[Help] = new Button(Vec2(0, 95), buttonTexture, "Help", font, colour, renderer);
-	buttons[Credits] = new Button(Vec2(640 - buttonTexture->getDimensions().x, 385 - buttonTexture->getDimensions().y),
-		buttonTexture, "Credits", font, colour, renderer);
 	buttons[Quit] = new Button(Vec2(640 - buttonTexture->getDimensions().x, 460 - buttonTexture->getDimensions().y),
 		buttonTexture, "Quit", font, colour, renderer);
 	

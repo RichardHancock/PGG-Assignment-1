@@ -82,12 +82,12 @@ void Player::updateVelocities(float dt)
 	if (movingLeft &!movingRight)
 	{
 		// We are told to move left
-		velocity.x = -200.0f;
+		velocity.x = -150.0f;
 	}
 	if (movingRight &!movingLeft)
 	{
 		// We are told to move right
-		velocity.x = 200.0f;
+		velocity.x = 150.0f;
 	}
 
 	//if (!landed)
