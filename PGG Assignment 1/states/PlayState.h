@@ -1,3 +1,5 @@
+#include <SDL_ttf.h>
+
 #include "State.h"
 #include "StateManager.h"
 
@@ -95,4 +97,10 @@ private:
 
 	///Background music
 	Music* music;
+
+	///Font
+	TTF_Font* font;
+
+	///The UI Health display
+	Texture* UIHealth;
 };

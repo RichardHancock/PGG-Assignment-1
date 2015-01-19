@@ -45,6 +45,11 @@ PlayState::~PlayState()
 	delete enemyManager;
 	
 	delete music;
+
+	delete UIHealth;
+
+	TTF_CloseFont(font);
+	font = nullptr;
 }
 
 bool PlayState::eventHandler()
@@ -90,6 +95,11 @@ void PlayState::update(float dt)
 	player->update(dt);
 	enemyManager->update(dt, &camera);
 
+	delete UIHealth;
+	std::string healthUItext = "Health: " + std::to_string(player->getHealth());
+	SDL_Colour colour = { 255, 0, 0 };
+	UIHealth = new Texture(TTF_RenderText_Blended(font, healthUItext.c_str(), colour), renderer);
+
 	checkGameOver();
 }
 
@@ -98,6 +108,8 @@ void PlayState::render()
 	levels->getLevel("Level 1")->render(&camera);
 	player->render();
 	enemyManager->render(&camera);
+
+	UIHealth->draw(Vec2(0, 0));
 }
 
 void PlayState::checkGameOver()
@@ -122,6 +134,8 @@ void PlayState::loadResources()
 	playerSprite = new Texture(dir + "player.png", renderer);
 
 	player = new Player(playerSprite, Vec2(360, 200), bulletSprite);
+
+	font = TTF_OpenFont("res/fonts/OpenSans-Regular.ttf", 32);
 }
 
 //I have no idea how this works anymore, it has quite irritating bugs that I cannot fix without scraping it entirely
