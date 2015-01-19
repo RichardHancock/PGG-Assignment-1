@@ -105,6 +105,7 @@
     <ClInclude Include="particles\Particle.h" />
     <ClInclude Include="particles\ParticleSystem.h" />
     <ClInclude Include="SFX.h" />
+    <ClInclude Include="states\GameOverState.h" />
     <ClInclude Include="states\MenuState.h" />
     <ClInclude Include="states\PlayState.h" />
     <ClInclude Include="states\State.h" />
@@ -132,6 +133,7 @@
     <ClCompile Include="particles\Particle.cpp" />
     <ClCompile Include="particles\ParticleSystem.cpp" />
     <ClCompile Include="SFX.cpp" />
+    <ClCompile Include="states\GameOverState.cpp" />
     <ClCompile Include="states\MenuState.cpp" />
     <ClCompile Include="states\PlayState.cpp" />
     <ClCompile Include="states\State.cpp" />

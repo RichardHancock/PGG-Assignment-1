@@ -21,7 +21,8 @@ EnemyManager::~EnemyManager()
 	}
 	enemySprites.clear();
 
-	Utility::Timer::stopTimer("SpawnDelay");
+	// Handled somewhere else otherwise this causes major problems
+	//Utility::Timer::stopTimer("SpawnDelay");
 }
 
 void EnemyManager::update(float dt, SDL_Rect* camera)

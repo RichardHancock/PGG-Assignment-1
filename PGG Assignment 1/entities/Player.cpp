@@ -49,7 +49,8 @@ void Player::eventKeyboard(SDL_Event& e)
 			}
 			break;
 		case SDLK_SPACE:
-			isFiring = true;
+			//Disabled Bullets as they don't work anyway
+			//isFiring = true;
 			break;
 		}
 		break;

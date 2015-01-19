@@ -9,29 +9,29 @@
 #pragma once
 
 /**
-@class MenuState
-@brief The state which contains the menu
+@class GameOverState
+@brief A state shown when the game is over Win or Lose
 */
-class MenuState : public State
+class GameOverState : public State
 {
 private:
 	/// All the possible buttons on this menu
 	enum MenuButton
 	{
-		Play,
-		Credits,
-		Help,
-		Quit
+		NextLevel,
+		MainMenu
 	};
 public:
 	/**
 	@brief Create the State
 	@param StateManager* - Pointer to the current state manager
 	@param SDL_Renderer* - Renderer
+	@param bool - Was the game won
+	@param int - Player's health remaining (irrelevant if game lost)
 	*/
-	MenuState(StateManager* manager, SDL_Renderer* renderer);
+	GameOverState(StateManager* manager, SDL_Renderer* renderer, bool gameWon, int healthRemaining);
 
-	~MenuState();
+	~GameOverState();
 
 	/**
 	@brief Handles any events such as keyboard/mouse input
@@ -50,14 +50,20 @@ public:
 	void render();
 
 private:
+	///Was the game Won or Lost
+	bool gameWon;
+
+	///Text Message Congratulating or 'Shunning' the player
+	Texture* message;
+
+	//Message position
+	Vec2 messagePos;
+
 	/// Buttons background texture
 	Texture* buttonTexture;
 
 	/// The mouse's current position
 	Vec2 mouse;
-
-	/// Array of all of the buttons in the menu
-	std::unordered_map<MenuButton, Button*> buttons;
 
 	/**
 	@brief When the mouse is clicked this function checks which/if a button was pressed
@@ -65,13 +71,7 @@ private:
 	*/
 	bool click();
 
-	///Game Logo texture
-	Texture* logo;
-
-	///Menu screen background texture
-	Texture* background;
-
-	///Background music
-	Music* music;
+	/// Array of all of the buttons in the menu
+	std::unordered_map<MenuButton, Button*> buttons;
 
 };

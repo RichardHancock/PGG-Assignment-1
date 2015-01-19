@@ -29,6 +29,11 @@ public:
 	void addState(State* state);
 
 	/**
+	@brief Resets the Timer class otherwise conflicts happen
+	*/
+	void prepareToChangeState();
+
+	/**
 	@brief Change to a new state while deleting all previous states
 	@param State* - The new State
 	*/

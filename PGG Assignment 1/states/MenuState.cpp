@@ -12,11 +12,11 @@ MenuState::MenuState(StateManager* manager, SDL_Renderer* renderer)
 	{
 		Utility::log(Utility::E, "TTF_OpenFont in MenuState: " + std::string(TTF_GetError()));
 	}
+	//Create all the buttons
 	buttonTexture = new Texture("res/images/button.png", renderer);
 	SDL_Colour colour = { 255, 255, 255 };
 	buttons[Play] = new Button(Vec2(0, 20), buttonTexture, "Play", font, colour, renderer);
-	buttons[Options] = new Button(Vec2(0, 95), buttonTexture, "Options", font, colour, renderer);
-	buttons[Help] = new Button(Vec2(0, 170), buttonTexture, "Help", font, colour, renderer);
+	buttons[Help] = new Button(Vec2(0, 95), buttonTexture, "Help", font, colour, renderer);
 	buttons[Credits] = new Button(Vec2(640 - buttonTexture->getDimensions().x, 385 - buttonTexture->getDimensions().y),
 		buttonTexture, "Credits", font, colour, renderer);
 	buttons[Quit] = new Button(Vec2(640 - buttonTexture->getDimensions().x, 460 - buttonTexture->getDimensions().y),
@@ -117,7 +117,7 @@ bool MenuState::click()
 			case Play:
 				//This has to be here otherwise it stops the new music
 				music->stop(100);
-				
+				stateManager->prepareToChangeState();
 				stateManager->changeState(new PlayState(stateManager, renderer, 1));
 				
 				break;

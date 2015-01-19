@@ -1,5 +1,6 @@
 #include "PlayState.h"
 #include "MenuState.h"
+#include "GameOverState.h"
 
 PlayState::PlayState(StateManager* manager, SDL_Renderer* renderer,
 	unsigned int level)
@@ -62,7 +63,7 @@ bool PlayState::eventHandler()
 			if (e.key.keysym.sym == SDLK_ESCAPE)
 			{
 				music->stop(100);
-				//Add Pause here instead
+				stateManager->prepareToChangeState();
 				stateManager->changeState(new MenuState(stateManager,renderer));
 			}
 			break;
@@ -101,9 +102,15 @@ void PlayState::render()
 
 void PlayState::checkGameOver()
 {
-	if (SDL_HasIntersection(&player->getAABB(), &levels->getLevel(currentLevel)->getEndBox()))
+	if (player->isDead())
 	{
-		//TODO
+		stateManager->addState(new GameOverState(stateManager, renderer, false, player->getHealth()));
+		Utility::log(Utility::I, "Game Lost!");
+	}
+	// else if the player is intersecting with the end box
+	else if (SDL_HasIntersection(&player->getAABB(), &levels->getLevel(currentLevel)->getEndBox()))
+	{
+		stateManager->addState(new GameOverState(stateManager, renderer, true, player->getHealth()));
 		Utility::log(Utility::I, "Game Won!");
 	}
 }
@@ -117,8 +124,7 @@ void PlayState::loadResources()
 	player = new Player(playerSprite, Vec2(360, 200), bulletSprite);
 }
 
-//I have no idea how this works anymore, it has quite iritating bugs that I cannot fix without scraping it entirely
-
+//I have no idea how this works anymore, it has quite irritating bugs that I cannot fix without scraping it entirely
 void PlayState::worldCollisions(float dt, LevelManager &levels, Player &player)
 {
 	//Calculate the area that collisions will need to be calculated in.

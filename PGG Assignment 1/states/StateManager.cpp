@@ -28,6 +28,11 @@ void StateManager::addState(State* state)
 	Utility::log(Utility::I, "StateManager: Switched to the " + state->getStateName());
 }
 
+void StateManager::prepareToChangeState()
+{
+	Utility::Timer::cleanup();
+}
+
 void StateManager::changeState(State* state)
 {
 	clearStates();

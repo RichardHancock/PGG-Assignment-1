@@ -148,6 +148,9 @@
     <ClInclude Include="entities\Asteroid.h">
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="states\GameOverState.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -221,6 +224,9 @@
     </ClCompile>
     <ClCompile Include="entities\Asteroid.cpp">
       <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="states\GameOverState.cpp">
+      <Filter>Source Files\States</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
