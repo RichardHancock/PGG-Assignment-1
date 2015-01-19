@@ -88,7 +88,7 @@ void EnemyManager::spawnEnemy(Vec2 topRightScreenPos)
 	Vec2 startPos = topRightScreenPos;
 	Texture* sprite = (random == 4 ? enemySprites["LargeAsteroid"] : enemySprites["SmallAsteroid"]);
 	Asteroid* temp = new Asteroid(sprite, startPos, 1, 1, randomVelocity, enemySprites["AsteroidParticle"]);
-	temp->setReducedAABB(85);
+	temp->setReducedAABB(30);
 	enemies.push_back(temp);
 }
 

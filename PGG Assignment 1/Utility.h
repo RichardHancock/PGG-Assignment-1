@@ -80,6 +80,11 @@ namespace Utility
 		block,
 		start,
 		finish,
+		platform,
+		platformHoles,
+		beamLeft,
+		beamRight,
+		blockWarning
 	};
 
 	//Timer Management
